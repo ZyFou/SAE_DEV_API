@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <title>{{ pokemon.name }} - Détails</title>
+</head>
+
+<body>
+    <h1>Détails</h1>
+
+    <h2>{{ pokemon.name[0].upper() + pokemon.name[1:] }}</h2>
+
+    <img src="{{ pokemon.sprites.front_default }}" alt="{{ pokemon.name }} Image">
+    <br>
+    <span>Type: {{ pokemon.types[0].type.name[0].upper() + pokemon.types[0].type.name[1:] }}</span>
+    {% if pokemon.types|length > 1 %}
+    <span>, {{ pokemon.types[1].type.name[0].upper() + pokemon.types[1].type.name[1:] }}</span>
+    {% endif %}
+
+
+</body>
+
+</html>
