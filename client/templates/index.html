@@ -4,17 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initialscale=1.0">
-    <title>Pokédex</title>
+    <title>Index of the site</title>
 </head>
 
 <body>
-    <h1>Pokédex</h1>
-    <span>Il y a {{nb}} pokémons dans la base</span>
-    <ul>
-        {% for pokemon in pokemons %}
-        <li><a href="{{ url_for('pokemon_detail', name=pokemon.name) }}">{{pokemon.name}} </li>
-        {% endfor %}
-    </ul>
+    <h1>TITLE</h1>
+    {% if user %}
+    <span>{{ user }}</span>
+    {% endif %}
 </body>
 
 </html>
