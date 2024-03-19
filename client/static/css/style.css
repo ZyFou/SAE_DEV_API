@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+body{
+    background-color: #2B2D30;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+#mainTitle {
+    font-size: 80px;
+    display: flex;
+}
+
+#mainTitle span {
+    display: inline; /* Display spans side by side */
+    margin-bottom: -90px;
+}
+
+#dragon_text {
+    color: #FFDB00;
+    margin-right: 15px;
+}
+
+#ball_text {
+    color: #EC2324;
+}
+
+#draft_clash_text{
+    font-size: 50px;
+    color: #F2FCFF;
+}
+
+#main_description{
+    margin-top: -22px;
+    font-size: 28px;
+    color: #F2FCFF;
+    
+}
+
+
+#playButton{
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 30px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 170px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+#exploreButton{
+    cursor: pointer;
+    margin-left: 50px;
+    border: none;
+    background-color: #F2FCFF;
+    font-size: 30px;
+    font-weight: 800;
+    color: #4C5562;
+    width: 220px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+
+#indexContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+#indexLeftBox {
+    flex: 1;
+    padding-left: 85px;
+    padding-top: 50px;
+    /* Add any additional styles you need */
+}
+
+#indexRightBox {
+    flex: 1;
+    position: relative;
+    /* Add any additional styles you need */
+}
+
+#svgContainer {
+    position: relative;
+    margin-top: 10%;
+    left: 20px;
+}
+
+svg{
+    width: 100%;
+}
+
+#gokuImage, #vegetaImage {
+    position: absolute;
+}
+
+#gokuImage {
+    top: 86px;
+    left: 450px;
+    width: 250px;
+}
+
+#vegetaImage {
+    top: 87px;
+    left: 150px;
+    width: 290px;
+}

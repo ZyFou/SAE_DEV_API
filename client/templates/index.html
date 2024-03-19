@@ -5,10 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initialscale=1.0">
     <title>Index of the site</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
-    <h1>TITLE</h1>
+    <header>
+        <button>Profile</button>
+    </header>
+
+    <div id="indexContainer">
+
+        <div id="indexLeftBox">
+            <h1 id="mainTitle">
+                <span id="dragon_text">DRAGON</span>
+                <span id="ball_text">BALL</span>
+            </h1>
+
+            <h2 id="draft_clash_text">
+                <span>DRAFT CLASH</span>
+            </h2>
+
+            <p id="main_description">
+                Lancez vous dans des combats épiques dans<br>les quels vous ferez vous affronter les
+                grands<br>protagonistes
+                de l’univers de
+                Dragon Ball.
+            </p>
+
+            <button id="playButton">JOUER</button>
+            <button id="exploreButton">EXPLORER</button>
+
+
+
+        </div>
+
+        <div id="indexRightBox">
+            <div id="svgContainer">
+                <svg width="930" height="539" viewBox="0 0 930 539" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M1038.83 539H245.413C209.667 539 136.733 526.94 93.5501 479.629C27.4321 407.19 -31.7846 263.482 19.2972 136.391C70.379 9.29953 235.21 11.6187 413.206 52.9001C591.203 94.1815 693.366 52.9001 867.676 11.6187C1041.99 -29.6627 1146.78 36.6659 1248.95 249.103C1330.68 419.052 1142.92 513.18 1038.83 539Z"
+                        fill="#4C5562" fill-opacity="0.9" />
+                </svg>
+
+            </div>
+            <img src="static/images/asset_goku.png" alt="" id="gokuImage">
+            <img src="static/images/asset_vegeta.png" alt="" id="vegetaImage">
+        </div>
+
+    </div>
+
+
+
     {% if user %}
     <span>{{ user }}</span>
     {% endif %}
