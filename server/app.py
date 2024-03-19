@@ -18,10 +18,8 @@ createTables.createUserTable(cursor)
 
 
 from utils import addExempleUsers
-add_user = input("Add Users ? y/n : ")
 
-if add_user == 'y':
-    addExempleUsers.addExempleUsers(cursor, db)
+addExempleUsers.addExempleUsers(cursor, db)
 
 cursor.close()
 db.close()
