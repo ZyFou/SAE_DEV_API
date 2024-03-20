@@ -25,7 +25,6 @@ cursor.close()
 db.close()
 
 
-
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -35,11 +34,11 @@ db = mysql.connector.connect(
 
 app = Flask(__name__)
 
-@app.route('/api/infos/<string:prenom>', methods=['GET'])
-def obtenir_donnees(prenom):
+@app.route('/api/userInfos/<int:id>', methods=['GET'])
+def obtenir_donnees(id):
     cursor = db.cursor()
-    query = "SELECT * FROM `users` WHERE prenom = %s"
-    cursor.execute(query, (prenom,))
+    query = "SELECT * FROM `users` WHERE id = %s"
+    cursor.execute(query, (id,))
     result = cursor.fetchall()
 
     if len(result) == 0:
@@ -49,7 +48,7 @@ def obtenir_donnees(prenom):
 
     user_data = {}
     for i, col in enumerate(columns):
-        forbiden_col = ["password"]
+        forbiden_col = ["password", "admin","email"]
         if not col in forbiden_col:
             user_data[col] = result[0][i]
 

@@ -14,8 +14,8 @@ def createUserTable(cursor):
                     email VARCHAR(255),
                     password VARCHAR(255),
                     admin BOOLEAN,
-                    profile_picture VARCHAR(255),
-                    banner VARCHAR(255),
+                    profile_picture TEXT,
+                    banner TEXT,
                     favorite_character VARCHAR(255),
                     collection_id INT
                 )

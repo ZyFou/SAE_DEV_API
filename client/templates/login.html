@@ -6,10 +6,50 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Login</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="static/css/style.css">
+
 </head>
 
 <body>
 
+
+    <h1 id="mainTitleLogo">
+        <a href="/" id="site_logo">
+            <span id="dragon_text_logo">DRAGON</span>
+            <span id="ball_text">BALL</span>
+        </a>
+    </h1>
+    <a href="/" id="site_logo">
+        <h2 id="draft_clash_text_logo">
+            <span>DRAFT CLASH</span>
+        </h2>
+    </a>
+
+
+
+    <div id="containerLogin">
+        <img id="gokuLogin" src="/static/images/asset_goku.png" alt="Goku">
+
+        <div id="LoginDiv">
+            <h1 id="connexionTitle">CONNEXION</h1>
+            <form action="/login" method="post" id="forms">
+                <div>
+                    <input type="email" id="email" name="email" required placeholder="E-MAIL">
+                </div>
+                <div>
+                    <input type="password" id="password" name="password" required placeholder="MOT DE PASSE">
+                </div>
+                <div>
+                    <button id="submit" type="submit">JOUER</button>
+                </div>
+                <div>{{error}}</div>
+            </form>
+            <br>
+            <a id="goToRegister" href="/register">Pas encore de compte ?</a>
+        </div>
+
+        <img id="vegetaLogin" src="/static/images/asset_vegeta.png" alt="Vegeta">
+    </div>
 </body>
 
 </html>

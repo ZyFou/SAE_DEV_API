@@ -10,7 +10,10 @@
 
 <body>
     <header>
-        <button>Profile</button>
+        <a href="{% if is_co %}profile{% else %}login{% endif %}">
+            <img id="profileButton" src="{{ profile_picture }}" alt="">
+        </a>
+
     </header>
 
     <div id="indexContainer">
@@ -32,10 +35,8 @@
                 Dragon Ball.
             </p>
 
-            <button id="playButton">JOUER</button>
-            <button id="exploreButton">EXPLORER</button>
-
-
+            <a href="#"><button id="playButton">JOUER</button></a>
+            <a href="#"><button id="exploreButton">EXPLORER</button></a>
 
         </div>
 
@@ -56,13 +57,12 @@
 
 
 
-    {% if user %}
-    <span>{{ user }}</span>
-    {% endif %}
+    <!-- {% if is_co %}
+        <span>Connected</span>
+        {% else %}
+        <span>Not Connected</span>
+        {% endif %} -->
 
 </body>
-
-<!-- <img src="static/test/batavia.gif" alt=""> -->
-
 
 </html>

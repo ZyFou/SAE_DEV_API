@@ -7,10 +7,39 @@ body{
     overflow: hidden;
 }
 
+header{
+    text-align: right;
+}
+
+#profileButton {
+    cursor: pointer;
+    padding: 10px;
+    width: 64px;
+    height: 64px;
+    border-radius:50%;
+}
+
+
+#indexContainer {
+    margin-top: -20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
 #mainTitle {
     font-size: 80px;
     display: flex;
 }
+
+
+#mainTitleLogo {
+    font-size: 30px;
+    display: flex;
+    margin-left: 20px;
+}
+
+
 
 #mainTitle span {
     display: inline; /* Display spans side by side */
@@ -22,13 +51,33 @@ body{
     margin-right: 15px;
 }
 
+#dragon_text_logo{
+    color: #FFDB00;
+    margin-right: 5px;
+
+
+}
+
 #ball_text {
     color: #EC2324;
 }
 
+
 #draft_clash_text{
     font-size: 50px;
     color: #F2FCFF;
+}
+
+#draft_clash_text_logo{
+    margin-top: -30px;
+    font-size: 20px;
+    color: #F2FCFF;
+    margin-left: 20px;
+
+}
+
+#site_logo{
+    text-decoration: none;
 }
 
 #main_description{
@@ -38,12 +87,12 @@ body{
     
 }
 
-
 #playButton{
+    transition: 0.5s;
     cursor: pointer;
     border: none;
     background-color: #EC2324;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 800;
     color: #F2FCFF;
     width: 170px;
@@ -51,12 +100,17 @@ body{
     border-radius: 20px;
 }
 
+#playButton:hover{
+    background-color: #fe3939;
+}
+
 #exploreButton{
+    transition: 0.5s;
     cursor: pointer;
     margin-left: 50px;
     border: none;
     background-color: #F2FCFF;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 800;
     color: #4C5562;
     width: 220px;
@@ -64,33 +118,30 @@ body{
     border-radius: 20px;
 }
 
+#exploreButton:hover{
+    background-color: #ffffff;
+    color: #6e7988;
 
-#indexContainer {
-    display: flex;
-    justify-content: space-between;
 }
 
 #indexLeftBox {
     flex: 1;
     padding-left: 85px;
     padding-top: 50px;
-    /* Add any additional styles you need */
 }
 
 #indexRightBox {
     flex: 1;
     position: relative;
-    /* Add any additional styles you need */
 }
 
 #svgContainer {
     position: relative;
-    margin-top: 10%;
-    left: 20px;
+    margin-top: 7%;
 }
 
 svg{
-    width: 100%;
+    width: 110%;
 }
 
 #gokuImage, #vegetaImage {
@@ -107,4 +158,98 @@ svg{
     top: 87px;
     left: 150px;
     width: 290px;
+}
+
+/* -----------------------LOGIN----------------------- */
+
+#containerLogin {
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+    }
+
+
+#LoginDiv{
+    margin: auto;
+    background-color: #4C5562;
+    width: 450px;
+    height: 620px;
+    border-radius: 20px;
+    justify-content: center;
+    text-align: center;
+
+}
+
+#gokuLogin{
+    width: 25%;
+    margin-bottom: -100px;
+}
+
+#vegetaLogin{
+    width: 27%;
+    margin-bottom: -100px;
+
+}
+
+#connexionTitle{
+    margin-top: 70px;
+
+    font-size: 38px;
+    color: #F2FCFF;
+}
+
+#email{
+    padding-left: 8px;
+    margin-top: 20px;
+
+    width: 350px;
+    font-size: 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+}
+#email::placeholder{
+    color: #4c556269;
+}
+
+#password{
+    padding-left: 8px;
+
+    margin-top: 20px;
+    width: 350px;
+    font-size: 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+}
+
+#password::placeholder{
+    color: #4c556269;
+}
+
+#submit{
+    transition: 0.5s;
+    margin-top: 50px;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 23px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 160px;
+    height: 75px;
+    border-radius: 15px;
+}
+
+#submit:hover{
+    background-color: #fe3939;
+}
+
+#goToRegister{
+    transition: 0.5s;
+    color: #F2FCFF;
+}
+
+#goToRegister:hover{
+    color: #ffffff;
 }
