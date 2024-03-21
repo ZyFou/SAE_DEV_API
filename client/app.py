@@ -124,6 +124,17 @@ def gameMode():
         return render_template('game/gameMode.html')
     else:
         return redirect('/')
+    
+
+
+@app.route('/gameMode/custom')
+def gameMode_Custom():
+    if 'user_id' in session:
+        response = requests.get(base_url + "characters")
+        characters = response.json()
+        return render_template('game/modes/custom.html', characters=characters)
+    else:
+        return redirect('/')
 
 
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CUSTOM</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <h1 id="mainTitleLogo">
+        <a href="/" id="site_logo">
+            <span id="dragon_text_logo">DRAGON</span>
+            <span id="ball_text">BALL</span>
+        </a>
+    </h1>
+    <a href="/" id="site_logo">
+        <h2 id="draft_clash_text_logo">
+            <span>DRAFT CLASH</span>
+        </h2>
+    </a>
+
+    <div id="gameModeMainDiv">
+        <h1 id="mainTitle">
+            <span id="dragon_text">CHOISISSEZ VOTRE</span>
+            <span id="title2ndWord">PERSONNAGE</span>
+        </h1>
+    </div>
+
+    <div id="charactersContainer">
+        {% for character in characters.characters %}
+        {% if character.image %}
+        <div id="characterCard">
+            <img src="{{ character.image }}" alt="{{ character.name }}" id="characterImage"
+                onclick="pickYourCharacter('{{ character.name }}')">
+            {% else %}
+            <p>no image</p>
+            {% endif %}
+            <h1 id="characterName">{{ character.name }}</h1>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="EnnemycharactersContainer">
+        {% for character in characters.characters %}
+        {% if character.image %}
+        <div id="characterCard">
+            <img src="{{ character.image }}" alt="{{ character.name }}" id="characterImage"
+                onclick="pickEnnemyCharacter('{{ character.name }}')">
+            {% else %}
+            <p>no image</p>
+            {% endif %}
+            <h1 id="characterName">{{ character.name }}</h1>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+<footer>
+
+    <a href="/gameMode"><button id="goBack">RETOUR</button></a>
+    <div id="confirm_div">
+        <button id="confirm" onclick="confirmYourChoice()">CONFIRMER</button>
+        <!-- <button id="confirm_opponent" onclick="confirmYourChoice()">CONFIRMER A</button> -->
+    </div>
+
+
+</footer>
+
+</html>
+
+<script src="../static/script/main.js"></script>

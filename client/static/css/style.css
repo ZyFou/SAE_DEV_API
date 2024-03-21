@@ -61,7 +61,9 @@ header{
 #ball_text {
     color: #EC2324;
 }
-
+#title2ndWord{
+    color: #EC2324;
+}
 
 #draft_clash_text{
     font-size: 50px;
@@ -253,3 +255,180 @@ svg{
 #goToRegister:hover{
     color: #ffffff;
 }
+
+/* -----------------------GAME MODE CHOICES----------------------- */
+
+#gameModeMainDiv{
+    margin-top: -50px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+#gameModeChoices {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#cardDiv {
+    position: relative;
+    margin: 50px;
+}
+
+#card {
+    position: relative;
+    margin: 50px;
+    background-color: #4C5562;
+    border-radius: 20px;
+    height: 300px;
+}
+
+#cardImg {
+    transition: 0.5s;
+    cursor: pointer;
+    transition: transform 0.5s, filter 0.5s; 
+    filter: brightness(75%);
+    position: relative;
+    left: -40px;
+    top: -60px;
+    width:130%;
+}
+
+
+#cardDiv:hover img{
+    filter: brightness(100%);
+    transform: scale(1.1);
+}
+
+#card p {
+    cursor: pointer;
+
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#cardText {
+    position: absolute;
+    bottom: -30px;
+    left: 50px;
+    width: 70%;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #4C5562;
+
+}
+
+#gameModeChoices a {
+    cursor:default;
+    border-color: solid red 1px;
+    text-decoration: none;
+    color: black;
+}
+
+#gameModeChoices a:hover {
+    color: blue;
+}
+
+
+/* -----------------------CUSTOM MODE----------------------- */
+
+#charactersContainer{
+    display: flex;
+    margin-top: 40px;
+}
+#characterCard {
+    display: inline-block;
+    width: 300px; /* Vous pouvez ajuster la largeur selon vos besoins */
+    margin: 10px; /* Espacement entre les cartes */
+    text-align: center; /* Centrer le contenu à l'intérieur de la carte */
+}
+
+#characterImage {
+    border-radius: 20px;
+    transition: transform 0.5s, filter 0.5s; 
+    filter: brightness(75%);
+    width: 300px;
+    cursor: pointer;
+}
+
+#characterImage:hover {
+    filter: brightness(100%);
+    transform: scale(1.1); /* Agrandir l'image au survol */
+}
+
+#characterName{
+    font-size: 30px;
+    color: #F2FCFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+#goBack{
+    position: relative;
+    transition: 0.5s;
+    margin-top: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #F2FCFF;
+    font-size: 20px;
+    font-weight: 800;
+    color: #4C5562;
+    width: 120px;
+    height: 60px;
+    border-radius: 15px;
+}
+
+#goBack:hover{
+    background-color: #ffffff;
+    color: #6e7988;
+}
+
+#confirm_div{
+    text-align: right;
+
+}
+#confirm{
+    display: none;
+    position: relative;
+    transition: 0.5s;
+    margin-top: 20px;
+    margin-right:40px;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 180px;
+    height: 60px;
+    border-radius: 15px;
+}
+
+#confirm:hover{
+    background-color: #fe3939;
+    color: #FFFFFF;
+
+}
+
+
+#EnnemycharactersContainer{
+    display: flex;
+    margin-top: 40px;
+    display: none;
+}
+
