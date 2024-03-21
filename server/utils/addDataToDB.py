@@ -88,6 +88,13 @@ def addCharacters(db_infos):
             """, ('TaoPaiPai', 'Human',tao_pai_pai_image, 'Tristement connu assassin à renommée mondiale capable de tuer avec sa langue.', 40, 50, 80, 1300, 600))
             print("Personnage 'TaoPaiPai' ajouté à la table 'characters'.")
 
+            # gohan_image = "https://dragonball-legends.com/assets/characters/0552_gohansh_552_texture/Texture2D/0552_GohanSH_552_Chara.png"
+            # cursor.execute("""
+            #     INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
+            #     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            # """, ('Gohan', 'Saiyan',gohan_image, 'TODO', 40, 50, 80, 1300, 600))
+            # print("Personnage 'Gohan' ajouté à la table 'characters'.")
+
             db.commit()
         else:
             print("Les personnages existent déjà dans la table 'characters'.")

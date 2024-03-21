@@ -425,6 +425,29 @@ footer{
 
 }
 
+#confirm_opponent{
+    display: none;
+    position: relative;
+    transition: 0.5s;
+    margin-top: 20px;
+    margin-right:40px;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 180px;
+    height: 60px;
+    border-radius: 15px;
+}
+
+#confirm_opponent:hover{
+    background-color: #fe3939;
+    color: #FFFFFF;
+
+}
+
 
 #EnnemycharactersContainer{
     display: flex;

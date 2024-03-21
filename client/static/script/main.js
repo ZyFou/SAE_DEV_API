@@ -21,7 +21,7 @@ function pickYourCharacter(name) {
 }
 
 function pickEnnemyCharacter(name) {
-    var confirm_button = document.getElementById("confirm")
+    var confirm_opponent = document.getElementById("confirm_opponent")
     var images = document.getElementsByClassName("ennemy");
     for (var i = 0; i < images.length; i++) {
         images[i].style.boxShadow = "none";
@@ -31,7 +31,7 @@ function pickEnnemyCharacter(name) {
         if (images[i].alt === name) {
             your_ennemy = name;
             images[i].style.boxShadow = "0 0 0 3px #FFDB00"
-            confirm_button.style.display = "block"
+            confirm_opponent.style.display = "block"
 
             break;
         }
@@ -43,8 +43,20 @@ var your_choice_div = document.getElementById("charactersContainer")
 var ennemy_choice_div = document.getElementById("EnnemycharactersContainer")
 
 function confirmYourChoice() {
-    // alert("Perso choisi : " + your_character)
+    alert("Perso choisi : " + your_character)
+    var confirm_button = document.getElementById("confirm")
+    confirm_button.style.display = "none"
     ennemy_text.textContent = "ADVERSAIRE"
     your_choice_div.style.display = "none"
     ennemy_choice_div.style.display = "block";
 }
+
+function confirmYourChoiceOpponent() {
+    alert("Adervsaire choisi : " + your_ennemy)
+    // var confirm_button = document.getElementById("confirm")
+    // confirm_button.style.display = "none"
+    // ennemy_text.textContent = "ADVERSAIRE"
+    // your_choice_div.style.display = "none"
+    // ennemy_choice_div.style.display = "block";
+}
+
