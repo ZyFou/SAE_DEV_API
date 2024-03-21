@@ -19,8 +19,6 @@ addDataToDB.addCharacters(db_infos)
 addDataToDB.addTechniques(db_infos)
 
 
-
-
 app = Flask(__name__)
 
 @app.route('/api/userInfos/<int:id>', methods=['GET'])

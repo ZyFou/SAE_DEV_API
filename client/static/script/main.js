@@ -1,7 +1,9 @@
 var your_character;
+var your_ennemy;
+
 
 function pickYourCharacter(name) {
-    confirm_button = document.getElementById("confirm")
+    var confirm_button = document.getElementById("confirm")
     var images = document.getElementsByTagName('img');
     for (var i = 0; i < images.length; i++) {
         images[i].style.boxShadow = "none";
@@ -10,6 +12,24 @@ function pickYourCharacter(name) {
     for (var i = 0; i < images.length; i++) {
         if (images[i].alt === name) {
             your_character = name;
+            images[i].style.boxShadow = "0 0 0 3px #FFDB00"
+            confirm_button.style.display = "block"
+
+            break;
+        }
+    }
+}
+
+function pickEnnemyCharacter(name) {
+    var confirm_button = document.getElementById("confirm")
+    var images = document.getElementsByClassName("ennemy");
+    for (var i = 0; i < images.length; i++) {
+        images[i].style.boxShadow = "none";
+
+    }
+    for (var i = 0; i < images.length; i++) {
+        if (images[i].alt === name) {
+            your_ennemy = name;
             images[i].style.boxShadow = "0 0 0 3px #FFDB00"
             confirm_button.style.display = "block"
 

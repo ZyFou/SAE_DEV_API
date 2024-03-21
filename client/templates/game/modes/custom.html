@@ -47,7 +47,7 @@
         {% for character in characters.characters %}
         {% if character.image %}
         <div id="characterCard">
-            <img src="{{ character.image }}" alt="{{ character.name }}" id="characterImage"
+            <img class="ennemy" src="{{ character.image }}" alt="{{ character.name }}" id="characterImage"
                 onclick="pickEnnemyCharacter('{{ character.name }}')">
             {% else %}
             <p>no image</p>
