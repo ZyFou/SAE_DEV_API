@@ -1,6 +1,6 @@
 # flask run --port=8080 --debug
 
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify
 import requests
 import mysql.connector
 
@@ -42,9 +42,6 @@ def verify_credentials(email, password):
     cursor.execute("SELECT id, password, profile_picture FROM users WHERE email = %s", (email,))
     user = cursor.fetchone()
 
-    print("Mot de passe stocké dans la base de données:", user[1])
-    print("Mot de passe fourni par l'utilisateur:", password)
-
     if user and password == user[1]:
         cursor.close()
         db.close()
@@ -52,8 +49,6 @@ def verify_credentials(email, password):
     else:
         return None
  
-
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -63,6 +58,7 @@ def login():
         if request.method == 'POST':
             email = request.form.get('email')
             password = request.form.get('password')
+            print(password)
 
             if email and password:
                 user = verify_credentials(email, password)
@@ -130,9 +126,32 @@ def gameMode():
 @app.route('/gameMode/custom')
 def gameMode_Custom():
     if 'user_id' in session:
-        response = requests.get(base_url + "characters")
-        characters = response.json()
-        return render_template('game/modes/custom.html', characters=characters)
+        characters_response = requests.get(base_url + "characters")
+        characters = characters_response.json()
+
+        stages_response = requests.get(base_url + "stages")
+        stages = stages_response.json()
+        return render_template('game/modes/custom.html', characters=characters, stages=stages)
+    else:
+        return redirect('/')
+        
+
+@app.route('/test')
+def testGame():
+    if 'user_id' in session:
+        # Récupérer les paramètres de la requête GET
+        query_params = request.args
+
+        # Créer un dictionnaire pour stocker les paramètres et leurs valeurs
+        params_dict = {}
+
+        # Parcourir tous les paramètres et les ajouter au dictionnaire params_dict
+        for key, value in query_params.items():
+            params_dict[key] = value
+
+        # Retourner les paramètres sous forme de réponse JSON
+        return render_template('test.html', data=params_dict)
+    
     else:
         return redirect('/')
 

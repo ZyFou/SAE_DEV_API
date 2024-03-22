@@ -57,6 +57,23 @@
         {% endfor %}
     </div>
 
+    <div id="StagesContainer">
+        {% for stage in stages.stages %}
+        {% if stage.icon %}
+        <div id="stageCard">
+            <img class="stage" src="{{ stage.icon }}" alt="{{ stage.name }}" id="stageImage"
+                onclick="pickStage('{{ stage.name }}')">
+            {% else %}
+            <p>no image</p>
+            {% endif %}
+            <h1 id="stageName">{{ stage.name }}</h1>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+
 </body>
 
 <footer>
@@ -65,6 +82,8 @@
     <div id="confirm_div">
         <button id="confirm" onclick="confirmYourChoice()">CONFIRMER</button>
         <button id="confirm_opponent" onclick="confirmYourChoiceOpponent()">CONFIRMER</button>
+        <button id="confirm_stage" onclick="confirmStage()">CONFIRMER</button>
+
     </div>
 
 

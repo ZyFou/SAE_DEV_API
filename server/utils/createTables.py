@@ -134,3 +134,34 @@ def createTechniqueOwnByeTable(db_infos):
     
     cursor.close()
     db.close()
+
+
+def createStageTable(db_infos):
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+    cursor = db.cursor()
+
+    cursor.execute("SHOW TABLES LIKE 'stages'")
+    result = cursor.fetchone()
+
+    if not result:
+        cursor.execute("""
+                CREATE TABLE stages (
+                    idStage INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255),
+                    description TEXT,
+                    type VARCHAR(255),    
+                    image TEXT,
+                    icon TEXT              
+                )
+            """)
+        print("La table 'stages' a été créée avec succès.")
+    else:
+        print("La table 'stages' existe déjà.")
+    
+    cursor.close()
+    db.close()

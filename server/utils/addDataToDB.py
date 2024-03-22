@@ -144,3 +144,41 @@ def addTechniques(db_infos):
         print(f"Erreur: {error}")
         cursor.close()
         db.close()
+
+
+def addStages(db_infos):
+    try:
+        db = mysql.connector.connect(
+            host=db_infos['host'],
+            user=db_infos['user'],
+            password=db_infos['password'],
+            database=db_infos['database']
+        )
+        cursor = db.cursor()
+
+        # Vérifier si les personnages existent déjà dans la table
+        cursor.execute("SELECT COUNT(*) FROM stages")
+        stages_count = cursor.fetchone()[0]
+
+        if stages_count == 0: 
+            satan_city_image = "https://i.pinimg.com/originals/d0/5f/68/d05f68fe951d1a2a3e57774df5f1ba66.jpg"
+            satan_city_icon = "https://i2.wp.com/retrodbzccg.com/wp-content/uploads/2014/04/satan-city.jpg?fit=320%2C240&ssl=1"
+            cursor.execute("""
+                INSERT INTO stages (name, description, type, image, icon)
+                VALUES (%s, %s, %s, %s, %s)
+            """, ("SatanCity", "La plus grande ville sur Terre", "solid",satan_city_image, satan_city_icon))
+            print("Le Terrain 'satan_city' ajouté à la table 'stages'.")
+
+            
+            db.commit()
+        else:
+            print("Les stages existent déjà dans la table 'stages'.")
+
+        cursor.close()
+        db.close()
+
+    except mysql.connector.Error as error:
+        db.rollback()
+        print(f"Erreur: {error}")
+        cursor.close()
+        db.close()

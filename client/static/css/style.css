@@ -455,3 +455,61 @@ footer{
     display: none;
 }
 
+
+#StagesContainer{
+    display: flex;
+    margin-top: 40px;
+    display: none;
+}
+
+#stageCard {
+    display: inline-block;
+    width: 300px; /* Vous pouvez ajuster la largeur selon vos besoins */
+    margin: 10px; /* Espacement entre les cartes */
+    text-align: center; /* Centrer le contenu à l'intérieur de la carte */
+}
+
+
+#stageName{
+    font-size: 30px;
+    color: #F2FCFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#stageImage {
+    border-radius: 20px;
+    transition: transform 0.5s, filter 0.5s; 
+    filter: brightness(75%);
+    width: 300px;
+    cursor: pointer;
+}
+
+#stageImage:hover {
+    filter: brightness(100%);
+    transform: scale(1.1); /* Agrandir l'image au survol */
+}
+
+#confirm_stage{
+    display: none;
+    position: relative;
+    transition: 0.5s;
+    margin-top: 20px;
+    margin-right:40px;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 180px;
+    height: 60px;
+    border-radius: 15px;
+}
+
+#confirm_stage:hover{
+    background-color: #fe3939;
+    color: #FFFFFF;
+
+}
