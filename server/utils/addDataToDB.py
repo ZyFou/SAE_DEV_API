@@ -81,19 +81,26 @@ def addCharacters(db_infos):
             """, ('Vegeta', 'Saiyan', vegeta_image, 'Fier prince des Saiyans.', 85, 85, 60, 1750, 800))
             print("Personnage 'Vegeta' ajouté à la table 'characters'.")
 
+            gohan_image = "https://dragonball-legends.com/assets/characters/0258_gohanfuture_258_texture/Texture2D/0258_GohanFuture_258_Chara.png"
+            cursor.execute("""
+                INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Gohan', 'Saiyan',gohan_image, 'Fils de Goku et saiyan hybride au potentiel infini.', 75, 75, 60, 1600, 900))
+            print("Personnage 'Gohan' ajouté à la table 'characters'.")
+
+            piccolo_image = "https://dragonball-legends.com/assets/characters/0445_piccolohl_445_texture/Texture2D/0445_PiccoloHL_445_Chara.png"
+            cursor.execute("""
+                INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Piccolo', 'Namek',piccolo_image, 'Grand namek fort.', 60, 80, 55, 2000, 800))
+            print("Personnage 'Gohan' ajouté à la table 'characters'.")
+
             tao_pai_pai_image = "https://dragonball-legends.com/assets/characters/0309_taopaipai_309_texture/Texture2D/0309_TaoPaiPai_309_Effect3.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('TaoPaiPai', 'Human',tao_pai_pai_image, 'Tristement connu assassin à renommée mondiale capable de tuer avec sa langue.', 40, 50, 80, 1300, 600))
             print("Personnage 'TaoPaiPai' ajouté à la table 'characters'.")
-
-            # gohan_image = "https://dragonball-legends.com/assets/characters/0552_gohansh_552_texture/Texture2D/0552_GohanSH_552_Chara.png"
-            # cursor.execute("""
-            #     INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
-            #     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            # """, ('Gohan', 'Saiyan',gohan_image, 'TODO', 40, 50, 80, 1300, 600))
-            # print("Personnage 'Gohan' ajouté à la table 'characters'.")
 
             db.commit()
         else:
@@ -168,6 +175,15 @@ def addStages(db_infos):
                 VALUES (%s, %s, %s, %s, %s)
             """, ("SatanCity", "La plus grande ville sur Terre", "solid",satan_city_image, satan_city_icon))
             print("Le Terrain 'satan_city' ajouté à la table 'stages'.")
+
+
+            space_image = "https://pm1.aminoapps.com/7597/75f1b46b89157ca26e5c29c2603fadef8309a23fr1-1885-1080v2_hq.jpg"
+            space_icon = "https://vgculturehq.com/wp-content/uploads/2018/10/dragon-ball-fighterz-ultimate-attack.jpg"
+            cursor.execute("""
+                INSERT INTO stages (name, description, type, image, icon)
+                VALUES (%s, %s, %s, %s, %s)
+            """, ("Espace", "Bah c'est l'espace quoi...", "solid",space_image, space_icon))
+            print("Le Terrain 'space' ajouté à la table 'stages'.")
 
             
             db.commit()

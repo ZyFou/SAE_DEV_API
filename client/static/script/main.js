@@ -5,15 +5,15 @@ var stage;
 
 function pickYourCharacter(name) {
     var confirm_button = document.getElementById("confirm")
-    var images = document.getElementsByTagName('img');
-    for (var i = 0; i < images.length; i++) {
-        images[i].style.boxShadow = "none";
+    var title = document.getElementsByTagName('h1');
+    for (var i = 0; i < title.length; i++) {
+        title[i].style.color = "#F2FCFF";
 
     }
-    for (var i = 0; i < images.length; i++) {
-        if (images[i].alt === name) {
+    for (var i = 0; i < title.length; i++) {
+        if (title[i].textContent === name) {
             your_character = name;
-            images[i].style.boxShadow = "0 0 0 3px #63FA4B"
+            title[i].style.color = "#63FA4B"
             confirm_button.style.display = "block"
 
             break;
@@ -23,15 +23,14 @@ function pickYourCharacter(name) {
 
 function pickEnnemyCharacter(name) {
     var confirm_opponent = document.getElementById("confirm_opponent")
-    var images = document.getElementsByClassName("ennemy");
-    for (var i = 0; i < images.length; i++) {
-        images[i].style.boxShadow = "none";
-
+    var title = document.getElementsByClassName("ennemy");
+    for (var i = 0; i < title.length; i++) {
+        title[i].style.color = "#F2FCFF";
     }
-    for (var i = 0; i < images.length; i++) {
-        if (images[i].alt === name) {
+    for (var i = 0; i < title.length; i++) {
+        if (title[i].textContent === name) {
             your_ennemy = name;
-            images[i].style.boxShadow = "0 0 0 3px #EC2324"
+            title[i].style.color = "#fe3939"
             confirm_opponent.style.display = "block"
 
             break;
@@ -67,7 +66,7 @@ var stage_choice_div = document.getElementById("StagesContainer")
 
 
 function confirmYourChoice() {
-    alert("Perso choisi : " + your_character)
+    // alert("Perso choisi : " + your_character)
     var confirm_button = document.getElementById("confirm")
     confirm_button.style.display = "none"
     ennemy_text.textContent = "ADVERSAIRE"
@@ -76,7 +75,7 @@ function confirmYourChoice() {
 }
 
 function confirmYourChoiceOpponent() {
-    alert("Adervsaire choisi : " + your_ennemy)
+    // alert("Adervsaire choisi : " + your_ennemy)
     var confirm_ennemy_button = document.getElementById("confirm_opponent")
     confirm_ennemy_button.style.display = "none"
     ennemy_text.textContent = "TERRAIN"
@@ -102,16 +101,28 @@ function convertToQueryString(params) {
 
 
 function confirmStage() {
-    alert("Terrain choisi : " + stage)
+    // alert("Terrain choisi : " + stage)
     var confirm_stage_button = document.getElementById("confirm")
-    confirm_stage_button.style.display = "none"
-    ennemy_text.style.display = "none"
-    stage_choice_div.style.display = "none";
+    // confirm_stage_button.style.display = "none"
+    // ennemy_text.style.display = "none"
+    // stage_choice_div.style.display = "none";
 
     var dataToSend = { "yourPick": your_character, "ennemy": your_ennemy, "stage": stage };
     var queryString = convertToQueryString(dataToSend);
-    window.location.href = `/test?` + queryString
+    window.location.href = `/gameMode/customGame?` + queryString
+
 }
 
 
+// function showData(elt) {
+//     console.log(elt)
+// }
 
+
+function setBackground(stageImage) {
+    var imageUrl = stageImage;
+    var body = document.body;
+
+    body.style.backgroundImage = "url('" + imageUrl + "')";
+    body.style.backgroundSize = "cover";
+}

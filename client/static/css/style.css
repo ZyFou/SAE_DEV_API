@@ -11,12 +11,34 @@ header{
     text-align: right;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.167); 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(254, 255, 255, 0.249); 
+  border-radius: 10px;
+}
+
 #profileButton {
+    transition: 0.5s;
     cursor: pointer;
     padding: 10px;
     width: 64px;
     height: 64px;
-    border-radius:50%;
+    border-radius:100%;
+}
+
+#profileButton:hover{
+    transform: scale(1.1);
+
 }
 
 
@@ -104,6 +126,8 @@ header{
 
 #playButton:hover{
     background-color: #fe3939;
+    transform: scale(1.05);
+
 }
 
 #exploreButton{
@@ -123,6 +147,8 @@ header{
 #exploreButton:hover{
     background-color: #ffffff;
     color: #6e7988;
+    transform: scale(1.05);
+
 
 }
 
@@ -151,6 +177,7 @@ svg{
 }
 
 #gokuImage {
+    transition: 0.5s;
     top: 86px;
     left: 450px;
     width: 250px;
@@ -343,7 +370,12 @@ svg{
 #charactersContainer{
     display: flex;
     margin-top: 40px;
+
+    overflow-x: auto;
+    white-space: nowrap;
+
 }
+
 #characterCard {
     display: inline-block;
     width: 300px; /* Vous pouvez ajuster la largeur selon vos besoins */
@@ -370,6 +402,8 @@ svg{
     display: flex;
     align-items: center;
     justify-content: center;
+
+    
 }
 
 footer{
@@ -396,6 +430,8 @@ footer{
 #goBack:hover{
     background-color: #ffffff;
     color: #6e7988;
+    transform: scale(1.05);
+
 }
 
 #confirm_div{
@@ -422,6 +458,8 @@ footer{
 #confirm:hover{
     background-color: #fe3939;
     color: #FFFFFF;
+    transform: scale(1.05);
+
 
 }
 
@@ -445,6 +483,8 @@ footer{
 #confirm_opponent:hover{
     background-color: #fe3939;
     color: #FFFFFF;
+    transform: scale(1.05);
+
 
 }
 
@@ -453,13 +493,15 @@ footer{
     display: flex;
     margin-top: 40px;
     display: none;
+    overflow-x: auto;
+    white-space: nowrap;
 }
-
 
 #StagesContainer{
     display: flex;
     margin-top: 40px;
     display: none;
+
 }
 
 #stageCard {
@@ -483,12 +525,16 @@ footer{
     transition: transform 0.5s, filter 0.5s; 
     filter: brightness(75%);
     width: 300px;
+    height: 200px;
+
     cursor: pointer;
 }
 
 #stageImage:hover {
     filter: brightness(100%);
     transform: scale(1.1); /* Agrandir l'image au survol */
+    transform: scale(1.05);
+
 }
 
 #confirm_stage{
@@ -511,5 +557,24 @@ footer{
 #confirm_stage:hover{
     background-color: #fe3939;
     color: #FFFFFF;
+}
 
+.container {
+    display: flex;
+    justify-content: space-between; /* Pour aligner les images à gauche et à droite */
+}
+
+.character {
+    text-align: center; /* Pour centrer le nom */
+}
+
+.character-image {
+    width: 500px; /* Largeur des images */
+}
+
+.character-name {
+    font-size: 30px;
+    color: #F2FCFF;
+    margin-top: 80px; /* Marge au-dessus du nom */
+    font-weight: bold; /* Texte en gras */
 }

@@ -11,6 +11,7 @@ db_infos = {"host" : "localhost", "user":"root", "password":"", "database":"sae_
 app = Flask(__name__)
 app.secret_key = b'veigar'
 
+
 base_url = "http://127.0.0.1:5000/api/"
 default_pfp = "/static/images/default_pfp.png"
 
@@ -136,7 +137,7 @@ def gameMode_Custom():
         return redirect('/')
         
 
-@app.route('/test')
+@app.route('/gameMode/customGame')
 def testGame():
     if 'user_id' in session:
         # Récupérer les paramètres de la requête GET
@@ -149,8 +150,12 @@ def testGame():
         for key, value in query_params.items():
             params_dict[key] = value
 
-        # Retourner les paramètres sous forme de réponse JSON
-        return render_template('test.html', data=params_dict)
+        print(params_dict)
+        yourPick = requests.get(f"{base_url}characters/{params_dict['yourPick']}").json()
+        ennemy = requests.get(f"{base_url}characters/{params_dict['ennemy']}").json()
+        stage = requests.get(f"{base_url}stages/{params_dict['stage']}").json()
+
+        return render_template('game/modes/custom_game.html', yourPick=yourPick, ennemy=ennemy, stage=stage )
     
     else:
         return redirect('/')
