@@ -116,11 +116,11 @@ header{
     cursor: pointer;
     border: none;
     background-color: #EC2324;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 800;
     color: #F2FCFF;
-    width: 170px;
-    height: 80px;
+    width: 130px;
+    height: 70px;
     border-radius: 20px;
 }
 
@@ -133,14 +133,14 @@ header{
 #exploreButton{
     transition: 0.5s;
     cursor: pointer;
-    margin-left: 50px;
+    margin-left: 35px;
     border: none;
     background-color: #F2FCFF;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 800;
     color: #4C5562;
-    width: 220px;
-    height: 80px;
+    width: 180px;
+    height: 70px;
     border-radius: 20px;
 }
 
@@ -148,14 +148,32 @@ header{
     background-color: #ffffff;
     color: #6e7988;
     transform: scale(1.05);
+}
 
+#charactersButton{
+    transition: 0.5s;
+    cursor: pointer;
+    margin-left: 35px;
+    border: none;
+    background-color: #FFDB00;
+    font-size: 20px;
+    font-weight: 800;
+    color: #63645d;
+    width: 280px;
+    height: 70px;
+    border-radius: 20px;
+}
 
+#charactersButton:hover{
+    background-color: #ffe540;
+    color: #a3a593;
+    transform: scale(1.05);
 }
 
 #indexLeftBox {
     flex: 1;
-    padding-left: 85px;
-    padding-top: 50px;
+    padding-left: 80px;
+    padding-top: 35px;
 }
 
 #indexRightBox {
@@ -336,7 +354,7 @@ svg{
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
 }
