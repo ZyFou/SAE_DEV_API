@@ -23,8 +23,13 @@ header{
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
+    cursor: pointer;
   background: rgba(254, 255, 255, 0.249); 
   border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: rgba(254, 255, 255, 0.312); 
 }
 
 #profileButton {
@@ -166,7 +171,7 @@ header{
 
 #charactersButton:hover{
     background-color: #ffe540;
-    color: #a3a593;
+    color: #5e5f58;
     transform: scale(1.05);
 }
 

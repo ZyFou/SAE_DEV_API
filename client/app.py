@@ -110,8 +110,7 @@ def profile():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
-    session.pop('profile_picture', None)
+    session.clear()
 
     return redirect('/')
 
@@ -137,30 +136,120 @@ def gameMode_Custom():
     else:
         return redirect('/')
         
-
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+    
 @app.route('/gameMode/customGame')
 def testGame():
     if 'user_id' in session:
-        # Récupérer les paramètres de la requête GET
         query_params = request.args
 
-        # Créer un dictionnaire pour stocker les paramètres et leurs valeurs
-        params_dict = {}
+        required_params = ['yourPick', 'ennemy', 'stage']
+        missing_params = [param for param in required_params if param not in query_params]
 
-        # Parcourir tous les paramètres et les ajouter au dictionnaire params_dict
-        for key, value in query_params.items():
-            params_dict[key] = value
+        if missing_params:
+            # Handle the case where required parameters are missing
+            return render_template('missing_params.html', missing_params=missing_params)
 
-        print(params_dict)
-        yourPick = requests.get(f"{base_url}characters/{params_dict['yourPick']}").json()
-        ennemy = requests.get(f"{base_url}characters/{params_dict['ennemy']}").json()
-        stage = requests.get(f"{base_url}stages/{params_dict['stage']}").json()
+        # Check if session variables are set
+        if "yourPick" not in session or "ennemy" not in session or "stage" not in session:
+            # Fetch data from API and set session variables
+            yourPick = requests.get(f"{base_url}characters/{query_params['yourPick']}").json()
+            ennemy = requests.get(f"{base_url}characters/{query_params['ennemy']}").json()
+            stage = requests.get(f"{base_url}stages/{query_params['stage']}").json()
 
-        return render_template('game/modes/custom_game.html', yourPick=yourPick, ennemy=ennemy, stage=stage )
-    
+            session["yourPick"] = yourPick
+            session["ennemy"] = ennemy
+            session["stage"] = stage
+
+        else:
+            if (session["yourPick"] != query_params['yourPick'] or 
+                session["ennemy"] != query_params['ennemy'] or 
+                session["stage"] != query_params['stage']):
+                
+                yourPick = requests.get(f"{base_url}characters/{query_params['yourPick']}").json()
+                ennemy = requests.get(f"{base_url}characters/{query_params['ennemy']}").json()
+                stage = requests.get(f"{base_url}stages/{query_params['stage']}").json()
+                
+                session["yourPick"] = yourPick
+                session["ennemy"] = ennemy
+                session["stage"] = stage
+                return render_template('game/modes/custom_game.html', yourPick=yourPick, ennemy=ennemy, stage=stage)
+
+
+        yourPick = session["yourPick"]
+        ennemy = session["ennemy"]
+        stage = session["stage"]
+        return render_template('game/modes/custom_game.html', yourPick=yourPick, ennemy=ennemy, stage=stage)
+
     else:
         return redirect('/')
-
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
+# C'est cassé
 
 
 

@@ -94,6 +94,7 @@ def createTechniqueTable(db_infos):
                     idTechnique INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(255),
                     description TEXT,
+                    image TEXT,
                     type VARCHAR(255),
                     damages INT,
                     accuracy INT,
