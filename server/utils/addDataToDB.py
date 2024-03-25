@@ -95,6 +95,15 @@ def addCharacters(db_infos):
             """, ('Piccolo', 'Namek',piccolo_image, 'Grand namek fort.', 60, 80, 55, 2000, 800))
             print("Personnage 'Gohan' ajouté à la table 'characters'.")
 
+
+            goku_ssj1_image = "https://dragonball-legends.com/assets/characters/0563_gokuss1_563_texture/Texture2D/0563_GokuSS1_563_Chara_00.png"
+            cursor.execute("""
+                INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Super Saiyan Goku', 'Saiyan', goku_ssj1_image, 'Première apparition d"un super Saiyan dans la série.', 95, 70, 70, 1500, 650))
+            print("Personnage 'Goku' ajouté à la table 'characters'.")
+
+
             tao_pai_pai_image = "https://dragonball-legends.com/assets/characters/0309_taopaipai_309_texture/Texture2D/0309_TaoPaiPai_309_Effect3.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)

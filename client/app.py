@@ -79,6 +79,7 @@ def login():
 def register():
     if not 'user_id' in session:
         return render_template('/register.html')
+    # todo
     else:
         return redirect('/')
 
