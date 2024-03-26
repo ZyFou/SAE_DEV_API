@@ -32,7 +32,12 @@
 
         <div id="LoginDiv">
             <h1 id="connexionTitle">REGISTER</h1>
-            <form action="/login" method="post" id="forms">
+            <form action="/register" method="post" id="forms">
+
+                <div>
+                    <input type="pseudo" id="pseudo" name="pseudo" required placeholder="PSEUDONYME">
+                </div>
+
                 <div>
                     <input type="email" id="email" name="email" required placeholder="E-MAIL">
                 </div>
@@ -45,7 +50,7 @@
                 <div>{{error}}</div>
             </form>
             <br>
-            <a id="goToRegister" href="/register">Pas encore de compte ?</a>
+            <a id="goToRegister" href="/login">Déja un compte ?</a>
         </div>
 
         <img id="vegetaLogin" src="/static/images/asset_vegeta.png" alt="Vegeta">

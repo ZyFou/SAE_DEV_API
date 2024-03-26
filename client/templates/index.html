@@ -11,7 +11,9 @@
 <body>
     <header>
         <a href="{% if is_co %}logout{% else %}login{% endif %}">
-            <img id="profileButton" src="{{ profile_picture }}" alt="">
+            <img id="profileButton"
+                src="{% if is_co %}{{profile_picture}}{% else %}https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png{% endif %}"
+                alt="">
         </a>
 
     </header>

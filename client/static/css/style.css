@@ -264,6 +264,20 @@ svg{
     color: #4c556269;
 }
 
+#pseudo{
+    padding-left: 8px;
+    margin-top: 20px;
+
+    width: 350px;
+    font-size: 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+}
+#pseudo::placeholder{
+    color: #4c556269;
+}
+
 #password{
     padding-left: 8px;
 

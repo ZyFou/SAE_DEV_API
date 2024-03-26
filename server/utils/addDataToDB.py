@@ -10,29 +10,29 @@ def addExempleUsers(db_infos):
         )
         cursor = db.cursor()
 
-        cursor.execute("SELECT * FROM users WHERE nom = 'Admin'")
+        cursor.execute("SELECT * FROM users WHERE nickname = 'Admin'")
         admin_exists = cursor.fetchone()
 
         if not admin_exists:
             # If 'Admin' doesn't exist, insert it into the table
             cursor.execute("""
-                INSERT INTO users (nom, prenom, email, password, admin)
-                VALUES (%s, %s, %s, %s, %s)
-            """, ('Admin', 'Admin', 'admin@example.com', 'password123', True))
+                INSERT INTO users (nickname, email, password, admin)
+                VALUES (%s, %s, %s, %s)
+            """, ('Admin', 'admin@example.com', 'password123', True))
             print("Utilisateur 'Admin' a été ajouté à la table 'users'.")
         else:
             print("L'utilisateur 'Admin' existe déjà.")
 
         # Check if the name 'Utilisateur' already exists in the table
-        cursor.execute("SELECT * FROM users WHERE nom = 'Utilisateur'")
+        cursor.execute("SELECT * FROM users WHERE nickname = 'Utilisateur'")
         user_exists = cursor.fetchone()
 
         if not user_exists:
             # If 'Utilisateur' doesn't exist, insert it into the table
             cursor.execute("""
-                INSERT INTO users (nom, prenom, email, password, admin,profile_picture, experience, level)
-                VALUES (%s, %s, %s, %s, %s, %s, %s,%s)
-            """, ('Utilisateur', 'Normal', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg",0,1))
+                INSERT INTO users (nickname, email, password, admin,profile_picture, experience, level)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg",0,1))
             print("Utilisateur 'Utilisateur' a été ajouté à la table 'users'.")
         else:
             print("L'utilisateur 'Utilisateur' existe déjà.")

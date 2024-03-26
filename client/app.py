@@ -13,7 +13,7 @@ app.secret_key = b'veigar'
 
 
 base_url = "http://127.0.0.1:5000/api/"
-default_pfp = "/static/images/default_pfp.png"
+default_pfp = "https://i.pinimg.com/474x/3b/65/5e/3b655e1f8aa870ccebce29159b6dd70e.jpg"
 
 
 temp_stockage = {"you" : {"Chracter": None}, "stats" : {"hp" : 0, "att": 0, "def": 0, "speed": 0, "ki":0}, "opponent" : {"Chracter": None}, "stats" : {"hp" : 0, "att": 0, "def": 0, "speed": 0, "ki":0}, "stage" : None}
@@ -77,28 +77,62 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if not 'user_id' in session:
-        return render_template('/register.html')
-    # todo
+    # Check if the user is not already logged in
+    if 'user_id' not in session:
+        if request.method == 'POST':
+            # Retrieve form data
+            pseudo = request.form.get('pseudo')
+            email = request.form.get('email')
+            password = request.form.get('password')
+
+            if pseudo and email and password:
+                try:
+                    db = mysql.connector.connect(
+                        host=db_infos['host'],
+                        user=db_infos['user'],
+                        password=db_infos['password'],
+                        database=db_infos['database']
+                    )
+    
+                    cursor = db.cursor()
+
+                    # Check if the email is already in use
+                    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+                    existing_user = cursor.fetchone()
+                    if existing_user:
+                        # If the email is already in use, show an error message
+                        return render_template('register.html', error="Email already in use.")
+
+                    # Insert the new user into the database
+                    cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s)""", 
+                                   (pseudo, email, password, False, default_pfp,0,1))
+                    db.commit()
+
+                    # Retrieve the ID of the newly inserted user
+                    user = verify_credentials(email, password)
+                    # Close the cursor and the database connection
+                    cursor.close()
+                    db.close()
+
+                    # Store the user ID in the session
+                    session['user_id'] = user['id']
+                    session['profile_picture'] = user['profile_picture']
+
+
+                    # Redirect the user to the home page
+                    return redirect('/')
+                    
+                except mysql.connector.Error as err:
+                    # If there's an error interacting with the database, show an error message
+                    return render_template('register.html', error="Error registering. Please try again.")
+
+        # If the request method is GET, simply display the registration form
+        return render_template('register.html', error="")
     else:
+        # If the user is already logged in, redirect them to the home page
         return redirect('/')
 
-    # TO DO IMPORTANT 
-
-    # if request.method == 'POST':
-    #     email = request.form.get('email')
-    #     password = request.form.get('password')
-
-    #     if email and password:
-    #         user = verify_credentials(email, password)
-    #         if user:
-    #             session['user_id'] = user['id']
-    #             session['profile_picture'] = user['profile_picture']
-    #             return redirect('/')
-    #         else:
-    #             return render_template('register.html', error="Identifiants incorrects. Veuillez réessayer.")
-
-    # return render_template('register.html', error="")
+    
 
 
 @app.route('/profile')
@@ -160,14 +194,4 @@ def testGame():
 
     else:
         return redirect('/')
-
-
-
-# --------------------------EXEMPLE REQUEST FROM API---------------------------
-# @app.route('/<string:email>')
-# def index_user(email):
-#     request = requests.get(base_url + f"userInfos/{email}")
-#     user = request.json()
-#     return user
-
 

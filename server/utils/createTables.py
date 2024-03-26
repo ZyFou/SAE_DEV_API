@@ -17,8 +17,6 @@ def createUserTable(db_infos):
                 CREATE TABLE users (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     nickname VARCHAR(255),
-                    nom VARCHAR(255),
-                    prenom VARCHAR(255),
                     email VARCHAR(255),
                     password VARCHAR(255),
                     admin BOOLEAN,
