@@ -16,9 +16,9 @@ def addExempleUsers(db_infos):
         if not admin_exists:
             # If 'Admin' doesn't exist, insert it into the table
             cursor.execute("""
-                INSERT INTO users (nickname, email, password, admin)
-                VALUES (%s, %s, %s, %s)
-            """, ('Admin', 'admin@example.com', 'password123', True))
+                INSERT INTO users (nickname, email, password, admin, profile_picture)
+                VALUES (%s, %s, %s, %s, %s)
+            """, ('Admin', 'admin@example.com', 'password123', True, "https://pm1.aminoapps.com/6513/7a6c57af2212845871e63e55f6cd476851ebebcd_00.jpg"))
             print("Utilisateur 'Admin' a été ajouté à la table 'users'.")
         else:
             print("L'utilisateur 'Admin' existe déjà.")
