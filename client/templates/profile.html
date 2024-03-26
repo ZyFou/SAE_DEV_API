@@ -12,6 +12,18 @@
 
 <body>
 
+    <div id="new_pfp_div">
+        <h1>Add new profile picture</h1>
+        <input type="text" name="" id="new_pfp" value="">
+        <button id="add_new_pfp" onclick="addNewPFP()">Add</button>
+    </div>
+
+    <div id="new_banner_div">
+        <h1>Add new banner</h1>
+        <input type="text" name="" id="new_banner" value="">
+        <button id="add_new_banner" onclick="addNewBANNER()">Add</button>
+    </div>
+
     <h1 id="mainTitleLogo">
         <a href="/" id="site_logo">
             <span id="dragon_text_logo">DRAGON</span>
@@ -29,19 +41,21 @@
 
             <section id="visual_infos">
                 <div id="banner_picture_container">
-                    <img src="{{userinfos['banner']}}" alt="" id="banner_picture">
+                    <img src="{{userinfos['banner']}}" alt="" id="banner_picture" name="banner_picture">
                 </div>
 
                 <div id="profile_picture_section">
-                    <img src="{{userinfos['profile_picture']}}" alt="" id="profile_picture">
-                    <button id="change_profile_button">E</button>
+                    <img src="{{userinfos['profile_picture']}}" alt="" id="profile_picture" name="profile_picture">
+                    <img id="change_profile_picture_button" src="../static/images/editer.png"
+                        onclick="openPFPdiv()"></img>
+
                 </div>
 
                 <div id="name_section">
                     <h1>{{userinfos["nickname"]}}</h1>
                 </div>
                 <div id="change_banner_section">
-                    <button id="change_banner_button">E</button>
+                    <img id="change_banner_button" src="../static/images/editer.png" onclick="openBANNERdiv()"></img>
                 </div>
             </section>
 
@@ -77,10 +91,14 @@
 
 
             <section id="bottom_part">
-                <a href="/"><button id="goBack" class="goback">RETOUR</button></a>
+                <a href="/"><button id="goBack" class="goback" type="button">RETOUR</button></a>
                 <button id="confirm_changes" type="submit">CONFIRMER</button>
                 <a id="logout" href="/logout">Déconnexion</a>
             </section>
+
+            <input type="text" name="pfp_url" id="pfp_url" value="">
+            <input type="text" name="banner_url" id="banner_url" value="">
+
         </form>
 
     </div>
@@ -91,6 +109,9 @@
         <img id="vegetaLogin" src="/static/images/asset_vegeta.png" alt="Vegeta">
     </section>
 
+
+
 </body>
+<script src="/static/script/profile.js"></script>
 
 </html>

@@ -28,6 +28,17 @@
     z-index: -1; 
 }
 
+#change_banner_button{
+   cursor: pointer;
+    width: 25px;
+}
+
+
+#change_profile_picture_button{
+   cursor: pointer;
+    width: 25px;
+}
+
 #profile_picture_section {
     position: absolute;
     top: 30%;
@@ -40,14 +51,15 @@
     padding-left: 10px;
 }
 
-#change_profile_button {
+#change_profile_picture_button {
     position: absolute;
     bottom: 0;
     right: 0;
-    transform: translate(10%, 10%); 
+    transform: translate(30%, -5%); 
 }
 
 #name_section {
+    color: #FFDB00;
     position: absolute;
     text-align: center; 
     position: relative;
@@ -185,4 +197,22 @@
     left: 100px;
     width: 400px;
     filter: brightness(0%);
+}
+
+#pfp_url{
+    display: none;
+}
+
+#banner_url{
+    display: none;
+}
+
+
+#new_pfp_div{
+    display: none;
+}
+
+
+#new_banner_div{
+    display: none;
 }

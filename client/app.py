@@ -147,8 +147,28 @@ def profile():
             password=db_infos['password'],
             database=db_infos['database']
         )
-    
         cursor = db.cursor()
+
+        if request.method == 'POST':
+
+            nickname = request.form.get('nickname')
+            bio = request.form.get('bio')
+            email = request.form.get('email')
+            password = request.form.get('password')
+
+            if not password:
+                cursor.execute("SELECT password FROM users WHERE id = %s", (session["user_id"],))
+                pwd = cursor.fetchone()
+                password =  pwd[0]
+
+            cursor.execute("UPDATE users SET nickname = %s, email = %s, bio = %s, password = %s WHERE id = %s", (nickname, email, bio, password, session["user_id"]))
+            db.commit()
+            
+            cursor.close()
+            db.close()
+
+            return redirect('/profile')
+    
         cursor.execute("SELECT nickname, email, bio, profile_picture, banner FROM users WHERE id = %s", (session["user_id"],))
         userinfos = cursor.fetchone()
         userinfos = {"nickname":userinfos[0],
@@ -160,20 +180,9 @@ def profile():
         cursor.close()
         db.close()
 
-        if request.method == 'POST':
-            nickname = request.form.get('nickname')
-            bio = request.form.get('bio')
-            email = request.form.get('email')
-            password = request.form.get('password')
-
-            print(nickname, bio, email, password)
-
-        
-
         return render_template('profile.html', userinfos = userinfos)
     else:
         return redirect('/')
-
 
 
 @app.route('/logout')
