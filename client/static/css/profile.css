@@ -1,0 +1,188 @@
+#container_profile {
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+}
+
+#profile_principale {
+    padding-top: 20px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    width: 50%;
+    background-color: #4c5562d3;
+    border-radius: 20px;
+    z-index: 2;
+}
+
+#visual_infos {
+    top: -90px;
+    position: relative;
+    margin-bottom: -20px;
+    height: 35%;
+}
+
+#banner_picture_container {
+    position: relative;
+    z-index: -1; 
+}
+
+#profile_picture_section {
+    position: absolute;
+    top: 30%;
+}
+
+#profile_picture {
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    padding-left: 10px;
+}
+
+#change_profile_button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transform: translate(10%, 10%); 
+}
+
+#name_section {
+    position: absolute;
+    text-align: center; 
+    position: relative;
+    top: -85%;
+    font-size: 30px;
+}
+
+#change_banner_section {
+    text-align: center; 
+    transform: translate(45%, -180px); 
+    
+}
+
+#banner_picture{
+    border-radius: 20px;
+    max-width: 500px;
+    width: 600px;
+}
+
+
+#text_infos {
+    margin-top: -60px;
+    display: flex;
+    justify-content: center;
+}
+
+#left_infos {
+    margin-right: 50px; 
+}
+
+#text_infos input {
+    width: 100%; 
+}
+
+#bottom_part {
+    display: flex;
+    justify-content: space-between; 
+    width: 100%;
+    margin-top: 50px; 
+    padding-bottom: 30px;
+}
+
+#text_infos_title{
+    color: #F2FCFF;
+}
+
+#back_button_part{
+    flex: 1; 
+}
+
+#bottom_part{
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: -90px;
+}
+
+#inputs_zone{
+
+    padding-left: 8px;
+
+    width: 300px;
+    font-size: 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+}
+#inputs_zone::placeholder{
+    color: #4c556269;
+}
+
+.goback{
+    left: 20%;
+
+}
+
+#confirm_changes{
+    position: relative;
+    transition: 0.5s;
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 160px;
+    height: 60px;
+    border-radius: 15px;
+}
+
+#confirm_changes:hover{
+    background-color: #fe3939;
+    color: rgb(255, 255, 255);
+    transform: scale(1.05);
+
+}
+
+#logout{
+    position: relative;
+    top: 40px;
+    left: -10%;
+    transition: 0.5s;
+    font-size: 20px;
+    color: #EC2324;
+}
+
+#logout:hover{
+    color: #ff4d4d;
+}
+
+
+#background_images {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Pour remplir toute la largeur de l'écran */
+    height: 100%; /* Pour remplir toute la hauteur de l'écran */
+    z-index: -1; /* Pour placer les images derrière le contenu principal */
+}
+
+#gokuLogin,
+#vegetaLogin {
+    position: absolute;
+    /* Ajoutez les propriétés top, left, right, bottom selon vos besoins pour positionner les images */
+}
+#gokuLogin{
+    top: 150px;
+    left: 1100px;
+    width: 350px;
+    filter: brightness(0%);
+}
+
+#vegetaLogin{
+    top: 150px;
+    left: 100px;
+    width: 400px;
+    filter: brightness(0%);
+}

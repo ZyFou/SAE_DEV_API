@@ -6,9 +6,90 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Profile</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/profile.css">
 </head>
 
 <body>
+
+    <h1 id="mainTitleLogo">
+        <a href="/" id="site_logo">
+            <span id="dragon_text_logo">DRAGON</span>
+            <span id="ball_text">BALL</span>
+        </a>
+    </h1>
+    <a href="/" id="site_logo">
+        <h2 id="draft_clash_text_logo">
+            <span>DRAFT CLASH</span>
+        </h2>
+    </a>
+
+    <div id="container_profile">
+        <form id="profile_principale" action="/profile" method="post">
+
+            <section id="visual_infos">
+                <div id="banner_picture_container">
+                    <img src="{{userinfos['banner']}}" alt="" id="banner_picture">
+                </div>
+
+                <div id="profile_picture_section">
+                    <img src="{{userinfos['profile_picture']}}" alt="" id="profile_picture">
+                    <button id="change_profile_button">E</button>
+                </div>
+
+                <div id="name_section">
+                    <h1>{{userinfos["nickname"]}}</h1>
+                </div>
+                <div id="change_banner_section">
+                    <button id="change_banner_button">E</button>
+                </div>
+            </section>
+
+
+            <section id="text_infos">
+                <div id="left_infos">
+                    <div id="name_part">
+                        <h2 id="text_infos_title">Pseudo</h2>
+                        <input type="text" value="{{userinfos['nickname']}}" id="inputs_zone" name="nickname">
+                    </div>
+
+                    <div id="bio_part">
+                        <h2 id="text_infos_title">Biographie</h2>
+                        <input type="text" value="{{userinfos['bio']}}" id="inputs_zone" name="bio">
+                    </div>
+
+
+                </div>
+
+                <div id="right_infos">
+                    <div id="mail_part">
+                        <h2 id="text_infos_title">Email</h2>
+                        <input type="text" value="{{userinfos['email']}}" id="inputs_zone" name="email">
+                    </div>
+
+                    <div id="passwors_part">
+                        <h2 id="text_infos_title">Mot de passe</h2>
+                        <input type="text" placeholder="*********" id="inputs_zone" name="password">
+                    </div>
+                </div>
+
+            </section>
+
+
+            <section id="bottom_part">
+                <a href="/"><button id="goBack" class="goback">RETOUR</button></a>
+                <button id="confirm_changes" type="submit">CONFIRMER</button>
+                <a id="logout" href="/logout">Déconnexion</a>
+            </section>
+        </form>
+
+    </div>
+
+
+    <section id="background_images">
+        <img id="gokuLogin" src="/static/images/asset_goku.png" alt="goku">
+        <img id="vegetaLogin" src="/static/images/asset_vegeta.png" alt="Vegeta">
+    </section>
 
 </body>
 

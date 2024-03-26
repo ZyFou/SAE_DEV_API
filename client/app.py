@@ -14,6 +14,8 @@ app.secret_key = b'veigar'
 
 base_url = "http://127.0.0.1:5000/api/"
 default_pfp = "https://i.pinimg.com/474x/3b/65/5e/3b655e1f8aa870ccebce29159b6dd70e.jpg"
+default_banner = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU"
+
 
 
 temp_stockage = {"you" : {"Chracter": None}, "stats" : {"hp" : 0, "att": 0, "def": 0, "speed": 0, "ki":0}, "opponent" : {"Chracter": None}, "stats" : {"hp" : 0, "att": 0, "def": 0, "speed": 0, "ki":0}, "stage" : None}
@@ -104,8 +106,8 @@ def register():
                         return render_template('register.html', error="Email already in use.")
 
                     # Insert the new user into the database
-                    cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s)""", 
-                                   (pseudo, email, password, False, default_pfp,0,1))
+                    cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, banner, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s,%s)""", 
+                                   (pseudo, email, password, False, default_pfp,default_banner, 0,1))
                     db.commit()
 
                     # Retrieve the ID of the newly inserted user
@@ -135,12 +137,44 @@ def register():
     
 
 
-@app.route('/profile')
+@app.route('/profile' , methods=['GET', 'POST'])
 def profile():
     if 'user_id' in session:
-        return render_template('profile.html')
+
+        db = mysql.connector.connect(
+            host=db_infos['host'],
+            user=db_infos['user'],
+            password=db_infos['password'],
+            database=db_infos['database']
+        )
+    
+        cursor = db.cursor()
+        cursor.execute("SELECT nickname, email, bio, profile_picture, banner FROM users WHERE id = %s", (session["user_id"],))
+        userinfos = cursor.fetchone()
+        userinfos = {"nickname":userinfos[0],
+                     "email":userinfos[1],
+                     "bio":userinfos[2],
+                     "profile_picture":userinfos[3],
+                     "banner":userinfos[4]}
+
+        cursor.close()
+        db.close()
+
+        if request.method == 'POST':
+            nickname = request.form.get('nickname')
+            bio = request.form.get('bio')
+            email = request.form.get('email')
+            password = request.form.get('password')
+
+            print(nickname, bio, email, password)
+
+        
+
+        return render_template('profile.html', userinfos = userinfos)
     else:
         return redirect('/')
+
+
 
 @app.route('/logout')
 def logout():

@@ -215,11 +215,10 @@ svg{
 /* -----------------------LOGIN----------------------- */
 
 #containerLogin {
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-    }
-
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
 
 #LoginDiv{
     margin: auto;
@@ -229,7 +228,6 @@ svg{
     border-radius: 20px;
     justify-content: center;
     text-align: center;
-
 }
 
 #gokuLogin{
