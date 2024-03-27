@@ -19,6 +19,7 @@ function addNewPFP() {
     const newPfpUrl = document.getElementById("new_pfp").value
     pfp_url_storage.value = newPfpUrl
     profile_picture.src = pfp_url_storage.value
+    new_pfp_div.style.display = "none"
 
 }
 
@@ -27,6 +28,8 @@ function addNewBANNER() {
     const newBannerUrl = document.getElementById("new_banner").value
     banner_url_storage.value = newBannerUrl
     banner_picture.src = banner_url_storage.value
+    new_banner_div.style.display = "none"
+
 }
 
 

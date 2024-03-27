@@ -156,12 +156,27 @@ def profile():
             email = request.form.get('email')
             password = request.form.get('password')
 
+            new_pfp = request.form.get('pfp_url')
+            if not new_pfp:
+                cursor.execute("SELECT profile_picture FROM users WHERE id = %s", (session["user_id"],))
+                pfp = cursor.fetchone()
+                new_pfp =  pfp[0]
+
+            session['profile_picture'] = new_pfp
+            
+            new_banner = request.form.get('banner_url')
+            if not new_banner:
+                cursor.execute("SELECT banner FROM users WHERE id = %s", (session["user_id"],))
+                banner = cursor.fetchone()
+                new_banner =  banner[0]
+
+
             if not password:
                 cursor.execute("SELECT password FROM users WHERE id = %s", (session["user_id"],))
                 pwd = cursor.fetchone()
                 password =  pwd[0]
 
-            cursor.execute("UPDATE users SET nickname = %s, email = %s, bio = %s, password = %s WHERE id = %s", (nickname, email, bio, password, session["user_id"]))
+            cursor.execute("UPDATE users SET nickname = %s, email = %s, bio = %s, profile_picture = %s, banner = %s, password = %s WHERE id = %s", (nickname, email, bio, new_pfp, new_banner, password, session["user_id"]))
             db.commit()
             
             cursor.close()
