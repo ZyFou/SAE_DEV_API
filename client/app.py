@@ -17,10 +17,6 @@ default_pfp = "https://i.pinimg.com/474x/3b/65/5e/3b655e1f8aa870ccebce29159b6dd7
 default_banner = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU"
 
 
-
-temp_stockage = {"you" : {"Chracter": None}, "stats" : {"hp" : 0, "att": 0, "def": 0, "speed": 0, "ki":0}, "opponent" : {"Chracter": None}, "stats" : {"hp" : 0, "att": 0, "def": 0, "speed": 0, "ki":0}, "stage" : None}
-
-
 @app.route('/')
 def index():
     pfp = default_pfp

@@ -30,9 +30,9 @@ def addExempleUsers(db_infos):
         if not user_exists:
             # If 'Utilisateur' doesn't exist, insert it into the table
             cursor.execute("""
-                INSERT INTO users (nickname, email, password, admin,profile_picture, experience, level)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg",0,1))
+                INSERT INTO users (nickname, email, password, admin,profile_picture,banner, experience, level)
+                VALUES (%s, %s, %s, %s, %s, %s, %s,%s)
+            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU",0,1))
             print("Utilisateur 'Utilisateur' a été ajouté à la table 'users'.")
         else:
             print("L'utilisateur 'Utilisateur' existe déjà.")
@@ -93,7 +93,7 @@ def addCharacters(db_infos):
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('Piccolo', 'Namek',piccolo_image, 'Grand namek fort.', 60, 80, 55, 2000, 800))
-            print("Personnage 'Gohan' ajouté à la table 'characters'.")
+            print("Personnage 'Piccolo' ajouté à la table 'characters'.")
 
 
             goku_ssj1_image = "https://dragonball-legends.com/assets/characters/0563_gokuss1_563_texture/Texture2D/0563_GokuSS1_563_Chara_00.png"
@@ -101,7 +101,7 @@ def addCharacters(db_infos):
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('Super Saiyan Goku', 'Saiyan', goku_ssj1_image, 'Première apparition d"un super Saiyan dans la série.', 95, 70, 70, 1500, 650))
-            print("Personnage ' ssj1' ajouté à la table 'characters'.")
+            print("Personnage 'Goku ssj1' ajouté à la table 'characters'.")
 
             vegeta_ssj1_image = "https://dragonball-legends.com/assets/characters/0257_vegeta_257_texture/Texture2D/0257_Vegeta_257_Effect15.png"
             cursor.execute("""
@@ -204,6 +204,71 @@ def addTechniques(db_infos):
         print(f"Erreur: {error}")
         cursor.close()
         db.close()
+
+
+def linkTechniquesToCharacter(db_infos):
+    try:
+        db = mysql.connector.connect(
+            host=db_infos['host'],
+            user=db_infos['user'],
+            password=db_infos['password'],
+            database=db_infos['database']
+        )
+        cursor = db.cursor()
+
+        # Vérifier si les personnages existent déjà dans la table
+        cursor.execute("SELECT COUNT(*) FROM technique_own_by")
+        techLinked = cursor.fetchone()[0]
+
+        if techLinked == 0:
+
+
+            cursor.execute("SELECT idCharacter FROM characters where name = 'Goku'")
+            goku_id = cursor.fetchone()[0]
+            # print(goku_id)
+            
+            cursor.execute("SELECT idTechnique FROM techniques where name = 'Kamehameha'")
+            kamehameha_id = cursor.fetchone()[0]
+            # print(kamehameha_id)
+
+            cursor.execute("""
+                INSERT INTO technique_own_by (idCharacter, idTechnique)
+                VALUES (%s, %s)
+            """, (goku_id, kamehameha_id))
+            print("Kamehameha Linked to Goku")
+
+            cursor.execute("SELECT idCharacter, name FROM characters")
+            all_characters_ids = cursor.fetchall()
+            all_characters_ids_dico = {}
+            for id_char,name in all_characters_ids:
+                all_characters_ids_dico[name] = id_char
+            
+            print(all_characters_ids_dico)
+
+            cursor.execute("SELECT idTechnique, name FROM techniques")
+            all_techniques_ids = cursor.fetchall()
+            all_techniques_ids_dico = {}
+
+            for id_char,name in all_techniques_ids:
+                all_techniques_ids_dico[name] = id_char
+            
+            print(all_techniques_ids_dico)
+
+
+
+            db.commit()
+        else:
+            print("Techniques Linked to their characters.")
+
+        cursor.close()
+        db.close()
+
+    except mysql.connector.Error as error:
+        db.rollback()
+        print(f"Erreur: {error}")
+        cursor.close()
+        db.close()
+
 
 
 def addStages(db_infos):

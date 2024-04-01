@@ -21,6 +21,8 @@ addDataToDB.addCharacters(db_infos)
 addDataToDB.addTechniques(db_infos)
 addDataToDB.addStages(db_infos)
 
+addDataToDB.linkTechniquesToCharacter(db_infos)
+
 
 app = Flask(__name__)
 
