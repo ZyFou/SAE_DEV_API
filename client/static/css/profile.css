@@ -59,7 +59,7 @@
 }
 
 #name_section {
-    color: #FFDB00;
+    color: #F2FCFF;
     position: absolute;
     text-align: center; 
     position: relative;
@@ -118,7 +118,6 @@
 }
 
 #inputs_zone{
-
     padding-left: 8px;
 
     width: 300px;
@@ -127,6 +126,7 @@
     border-radius: 50px;
     border: none;
 }
+
 #inputs_zone::placeholder{
     color: #4c556269;
 }
@@ -155,7 +155,6 @@
     background-color: #fe3939;
     color: rgb(255, 255, 255);
     transform: scale(1.05);
-
 }
 
 #logout{
@@ -208,12 +207,109 @@
     display: none;
 }
 
+#closeDiv{
+    cursor: pointer;
+    transition: 0.5s;
+    color: #F2FCFF;
+    background-color: #EC2324;
+    margin-left: 90%;
+    margin-top: 2%;
+    border: none;
+    border-radius: 10%;
+}
+
+#closeDiv:hover{
+    background-color: #fe3939;
+}
 
 #new_pfp_div{
+    color: #F2FCFF;
+    text-align: center;
+    background-color: #2b2d30;
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+    width: 600px;
+    height: 200px;
+    z-index: 5000;
     display: none;
+    position: absolute;
+    left: 30%;
+    top: 15%;
+}
+
+#add_new_pfp{
+    position: relative;
+    transition: 0.5s;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+#add_new_pfp:hover{
+    background-color: #fe3939;
+    color: rgb(255, 255, 255);
+    transform: scale(1.05);
 }
 
 
 #new_banner_div{
+    color: #F2FCFF;
+    text-align: center;
+    background-color: #2b2d30;
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+    width: 600px;
+    height: 200px;
+    z-index: 5000;
     display: none;
+    position: absolute;
+    left: 30%;
+    top: 15%;
+}
+
+#add_new_banner{
+    position: relative;
+    transition: 0.5s;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+#add_new_banner:hover{
+    background-color: #fe3939;
+    color: rgb(255, 255, 255);
+    transform: scale(1.05);
+}
+
+
+#new_pfp{
+    padding-left: 8px;
+
+    width: 300px;
+    font-size: 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+}
+
+#new_banner{
+    padding-left: 8px;
+
+    width: 300px;
+    font-size: 20px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
 }
