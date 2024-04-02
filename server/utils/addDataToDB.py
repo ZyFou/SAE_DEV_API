@@ -222,13 +222,15 @@ def linkTechniquesToCharacter(db_infos):
 
         if techLinked == 0:
 
-
             cursor.execute("SELECT idCharacter FROM characters where name = 'Goku'")
             goku_id = cursor.fetchone()[0]
             # print(goku_id)
-            
+
             cursor.execute("SELECT idTechnique FROM techniques where name = 'Kamehameha'")
             kamehameha_id = cursor.fetchone()[0]
+
+            cursor.execute("SELECT idTechnique FROM techniques where name = 'NormalAttack'")
+            normalAttack = cursor.fetchone()[0]
             # print(kamehameha_id)
 
             cursor.execute("""
@@ -236,6 +238,12 @@ def linkTechniquesToCharacter(db_infos):
                 VALUES (%s, %s)
             """, (goku_id, kamehameha_id))
             print("Kamehameha Linked to Goku")
+
+            cursor.execute("""
+                INSERT INTO technique_own_by (idCharacter, idTechnique)
+                VALUES (%s, %s)
+            """, (goku_id, normalAttack))
+            print("NormalAttack Linked to Goku")
 
             cursor.execute("SELECT idCharacter, name FROM characters")
             all_characters_ids = cursor.fetchall()
@@ -253,8 +261,6 @@ def linkTechniquesToCharacter(db_infos):
                 all_techniques_ids_dico[name] = id_char
             
             print(all_techniques_ids_dico)
-
-
 
             db.commit()
         else:

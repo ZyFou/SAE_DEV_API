@@ -124,7 +124,7 @@ def get_techniques():
         return jsonify({"message": "Aucune technique"}), 404
 
 
-    techniques = [{"name": row[1], "Description": row[2], "type": row[3]} for row in result]
+    techniques = [{"idTechnique": row[0],"name": row[1], "Description": row[2], "type": row[3]} for row in result]
     return jsonify({"techniques": techniques})
 
 @app.route('/api/techniques/<string:name>', methods=['GET'])
@@ -151,6 +151,36 @@ def get_specific_technique(name):
         technique_data[col] = result[0][i]
 
     return jsonify(technique_data)
+
+@app.route('/api/techniques/<int:idTechnique>', methods=['GET'])
+def get_specific_technique_id(idTechnique):
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+
+    cursor = db.cursor()
+    query = "SELECT * FROM `techniques` WHERE idTechnique = %s"
+    cursor.execute(query, (idTechnique,))
+    result = cursor.fetchall()
+
+    if len(result) == 0:
+        return jsonify({"message": "Technique inconnue"}), 404
+
+    columns = [col[0] for col in cursor.description]
+
+    technique_data = {}
+    for i, col in enumerate(columns):
+        technique_data[col] = result[0][i]
+
+    return jsonify(technique_data)
+
+
+
+
+
 
 @app.route('/api/stages/', methods=['GET'])
 def get_stages():
@@ -197,6 +227,70 @@ def get_specific_stages(name):
         stage_data[col] = result[0][i]
         
     return jsonify(stage_data)
+
+@app.route('/api/TOB/', methods=['GET'])
+def get_techniques_linked():
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+
+    cursor = db.cursor()
+    query = "SELECT * FROM `technique_own_by` "
+    cursor.execute(query)
+    results = cursor.fetchall()
+    
+    if len(results) == 0:
+        return jsonify({"message": "Aucun Id Trouvé"}), 404
+
+    TOB_Data = {}
+    for row in results:
+        idCharacter = row[0]
+        idTechnique = row[1]
+
+        if idCharacter not in TOB_Data:
+            TOB_Data[idCharacter] = []
+
+        TOB_Data[idCharacter].append(idTechnique)
+
+    # Convertir TOB_Data en une liste de dictionnaires
+    TOB_List = [{"idCharacter": k, "idTechniques": v} for k, v in TOB_Data.items()]
+
+    return jsonify(TOB_List)
+
+
+
+
+@app.route('/api/TOB/<int:idCharacter>', methods=['GET'])
+def get_infos_techniques_linked(idCharacter):
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+
+    cursor = db.cursor()
+
+    query = "SELECT idTechnique FROM `technique_own_by` WHERE idCharacter = %s"
+    cursor.execute(query, (idCharacter,))
+    results = cursor.fetchall()
+
+    if len(results) == 0:
+        return jsonify({"message": "Aucune technique associée"}), 404
+
+    # Créer une liste pour stocker les idTechnique
+    idTechniques = [row[0] for row in results]
+
+    # Vous pouvez retourner directement la liste d'idTechniques
+    return jsonify({"idCharacter": idCharacter, "idTechniques": idTechniques})
+
+
+
+
+
 
 
 if __name__ == '__main__':

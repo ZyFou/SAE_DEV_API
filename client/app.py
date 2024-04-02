@@ -232,7 +232,7 @@ def gameMode_Custom():
 def testGame():
     if 'user_id' in session:
         query_params = request.args
-        print(session)
+        # print(session)
 
         required_params = ['yourPick', 'ennemy', 'stage']
         missing_params = [param for param in required_params if param not in query_params]
@@ -241,6 +241,7 @@ def testGame():
             return redirect('/')
 
         yourPick = requests.get(f"{base_url}characters/{query_params['yourPick']}").json()
+        print(yourPick['idCharacter'])
         ennemy = requests.get(f"{base_url}characters/{query_params['ennemy']}").json()
         stage = requests.get(f"{base_url}stages/{query_params['stage']}").json()
 

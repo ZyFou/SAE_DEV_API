@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <a href="{% if is_co %}profile{% else %}login{% endif %}">
+        <a href="{% if is_co %}/profile{% else %}/login{% endif %}">
             <img id="profileButton"
                 src="{% if is_co %}{{profile_picture}}{% else %}https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png{% endif %}"
                 alt="">
@@ -37,7 +37,7 @@
                 Dragon Ball.
             </p>
 
-            <a href="/gameMode"><button id="playButton">JOUER</button></a>
+            <a href="{% if is_co %}/gameMode{% else %}/login{% endif %}"><button id="playButton">JOUER</button></a>
 
 
             {% if is_co %}
