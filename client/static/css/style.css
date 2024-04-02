@@ -39,6 +39,8 @@ header{
     width: 64px;
     height: 64px;
     border-radius:100%;
+    object-fit: cover;
+
 }
 
 #profileButton:hover{
@@ -144,7 +146,7 @@ header{
     font-size: 20px;
     font-weight: 800;
     color: #4C5562;
-    width: 180px;
+    width: 150px;
     height: 70px;
     border-radius: 20px;
 }
@@ -401,9 +403,76 @@ svg{
 
 
 /* -----------------------CUSTOM MODE----------------------- */
+#ModesContainer{
+    display: flex;
+    margin-top: 40px;
+    padding-left: 50px;
+
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: center;
+}
+
+#modesCard {
+    display:inline-flex;
+    padding-left: 50px;
+    width: 800px; /* Vous pouvez ajuster la largeur selon vos besoins */
+    text-align: center; /* Centrer le contenu à l'intérieur de la carte */
+}
+
+#modeImage {
+    margin-top: 20px;
+    border-radius: 20px;
+    transition: transform 0.5s, filter 0.5s; 
+    filter: brightness(75%);
+    width: 300px;
+    max-height: 200px;
+    cursor: pointer;
+}
+
+#second-mod{
+    margin-left: 50px;
+}
+
+#second-mod img{
+    object-fit: cover;
+    width: 300px;
+    height: 200px;
+}
+
+#modeImage:hover {
+    filter: brightness(100%);
+    transform: scale(1.1); /* Agrandir l'image au survol */
+}
+
+
+#confirm_Mode{
+    display: none;
+    position: relative;
+    transition: 0.5s;
+    margin-top: 20px;
+    margin-right:40px;
+    cursor: pointer;
+    border: none;
+    background-color: #EC2324;
+    font-size: 20px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 180px;
+    height: 60px;
+    border-radius: 15px;
+}
+
+#confirm_Mode:hover{
+    background-color: #fe3939;
+    color: #FFFFFF;
+    transform: scale(1.05);
+}
+
 
 #charactersContainer{
     display: flex;
+    display: none;
     margin-top: 40px;
 
     overflow-x: auto;
@@ -494,8 +563,6 @@ footer{
     background-color: #fe3939;
     color: #FFFFFF;
     transform: scale(1.05);
-
-
 }
 
 #confirm_opponent{

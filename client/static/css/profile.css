@@ -49,6 +49,8 @@
     height: 100px; 
     border-radius: 50%; 
     padding-left: 10px;
+    object-fit: cover;
+
 }
 
 #change_profile_picture_button {
@@ -75,8 +77,9 @@
 
 #banner_picture{
     border-radius: 20px;
-    max-width: 500px;
-    width: 600px;
+    width: 500px;
+    height: 225px;
+    object-fit: cover;
     filter: brightness(80%);
 }
 

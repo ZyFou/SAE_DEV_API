@@ -78,7 +78,7 @@ def addCharacters(db_infos):
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Vegeta', 'Saiyan', vegeta_image, 'Fier prince des Saiyans.', 85, 85, 60, 1750, 800))
+            """, ('Vegeta', 'Saiyan', vegeta_image, 'Fier prince des Saiyans.', 85, 85, 60, 1750, 750))
             print("Personnage 'Vegeta' ajouté à la table 'characters'.")
 
             gohan_image = "https://dragonball-legends.com/assets/characters/0258_gohanfuture_258_texture/Texture2D/0258_GohanFuture_258_Chara.png"
@@ -167,7 +167,7 @@ def addTechniques(db_infos):
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Counter', "Attaque de contre qui à un gros risque d'échouer mais peut être très efficace.", counter_gif, "counter_attack",150,20,50,2))
+            """, ('Counter', 'Attaque de contre qui à un gros risque d"échouer mais peut être très efficace.', counter_gif, 'counter_attack',150,20,50,2))
             print("Technique 'Counter' ajouté à la table 'techniques'.")
 
 
@@ -175,7 +175,7 @@ def addTechniques(db_infos):
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Kamehameha', "Technique emblématique de l'univers de dragon ball.", kamehameha_gif, "kikoha",120,65,70,0))
+            """, ('Kamehameha', 'Technique emblématique de l"univers de dragon ball.', kamehameha_gif, 'kikoha',120,65,70,0))
             print("Technique 'kamehameha' ajouté à la table 'techniques'.")
 
             garric_gun_gif = "https://c.tenor.com/zof-eTe2ibwAAAAC/tenor.gif"
@@ -191,6 +191,13 @@ def addTechniques(db_infos):
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, ('Kikohas', "Attaques énergétiques à faible précision mais faible coût.", kikoha_gif, "kikoha",70,50,20,0))
             print("Technique 'Kikoha' ajouté à la table 'techniques'.")
+
+            charge_ki_gif = "https://c.tenor.com/i-580TEI3LoAAAAC/tenor.gif"
+            cursor.execute("""
+                INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('ChargeKi', "Technique consistant à augmenter son énergie temporairement.", charge_ki_gif, "chargeKi",0,100,0,0))
+            print("Technique 'ChargeKi' ajouté à la table 'techniques'.")
             
             db.commit()
         else:
@@ -222,32 +229,17 @@ def linkTechniquesToCharacter(db_infos):
 
         if techLinked == 0:
 
-            cursor.execute("SELECT idCharacter FROM characters where name = 'Goku'")
-            goku_id = cursor.fetchone()[0]
-            # print(goku_id)
 
-            cursor.execute("SELECT idTechnique FROM techniques where name = 'Kamehameha'")
-            kamehameha_id = cursor.fetchone()[0]
-
-            cursor.execute("SELECT idTechnique FROM techniques where name = 'NormalAttack'")
-            normalAttack = cursor.fetchone()[0]
-            # print(kamehameha_id)
-
-            cursor.execute("""
-                INSERT INTO technique_own_by (idCharacter, idTechnique)
-                VALUES (%s, %s)
-            """, (goku_id, kamehameha_id))
-            print("Kamehameha Linked to Goku")
-
-            cursor.execute("""
-                INSERT INTO technique_own_by (idCharacter, idTechnique)
-                VALUES (%s, %s)
-            """, (goku_id, normalAttack))
-            print("NormalAttack Linked to Goku")
+            # cursor.execute("""
+            #     INSERT INTO technique_own_by (idCharacter, idTechnique)
+            #     VALUES (%s, %s)
+            # """, ("vegeta_id", "normalAttack"))
+            # print(f"NormalAttack Linked to vegeta")
 
             cursor.execute("SELECT idCharacter, name FROM characters")
             all_characters_ids = cursor.fetchall()
             all_characters_ids_dico = {}
+            
             for id_char,name in all_characters_ids:
                 all_characters_ids_dico[name] = id_char
             
@@ -261,6 +253,15 @@ def linkTechniquesToCharacter(db_infos):
                 all_techniques_ids_dico[name] = id_char
             
             print(all_techniques_ids_dico)
+            default_tech = ['NormalAttack', 'Guard', 'Counter', 'ChargeKi']
+
+            for character in all_characters_ids_dico:
+                for tech_to_link in default_tech:
+                    cursor.execute("""
+                        INSERT INTO technique_own_by (idCharacter, idTechnique)
+                        VALUES (%s, %s)
+                    """, (all_characters_ids_dico[character], all_techniques_ids_dico[tech_to_link]))
+                    print(f"{tech_to_link} Linked to {all_characters_ids_dico[character]}")
 
             db.commit()
         else:

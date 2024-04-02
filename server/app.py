@@ -55,7 +55,6 @@ def get_users_data(id):
     db.close()
     return jsonify(user_data)
 
-
 @app.route('/api/characters/', methods=['GET'])
 def get_characters():
     db = mysql.connector.connect(
@@ -75,9 +74,8 @@ def get_characters():
         return jsonify({"message": "Aucun personnages"}), 404
 
 
-    characters = [{"name": row[1], "race": row[2], "image":row[3]} for row in result]
+    characters = [{"idCharacter": row[0],"name": row[1], "race": row[2], "image":row[3]} for row in result]
     return jsonify({"characters": characters})
-
 
 @app.route('/api/characters/<string:name>', methods=['GET'])
 def get_specific_character(name):
@@ -104,6 +102,30 @@ def get_specific_character(name):
 
     return jsonify(user_data)
 
+@app.route('/api/characters/<int:idCharacter>', methods=['GET'])
+def get_specific_character_id(idCharacter):
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+
+    cursor = db.cursor()
+    query = "SELECT * FROM `characters` WHERE idCharacter = %s"
+    cursor.execute(query, (idCharacter,))
+    result = cursor.fetchall()
+
+    if len(result) == 0:
+        return jsonify({"message": "Personnage inconnu"}), 404
+
+    columns = [col[0] for col in cursor.description]
+
+    user_data = {}
+    for i, col in enumerate(columns):
+        user_data[col] = result[0][i]
+
+    return jsonify(user_data)
 
 @app.route('/api/techniques/', methods=['GET'])
 def get_techniques():
@@ -176,11 +198,6 @@ def get_specific_technique_id(idTechnique):
         technique_data[col] = result[0][i]
 
     return jsonify(technique_data)
-
-
-
-
-
 
 @app.route('/api/stages/', methods=['GET'])
 def get_stages():
@@ -286,10 +303,6 @@ def get_infos_techniques_linked(idCharacter):
 
     # Vous pouvez retourner directement la liste d'idTechniques
     return jsonify({"idCharacter": idCharacter, "idTechniques": idTechniques})
-
-
-
-
 
 
 

@@ -1,6 +1,16 @@
 var your_character;
 var your_ennemy;
 var stage;
+var mode;
+
+
+var infos_text = document.getElementById("title2ndWord")
+var mode_container_div = document.getElementById("ModesContainer")
+
+var your_choice_div = document.getElementById("charactersContainer")
+var ennemy_choice_div = document.getElementById("EnnemycharactersContainer")
+var stage_choice_div = document.getElementById("StagesContainer")
+
 
 
 function pickYourCharacter(name) {
@@ -39,6 +49,13 @@ function pickEnnemyCharacter(name) {
 }
 
 
+function pickYourMode(arg) {
+    var confirm_Mode = document.getElementById("confirm_Mode")
+    confirm_Mode.style.display = "block"
+    mode = arg
+}
+
+
 function pickStage(name) {
     var confirm_stage = document.getElementById("confirm_stage")
     var images = document.getElementsByClassName("stage");
@@ -57,19 +74,20 @@ function pickStage(name) {
     }
 }
 
-
-var ennemy_text = document.getElementById("title2ndWord")
-var your_choice_div = document.getElementById("charactersContainer")
-var ennemy_choice_div = document.getElementById("EnnemycharactersContainer")
-
-var stage_choice_div = document.getElementById("StagesContainer")
+function confirmMode() {
+    var confirm_button = document.getElementById("confirm_Mode")
+    confirm_button.style.display = "none"
+    infos_text.textContent = "PERSONNAGE"
+    mode_container_div.style.display = "none"
+    your_choice_div.style.display = "block";
+}
 
 
 function confirmYourChoice() {
     // alert("Perso choisi : " + your_character)
     var confirm_button = document.getElementById("confirm")
     confirm_button.style.display = "none"
-    ennemy_text.textContent = "ADVERSAIRE"
+    infos_text.textContent = "ADVERSAIRE"
     your_choice_div.style.display = "none"
     ennemy_choice_div.style.display = "block";
 }
@@ -78,10 +96,19 @@ function confirmYourChoiceOpponent() {
     // alert("Adervsaire choisi : " + your_ennemy)
     var confirm_ennemy_button = document.getElementById("confirm_opponent")
     confirm_ennemy_button.style.display = "none"
-    ennemy_text.textContent = "TERRAIN"
+    infos_text.textContent = "TERRAIN"
     ennemy_choice_div.style.display = "none";
     stage_choice_div.style.display = "block";
 }
+
+
+
+
+
+// FIGHT PART
+// FIGHT PART
+// FIGHT PART
+// FIGHT PART
 
 
 
@@ -99,7 +126,6 @@ function convertToQueryString(params) {
 }
 
 
-
 function confirmStage() {
     // alert("Terrain choisi : " + stage)
     var confirm_stage_button = document.getElementById("confirm")
@@ -107,16 +133,11 @@ function confirmStage() {
     // ennemy_text.style.display = "none"
     // stage_choice_div.style.display = "none";
 
-    var dataToSend = { "yourPick": your_character, "ennemy": your_ennemy, "stage": stage };
+    var dataToSend = { "yourPick": your_character, "ennemy": your_ennemy, "stage": stage, "mode": mode };
     var queryString = convertToQueryString(dataToSend);
     window.location.href = `/gameMode/customGame?` + queryString
 
 }
-
-
-// function showData(elt) {
-//     console.log(elt)
-// }
 
 
 function setBackground(stageImage) {
@@ -125,4 +146,83 @@ function setBackground(stageImage) {
 
     body.style.backgroundImage = "url('" + imageUrl + "')";
     body.style.backgroundSize = "cover";
+}
+
+
+function SetHealthBarYou(health) {
+    const healthBar = document.getElementById('YourHealth');
+    const healthPercentage = Math.min(Math.max(health, 0), 100);
+    healthBar.style.width = healthPercentage + '%';
+    healthBar.textContent = health;
+}
+
+function SetHealthBarEnnemy(health) {
+    const healthBar = document.getElementById('EnnemyHealth');
+    const healthPercentage = Math.min(Math.max(health, 0), 100);
+    healthBar.style.width = healthPercentage + '%';
+    healthBar.textContent = health;
+}
+
+
+function attack(target, data, initial_health) {
+    const YourhealthBar = document.getElementById('YourHealth');
+    const EnnemyhealthBar = document.getElementById('EnnemyHealth');
+
+    const YourEnergyBar = document.getElementById('YourEnergy');
+    const EnnemyEnergyBar = document.getElementById('EnnemyEnergy');
+
+    if (target == 'player') {
+        var damages = data.damages;
+        var cost = data.cost;
+
+        if (hasEnoughEnergy(cost, EnnemyEnergyBar.textContent)) {
+            if (data.name == "ChargeKi") {
+                updateEnergy('ennemy', 20)
+            } else {
+                updateEnergy('ennemy', cost * -1)
+            }
+        } else {
+            console.log('Not enough energy')
+            return
+        }
+
+        var health = parseInt(YourhealthBar.textContent);
+        var remainingHealth = Math.max(health - damages, 0);
+        var healthPercentage = (remainingHealth / initial_health) * 100; // 1800 est le nombre total de points de vie
+
+        YourhealthBar.style.width = healthPercentage + '%';
+        YourhealthBar.textContent = remainingHealth;
+
+    } else {
+        var damages = data.damages;
+        var cost = data.cost;
+
+        if (hasEnoughEnergy(cost, YourEnergyBar.textContent)) {
+            if (data.name == "ChargeKi") {
+                updateEnergy('player', 20)
+            } else {
+                updateEnergy('player', cost * -1)
+            }
+        } else {
+            console.log('Not enough energy')
+            return
+        }
+
+        var health = parseInt(EnnemyhealthBar.textContent);
+        var remainingHealth = Math.max(health - damages, 0);
+        var healthPercentage = (remainingHealth / initial_health) * 100; // 1800 est le nombre total de points de vie
+
+        EnnemyhealthBar.style.width = healthPercentage + '%';
+        EnnemyhealthBar.textContent = remainingHealth;
+    }
+}
+
+
+function hasEnoughEnergy(cost, value) {
+    if (value >= cost) {
+        return true
+    }
+    else {
+        return false
+    }
 }

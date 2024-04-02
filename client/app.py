@@ -6,11 +6,8 @@ import mysql.connector
 
 db_infos = {"host" : "localhost", "user":"root", "password":"", "database":"sae_api"}
 
-
-
 app = Flask(__name__)
 app.secret_key = b'veigar'
-
 
 base_url = "http://127.0.0.1:5000/api/"
 default_pfp = "https://i.pinimg.com/474x/3b/65/5e/3b655e1f8aa870ccebce29159b6dd70e.jpg"
@@ -234,18 +231,34 @@ def testGame():
         query_params = request.args
         # print(session)
 
-        required_params = ['yourPick', 'ennemy', 'stage']
+        required_params = ['yourPick', 'ennemy', 'stage', 'mode']
         missing_params = [param for param in required_params if param not in query_params]
 
         if missing_params:
             return redirect('/')
 
         yourPick = requests.get(f"{base_url}characters/{query_params['yourPick']}").json()
-        print(yourPick['idCharacter'])
-        ennemy = requests.get(f"{base_url}characters/{query_params['ennemy']}").json()
-        stage = requests.get(f"{base_url}stages/{query_params['stage']}").json()
+        yourPick_techniques = requests.get(f"{base_url}TOB/{yourPick['idCharacter']}").json()
+        yourPick_tech_list = {}
 
-        return render_template('game/modes/custom_game.html', yourPick=yourPick, ennemy=ennemy, stage=stage)
+        for tech_id in yourPick_techniques['idTechniques']:
+            infos = requests.get(f"{base_url}techniques/{tech_id}").json()
+            yourPick_tech_list[infos['name']] = infos
+
+
+        ennemy = requests.get(f"{base_url}characters/{query_params['ennemy']}").json()
+        ennemy_techniques = requests.get(f"{base_url}TOB/{ennemy['idCharacter']}").json()
+        ennemy_tech_list = {}
+
+        for tech_id in ennemy_techniques['idTechniques']:
+            infos = requests.get(f"{base_url}techniques/{tech_id}").json()
+            ennemy_tech_list[infos['name']] = infos
+        
+
+        stage = requests.get(f"{base_url}stages/{query_params['stage']}").json()
+        mode = query_params['mode']
+
+        return render_template('game/modes/custom_game.html', yourPick=yourPick, yourPick_tech_list=yourPick_tech_list, ennemy=ennemy, ennemy_tech_list=ennemy_tech_list, stage=stage, mode=mode)
 
     else:
         return redirect('/')

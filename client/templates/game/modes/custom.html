@@ -25,9 +25,26 @@
     <div id="gameModeMainDiv">
         <h1 id="mainTitle">
             <span id="dragon_text">CHOISISSEZ VOTRE</span>
-            <span id="title2ndWord">PERSONNAGE</span>
+            <span id="title2ndWord">MODE DE JEU</span>
         </h1>
     </div>
+
+    <div id="ModesContainer">
+        <div id="modesCard">
+            <div>
+                <img src="https://64.media.tumblr.com/a7c78400c81728367db297a7b769241b/tumblr_pk2dmwef4a1usyygio1_540.gif"
+                    alt="" id="modeImage" onclick="pickYourMode('solo')">
+                <h1 id="characterName">1 V CPU</h1>
+            </div>
+
+            <div id="second-mod">
+                <img src="https://i.gifer.com/77dr.gif" alt="" id="modeImage" onclick="pickYourMode('multi')">
+                <h1 id="characterName">1 V 1 LOCAL</h1>
+            </div>
+        </div>
+    </div>
+
+
 
     <div id="charactersContainer">
         {% for character in characters.characters %}
@@ -76,6 +93,7 @@
 
     <a href="/gameMode"><button id="goBack">RETOUR</button></a>
     <div id="confirm_div">
+        <button id="confirm_Mode" onclick="confirmMode()">CONFIRMER</button>
         <button id="confirm" onclick="confirmYourChoice()">CONFIRMER</button>
         <button id="confirm_opponent" onclick="confirmYourChoiceOpponent()">CONFIRMER</button>
         <button id="confirm_stage" onclick="confirmStage()">CONFIRMER</button>
