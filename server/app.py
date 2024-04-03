@@ -277,9 +277,6 @@ def get_techniques_linked():
 
     return jsonify(TOB_List)
 
-
-
-
 @app.route('/api/TOB/<int:idCharacter>', methods=['GET'])
 def get_infos_techniques_linked(idCharacter):
     db = mysql.connector.connect(
@@ -303,7 +300,6 @@ def get_infos_techniques_linked(idCharacter):
 
     # Vous pouvez retourner directement la liste d'idTechniques
     return jsonify({"idCharacter": idCharacter, "idTechniques": idTechniques})
-
 
 
 if __name__ == '__main__':

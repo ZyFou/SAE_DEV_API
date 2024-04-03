@@ -26,10 +26,10 @@
 
 button{
     border: none;
+    padding: 0.5em 1em;
 }
 .normalAttackButton{
     transition: 0.5s;
-
     margin-left: 10px;
     background-color: rgb(255, 170, 73);
     color: #F2FCFF;
@@ -39,7 +39,6 @@ button{
 
 .guardButton{
     transition: 0.5s;
-
     margin-left: 10px;
     background-color: rgb(54, 202, 89);
     color: #F2FCFF;
@@ -70,4 +69,19 @@ button{
 
 button:hover{
     transform: scale(1.05);
+}
+
+
+#turns{
+    position: relative;
+    left: 50%;
+    margin-top: 2.5em;
+    color: #F2FCFF;
+}
+
+#whoplays{
+    position: relative;
+    left: 25%;
+    color: #F2FCFF;
+    font-size: 20px;
 }

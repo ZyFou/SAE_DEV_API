@@ -14,7 +14,6 @@ def addExempleUsers(db_infos):
         admin_exists = cursor.fetchone()
 
         if not admin_exists:
-            # If 'Admin' doesn't exist, insert it into the table
             cursor.execute("""
                 INSERT INTO users (nickname, email, password, admin, profile_picture)
                 VALUES (%s, %s, %s, %s, %s)
@@ -23,12 +22,10 @@ def addExempleUsers(db_infos):
         else:
             print("L'utilisateur 'Admin' existe déjà.")
 
-        # Check if the name 'Utilisateur' already exists in the table
         cursor.execute("SELECT * FROM users WHERE nickname = 'Utilisateur'")
         user_exists = cursor.fetchone()
 
         if not user_exists:
-            # If 'Utilisateur' doesn't exist, insert it into the table
             cursor.execute("""
                 INSERT INTO users (nickname, email, password, admin,profile_picture,banner,current_quest_stage, experience, level)
                 VALUES (%s, %s, %s, %s, %s, %s, %s,%s,%s)
@@ -37,14 +34,12 @@ def addExempleUsers(db_infos):
         else:
             print("L'utilisateur 'Utilisateur' existe déjà.")
 
-        # Commit the changes to the database
         db.commit()
 
         cursor.close()
         db.close()
 
     except mysql.connector.Error as error:
-        # Rollback the transaction if an error occurs
         db.rollback()
         print(f"Error: {error}")
         cursor.close()
@@ -288,7 +283,6 @@ def addStages(db_infos):
         )
         cursor = db.cursor()
 
-        # Vérifier si les personnages existent déjà dans la table
         cursor.execute("SELECT COUNT(*) FROM stages")
         stages_count = cursor.fetchone()[0]
 

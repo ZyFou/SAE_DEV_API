@@ -72,10 +72,8 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Check if the user is not already logged in
     if 'user_id' not in session:
         if request.method == 'POST':
-            # Retrieve form data
             pseudo = request.form.get('pseudo')
             email = request.form.get('email')
             password = request.form.get('password')
@@ -91,40 +89,30 @@ def register():
     
                     cursor = db.cursor()
 
-                    # Check if the email is already in use
                     cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
                     existing_user = cursor.fetchone()
                     if existing_user:
-                        # If the email is already in use, show an error message
                         return render_template('register.html', error="Email already in use.")
 
-                    # Insert the new user into the database
                     cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, banner,current_quest_stage, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s  )""", 
                                    (pseudo, email, password, False, default_pfp,default_banner,0,0,1))
                     db.commit()
 
-                    # Retrieve the ID of the newly inserted user
                     user = verify_credentials(email, password)
-                    # Close the cursor and the database connection
                     cursor.close()
                     db.close()
 
-                    # Store the user ID in the session
                     session['user_id'] = user['id']
                     session['profile_picture'] = user['profile_picture']
 
 
-                    # Redirect the user to the home page
                     return redirect('/')
                     
                 except mysql.connector.Error as err:
-                    # If there's an error interacting with the database, show an error message
                     return render_template('register.html', error="Error registering. Please try again.")
 
-        # If the request method is GET, simply display the registration form
         return render_template('register.html', error="")
     else:
-        # If the user is already logged in, redirect them to the home page
         return redirect('/')
 
     
