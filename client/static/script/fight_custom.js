@@ -1,12 +1,12 @@
 var nb_turn = 0;
 
-var lastPlayerAttack;
-var lastPlayerAttackTurn;
+var playerAttackCooldowns = {
+    "Counter": 0,
+};
 
-var lastEnnemyAttack;
-var lastEnnemyAttackTurn;
-
-
+var ennemyAttackCooldowns = {
+    "Counter": 0,
+};
 
 
 function SetHealthBarYou(health) {
@@ -24,20 +24,7 @@ function SetHealthBarEnnemy(health) {
 }
 
 
-
 function action(sender, target, data, initial_health) {
-
-    if (playerTurn(nb_turn) && sender == "player") {
-        console.log("player Turn")
-    } else if (playerTurn(nb_turn) && sender == "ennemy") {
-        console.log("player Turn")
-
-    } else {
-        console.log("Ennemy Turn")
-    }
-
-    console.log("sender : ", sender, " | target", target, " | player turn", playerTurn(nb_turn))
-
     if (sender == "player" && target == "ennemy" && playerTurn(nb_turn)) {
         playerAction(data, initial_health)
     } else if (sender == "player" && target == "ennemy" && playerTurn(nb_turn) == false) {
@@ -62,8 +49,13 @@ function playerAction(data) {
 
     var damages = data.damages;
     var cost = data.cost;
-    lastPlayerAttack = data.name
+    var name = data.name
 
+    if (!isOnCoolDown('player', name)) {
+        console.log('Not cooldown')
+    } else {
+        console.log('Cooldown')
+    }
 
     if (hasEnoughEnergy(cost, YourEnergyBar.textContent)) {
         if (data.name == "ChargeKi") {
@@ -99,7 +91,6 @@ function ennemyAction(data) {
     var damages = data.damages;
     var cost = data.cost;
 
-    lastEnnemyAttack = data.name
 
     if (hasEnoughEnergy(cost, EnnemyEnergyBar.textContent)) {
         if (data.name == "ChargeKi") {
@@ -120,6 +111,27 @@ function ennemyAction(data) {
         return
     }
 
+}
+
+function isOnCoolDown(sender, technique) {
+    if (sender == "player") {
+        return playerAttackCooldowns[technique] > 0
+    } else if (sender == "ennemy") {
+        return ennemyAttackCooldowns[technique] > 0
+    }
+}
+
+function updateCoolDown(sender, technique) {
+    if (sender == "player") {
+        if (playerAttackCooldowns[technique] > 0) {
+            playerAttackCooldowns[technique] -= 1
+        }
+    }
+    else if (sender == "ennemy") {
+        if (ennemyAttackCooldowns[technique] > 0) {
+            ennemyAttackCooldowns[technique] -= 1
+        }
+    }
 }
 
 function attackEmitted(data) {
