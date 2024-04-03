@@ -7,26 +7,34 @@
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../static/css/style.css'>
-    <script src='../static/script/main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='../static/css/custom_game.css'>
+
     <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+    <script src='../static/script/main.js'></script>
+    <script src='../static/script/fight_custom.js'></script>
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
+<h1 style="position: absolute;" id="turns">0</h1>
+
 <body>
     <div class="container">
+
         <div class="character">
 
             <div class="character-name">{{yourPick.name}}</div>
 
             <div class="progress" role="progressbar" aria-label="Example with label" aria-valuemin="0"
                 aria-valuemax="100">
-                <div class="progress-bar" id="YourHealth" style="width: 0%">0%</div>
+                <div class="progress-bar bg-success" id="YourHealth" style="width: 0%">0%</div>
             </div>
 
-            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuemin="0"
+            <div class="progress energyBar" role="progressbar" aria-label="Example with label" aria-valuemin="0"
                 aria-valuemax="100">
-                <div class="progress-bar bg-success" id="YourEnergy" style="width: 0%">0</div>
+                <div class="progress-bar" id="YourEnergy" style="width: 0%">0</div>
             </div>
 
             <img src="{{yourPick.image}}" alt="{{yourPick.name}}" class="character-image">
@@ -38,12 +46,12 @@
 
             <div class="progress" role="progressbar" aria-label="Example with label" aria-valuemin="0"
                 aria-valuemax="100">
-                <div class="progress-bar" id="EnnemyHealth" style="width: 0%">0%</div>
+                <div class="progress-bar bg-success" id="EnnemyHealth" style="width: 0%">0%</div>
             </div>
 
-            <div class="progress" role="progressbar" aria-label="Example with label" aria-valuemin="0"
+            <div class="progress energyBar" role="progressbar" aria-label="Example with label" aria-valuemin="0"
                 aria-valuemax="100">
-                <div class="progress-bar bg-success" id="EnnemyEnergy" style="width: 0%">0</div>
+                <div class="progress-bar" id="EnnemyEnergy" style="width: 0%">0</div>
             </div>
 
             <img src="{{ennemy.image}}" alt="{{ennemy.name}}" class="character-image">
@@ -63,11 +71,23 @@
         yourPick_tech_list = JSON.parse(yourPick_tech_list)
         var yourPickTech = '{{YourPickTech}}'
 
-        console.log(yourPick_tech_list[yourPickTech])
+        console.log(yourPick_tech_list[yourPickTech].name)
+
 
         button.innerHTML = yourPick_tech_list[yourPickTech].name;
+
+        if (yourPick_tech_list[yourPickTech].name == "NormalAttack") {
+            button.classList.add("normalAttackButton")
+        } else if (yourPick_tech_list[yourPickTech].name == "Guard") {
+            button.classList.add("guardButton")
+        } else if (yourPick_tech_list[yourPickTech].name == "ChargeKi") {
+            button.classList.add("kiButton")
+        } else {
+            button.classList.add("techniqueButton")
+        }
+
         var YourPickData = yourPick_tech_list[yourPickTech]
-        button.setAttribute("onclick", `attack('ennemy',${JSON.stringify(YourPickData)}, {{ennemy.health}})`);
+        button.setAttribute("onclick", `attack('player','ennemy',${JSON.stringify(YourPickData)}, {{ennemy.health}})`);
 
         div.appendChild(button);
 
@@ -88,9 +108,18 @@
 
         var EnnemyData = ennemy_tech_list[ennemyTech]
 
-        button.innerHTML = ennemy_tech_list[ennemyTech].name;
-        button.setAttribute("onclick", `attack('player',${JSON.stringify(EnnemyData)}, {{yourPick.health}})`);
+        if (ennemy_tech_list[ennemyTech].name == "NormalAttack") {
+            button.classList.add("normalAttackButton")
+        } else if (ennemy_tech_list[ennemyTech].name == "Guard") {
+            button.classList.add("guardButton")
+        } else if (ennemy_tech_list[ennemyTech].name == "ChargeKi") {
+            button.classList.add("kiButton")
+        } else {
+            button.classList.add("techniqueButton")
+        }
 
+        button.innerHTML = ennemy_tech_list[ennemyTech].name;
+        button.setAttribute("onclick", `attack('ennemy','player',${JSON.stringify(EnnemyData)}, {{yourPick.health}})`);
 
         div.appendChild(button);
     </script>
@@ -107,12 +136,27 @@
         function updateEnergy(target, amount) {
             const YourEnergyBar = document.getElementById('YourEnergy');
             const EnnemyEnergyBar = document.getElementById('EnnemyEnergy');
-            if (target == "player") {
-                YourEnergyBar.textContent = parseInt(YourEnergyBar.textContent) + amount
-                YourEnergyBar.style.width = (YourEnergyBar.textContent / "{{yourPick.energy}}") * 100 + '%'
+            const maxEnergy = (target === "player") ? parseInt("{{yourPick.energy}}") : parseInt("{{ennemy.energy}}");
+
+            let newEnergyValue;
+            if (target === "player") {
+                newEnergyValue = parseInt(YourEnergyBar.textContent) + amount;
             } else {
-                EnnemyEnergyBar.textContent = parseInt(EnnemyEnergyBar.textContent) + amount
-                EnnemyEnergyBar.style.width = (EnnemyEnergyBar.textContent / "{{ennemy.energy}}") * 100 + '%'
+                newEnergyValue = parseInt(EnnemyEnergyBar.textContent) + amount;
+            }
+
+            newEnergyValue = Math.min(newEnergyValue, maxEnergy);
+
+            if (target === "player") {
+                YourEnergyBar.textContent = newEnergyValue;
+                YourEnergyBar.style.width = (newEnergyValue / maxEnergy) * 100 + '%';
+            } else {
+                EnnemyEnergyBar.textContent = newEnergyValue;
+                EnnemyEnergyBar.style.width = (newEnergyValue / maxEnergy) * 100 + '%';
+            }
+
+            if (newEnergyValue == maxEnergy) {
+                console.log("energy full")
             }
         }
 

@@ -71,7 +71,7 @@ header{
 
 
 #mainTitle span {
-    display: inline; /* Display spans side by side */
+    display: inline; 
     margin-bottom: -90px;
 }
 
@@ -416,8 +416,8 @@ svg{
 #modesCard {
     display:inline-flex;
     padding-left: 50px;
-    width: 800px; /* Vous pouvez ajuster la largeur selon vos besoins */
-    text-align: center; /* Centrer le contenu à l'intérieur de la carte */
+    width: 800px; 
+    text-align: center; 
 }
 
 #modeImage {
@@ -442,7 +442,7 @@ svg{
 
 #modeImage:hover {
     filter: brightness(100%);
-    transform: scale(1.1); /* Agrandir l'image au survol */
+    transform: scale(1.1);
 }
 
 
@@ -482,9 +482,9 @@ svg{
 
 #characterCard {
     display: inline-block;
-    width: 300px; /* Vous pouvez ajuster la largeur selon vos besoins */
-    margin: 10px; /* Espacement entre les cartes */
-    text-align: center; /* Centrer le contenu à l'intérieur de la carte */
+    width: 300px; 
+    margin: 10px; 
+    text-align: center; 
 }
 
 #characterImage {
@@ -497,7 +497,7 @@ svg{
 
 #characterImage:hover {
     filter: brightness(100%);
-    transform: scale(1.1); /* Agrandir l'image au survol */
+    transform: scale(1.1); 
 }
 
 #characterName{
@@ -608,9 +608,9 @@ footer{
 
 #stageCard {
     display: inline-block;
-    width: 300px; /* Vous pouvez ajuster la largeur selon vos besoins */
-    margin: 10px; /* Espacement entre les cartes */
-    text-align: center; /* Centrer le contenu à l'intérieur de la carte */
+    width: 300px; 
+    margin: 10px; 
+    text-align: center; 
 }
 
 
@@ -634,7 +634,7 @@ footer{
 
 #stageImage:hover {
     filter: brightness(100%);
-    transform: scale(1.1); /* Agrandir l'image au survol */
+    transform: scale(1.1); 
     transform: scale(1.05);
 
 }
@@ -659,24 +659,4 @@ footer{
 #confirm_stage:hover{
     background-color: #fe3939;
     color: #FFFFFF;
-}
-
-.container {
-    display: flex;
-    justify-content: space-between; /* Pour aligner les images à gauche et à droite */
-}
-
-.character {
-    text-align: center; /* Pour centrer le nom */
-}
-
-.character-image {
-    width: 500px; /* Largeur des images */
-}
-
-.character-name {
-    font-size: 30px;
-    color: #F2FCFF;
-    margin-top: 80px; /* Marge au-dessus du nom */
-    font-weight: bold; /* Texte en gras */
 }

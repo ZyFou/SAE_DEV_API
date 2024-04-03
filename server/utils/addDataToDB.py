@@ -30,9 +30,9 @@ def addExempleUsers(db_infos):
         if not user_exists:
             # If 'Utilisateur' doesn't exist, insert it into the table
             cursor.execute("""
-                INSERT INTO users (nickname, email, password, admin,profile_picture,banner, experience, level)
-                VALUES (%s, %s, %s, %s, %s, %s, %s,%s)
-            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU",0,1))
+                INSERT INTO users (nickname, email, password, admin,profile_picture,banner,current_quest_stage, experience, level)
+                VALUES (%s, %s, %s, %s, %s, %s, %s,%s,%s)
+            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU",0,0,1))
             print("Utilisateur 'Utilisateur' a été ajouté à la table 'users'.")
         else:
             print("L'utilisateur 'Utilisateur' existe déjà.")

@@ -99,8 +99,8 @@ def register():
                         return render_template('register.html', error="Email already in use.")
 
                     # Insert the new user into the database
-                    cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, banner, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s,%s)""", 
-                                   (pseudo, email, password, False, default_pfp,default_banner, 0,1))
+                    cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, banner,current_quest_stage, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s  )""", 
+                                   (pseudo, email, password, False, default_pfp,default_banner,0,0,1))
                     db.commit()
 
                     # Retrieve the ID of the newly inserted user

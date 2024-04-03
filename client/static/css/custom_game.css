@@ -1,0 +1,73 @@
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.character {
+    text-align: center; 
+}
+
+.character-image {
+    width: 500px; 
+}
+
+.character-name {
+    font-size: 30px;
+    color: #F2FCFF;
+    margin-top: 80px; 
+    font-weight: bold; 
+}
+
+.energyBar{
+    margin-top: 5px;
+    width: 50%;
+}
+
+button{
+    border: none;
+}
+.normalAttackButton{
+    transition: 0.5s;
+
+    margin-left: 10px;
+    background-color: rgb(255, 170, 73);
+    color: #F2FCFF;
+    font-size: 20px;
+    border-radius: 8px;
+}
+
+.guardButton{
+    transition: 0.5s;
+
+    margin-left: 10px;
+    background-color: rgb(54, 202, 89);
+    color: #F2FCFF;
+    font-size: 20px;
+    border-radius: 8px;
+
+}
+
+.techniqueButton{
+    transition: 0.5s;
+
+    margin-left: 10px;
+    background-color: rgb(255, 73, 73);
+    color: #F2FCFF;
+    font-size: 20px;
+    border-radius: 8px;
+
+}
+
+.kiButton{
+    transition: 0.5s;
+    margin-left: 10px;
+    background-color: rgb(73, 131, 255);
+    color: #F2FCFF;
+    font-size: 20px;
+    border-radius: 8px;
+}
+
+button:hover{
+    transform: scale(1.05);
+}

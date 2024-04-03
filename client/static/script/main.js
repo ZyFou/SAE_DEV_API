@@ -102,16 +102,6 @@ function confirmYourChoiceOpponent() {
 }
 
 
-
-
-
-// FIGHT PART
-// FIGHT PART
-// FIGHT PART
-// FIGHT PART
-
-
-
 function convertToQueryString(params) {
     var queryString = '';
 
@@ -136,7 +126,6 @@ function confirmStage() {
     var dataToSend = { "yourPick": your_character, "ennemy": your_ennemy, "stage": stage, "mode": mode };
     var queryString = convertToQueryString(dataToSend);
     window.location.href = `/gameMode/customGame?` + queryString
-
 }
 
 
@@ -149,80 +138,3 @@ function setBackground(stageImage) {
 }
 
 
-function SetHealthBarYou(health) {
-    const healthBar = document.getElementById('YourHealth');
-    const healthPercentage = Math.min(Math.max(health, 0), 100);
-    healthBar.style.width = healthPercentage + '%';
-    healthBar.textContent = health;
-}
-
-function SetHealthBarEnnemy(health) {
-    const healthBar = document.getElementById('EnnemyHealth');
-    const healthPercentage = Math.min(Math.max(health, 0), 100);
-    healthBar.style.width = healthPercentage + '%';
-    healthBar.textContent = health;
-}
-
-
-function attack(target, data, initial_health) {
-    const YourhealthBar = document.getElementById('YourHealth');
-    const EnnemyhealthBar = document.getElementById('EnnemyHealth');
-
-    const YourEnergyBar = document.getElementById('YourEnergy');
-    const EnnemyEnergyBar = document.getElementById('EnnemyEnergy');
-
-    if (target == 'player') {
-        var damages = data.damages;
-        var cost = data.cost;
-
-        if (hasEnoughEnergy(cost, EnnemyEnergyBar.textContent)) {
-            if (data.name == "ChargeKi") {
-                updateEnergy('ennemy', 20)
-            } else {
-                updateEnergy('ennemy', cost * -1)
-            }
-        } else {
-            console.log('Not enough energy')
-            return
-        }
-
-        var health = parseInt(YourhealthBar.textContent);
-        var remainingHealth = Math.max(health - damages, 0);
-        var healthPercentage = (remainingHealth / initial_health) * 100; // 1800 est le nombre total de points de vie
-
-        YourhealthBar.style.width = healthPercentage + '%';
-        YourhealthBar.textContent = remainingHealth;
-
-    } else {
-        var damages = data.damages;
-        var cost = data.cost;
-
-        if (hasEnoughEnergy(cost, YourEnergyBar.textContent)) {
-            if (data.name == "ChargeKi") {
-                updateEnergy('player', 20)
-            } else {
-                updateEnergy('player', cost * -1)
-            }
-        } else {
-            console.log('Not enough energy')
-            return
-        }
-
-        var health = parseInt(EnnemyhealthBar.textContent);
-        var remainingHealth = Math.max(health - damages, 0);
-        var healthPercentage = (remainingHealth / initial_health) * 100; // 1800 est le nombre total de points de vie
-
-        EnnemyhealthBar.style.width = healthPercentage + '%';
-        EnnemyhealthBar.textContent = remainingHealth;
-    }
-}
-
-
-function hasEnoughEnergy(cost, value) {
-    if (value >= cost) {
-        return true
-    }
-    else {
-        return false
-    }
-}

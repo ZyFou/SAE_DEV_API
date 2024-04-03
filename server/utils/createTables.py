@@ -25,6 +25,7 @@ def createUserTable(db_infos):
                     banner TEXT,
                     favorite_character VARCHAR(255),
                     collection_id INT,
+                    current_quest_stage INT,
                     experience FLOAT,
                     level INT
                 )
