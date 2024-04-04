@@ -38,6 +38,8 @@
 
             <img src="{{yourPick.image}}" alt="{{yourPick.name}}" class="character-image">
             <div id="YourPickAttacks"></div>
+            <div id="PlayerSpecialAttacks"></div>
+
 
         </div>
         <div>
@@ -62,6 +64,7 @@
 
             <img src="{{ennemy.image}}" alt="{{ennemy.name}}" class="character-image">
             <div id="EnnemyAttacks"></div>
+            <div id="EnnemySpecialAttacks"></div>
 
         </div>
     </div>
@@ -73,9 +76,14 @@
 
         var div = document.getElementById("YourPickAttacks");
 
+        var special_div = document.getElementById("PlayerSpecialAttacks")
+
+
         var yourPick_tech_list = '{{yourPick_tech_list}}'.replace(/&#39;/g, '"').replace(/&#34;/g, "'")
         yourPick_tech_list = JSON.parse(yourPick_tech_list)
         var yourPickTech = '{{YourPickTech}}'
+
+        var classic_techs = ["NormalAttack", "Guard", "Counter", "ChargeKi"]
 
         // console.log(yourPick_tech_list[yourPickTech].name)
 
@@ -85,6 +93,9 @@
             button.classList.add("normalAttackButton")
         } else if (yourPick_tech_list[yourPickTech].name == "Guard") {
             button.classList.add("guardButton")
+        }
+        else if (yourPick_tech_list[yourPickTech].name == "Counter") {
+            button.classList.add("counterButton")
         } else if (yourPick_tech_list[yourPickTech].name == "ChargeKi") {
             button.classList.add("kiButton")
         } else {
@@ -94,7 +105,11 @@
         var YourPickData = yourPick_tech_list[yourPickTech]
         button.setAttribute("onclick", `action('player','ennemy',${JSON.stringify(YourPickData)}, {{ennemy.health}})`);
 
-        div.appendChild(button);
+        if (classic_techs.includes(yourPick_tech_list[yourPickTech].name)) {
+            div.appendChild(button);
+        } else {
+            special_div.appendChild(button);
+        }
 
     </script>
     {% endfor %}
@@ -106,6 +121,7 @@
         var button = document.createElement("button");
 
         var div = document.getElementById("EnnemyAttacks");
+        var special_div = document.getElementById("EnnemySpecialAttacks")
 
         var ennemy_tech_list = '{{ennemy_tech_list}}'.replace(/&#39;/g, '"').replace(/&#34;/g, "'")
         ennemy_tech_list = JSON.parse(ennemy_tech_list)
@@ -113,10 +129,14 @@
 
         var EnnemyData = ennemy_tech_list[ennemyTech]
 
+        var classic_techs = ["NormalAttack", "Guard", "Counter", "ChargeKi"]
+
         if (ennemy_tech_list[ennemyTech].name == "NormalAttack") {
             button.classList.add("normalAttackButton")
         } else if (ennemy_tech_list[ennemyTech].name == "Guard") {
             button.classList.add("guardButton")
+        } else if (ennemy_tech_list[ennemyTech].name == "Counter") {
+            button.classList.add("counterButton")
         } else if (ennemy_tech_list[ennemyTech].name == "ChargeKi") {
             button.classList.add("kiButton")
         } else {
@@ -126,7 +146,11 @@
         button.innerHTML = ennemy_tech_list[ennemyTech].name;
         button.setAttribute("onclick", `action('ennemy','player',${JSON.stringify(EnnemyData)}, {{yourPick.health}})`);
 
-        div.appendChild(button);
+        if (classic_techs.includes(ennemy_tech_list[ennemyTech].name)) {
+            div.appendChild(button);
+        } else {
+            special_div.appendChild(button);
+        }
     </script>
     {% endfor %}
 
@@ -144,7 +168,7 @@
             const maxEnergy = (target === "player") ? parseInt("{{yourPick.energy}}") : parseInt("{{ennemy.energy}}");
 
             let newEnergyValue;
-            if (target === "player") {
+            if (target == "player") {
                 newEnergyValue = parseInt(YourEnergyBar.textContent) + amount;
             } else {
                 newEnergyValue = parseInt(EnnemyEnergyBar.textContent) + amount;

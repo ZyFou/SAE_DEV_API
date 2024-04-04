@@ -148,21 +148,21 @@ def addTechniques(db_infos):
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('NormalAttack', "Enchainnement de coups simple mais effiace.", normal_attack_gif, "normal_attack",50,50,20,0))
+            """, ('NormalAttack', "Enchainnement de coups simple mais effiace.", normal_attack_gif, "normal_attack",50,95,20,0))
             print("Technique 'Normal Attack' ajouté à la table 'techniques'.")
 
             guard_gif = "https://c.tenor.com/0MAPePoGxQ4AAAAC/tenor.gif"
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Guard', "Technique defensive visant uniquement à bloquer une attaque.", guard_gif, "block_attack",0,40,50,1))
+            """, ('Guard', "Technique defensive visant uniquement à bloquer une attaque.", guard_gif, "defense",0,90,50,2))
             print("Technique 'Guard' ajouté à la table 'techniques'.")
 
             counter_gif = "https://c.tenor.com/pbJ9Nuz-0y0AAAAC/tenor.gif"
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Counter', 'Attaque de contre qui à un gros risque d"échouer mais peut être très efficace.', counter_gif, 'counter_attack',150,20,50,2))
+            """, ('Counter', 'Attaque de contre qui à un gros risque d"échouer mais peut être très efficace.', counter_gif, 'counter_attack',150,60,50,4))
             print("Technique 'Counter' ajouté à la table 'techniques'.")
 
 
@@ -170,21 +170,21 @@ def addTechniques(db_infos):
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Kamehameha', 'Technique emblématique de l"univers de dragon ball.', kamehameha_gif, 'kikoha',120,65,70,0))
+            """, ('Kamehameha', 'Technique emblématique de l"univers de dragon ball.', kamehameha_gif, 'special',120,65,70,0))
             print("Technique 'kamehameha' ajouté à la table 'techniques'.")
 
             garric_gun_gif = "https://c.tenor.com/zof-eTe2ibwAAAAC/tenor.gif"
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('GarricGun', "Technique iconique des membres de la famille de vegeta.", garric_gun_gif, "kikoha",90,75,60,0))
+            """, ('GarricGun', "Technique iconique des membres de la famille de vegeta.", garric_gun_gif, "special",90,75,60,0))
             print("Technique 'garric gun' ajouté à la table 'techniques'.")
 
             kikoha_gif = "https://c.tenor.com/R11mg8c-5cwAAAAC/tenor.gif"
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Kikohas', "Attaques énergétiques à faible précision mais faible coût.", kikoha_gif, "kikoha",70,50,20,0))
+            """, ('Kikohas', "Attaques énergétiques à faible précision mais faible coût.", kikoha_gif, "special",70,50,20,0))
             print("Technique 'Kikoha' ajouté à la table 'techniques'.")
 
             charge_ki_gif = "https://c.tenor.com/i-580TEI3LoAAAAC/tenor.gif"

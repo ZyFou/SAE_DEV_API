@@ -1,12 +1,25 @@
 var nb_turn = 0;
 
+
+var lastPlayerAttack;
 var playerAttackCooldowns = {
     "Counter": 0,
 };
 
+var lastEnnemyAttack;
 var ennemyAttackCooldowns = {
     "Counter": 0,
 };
+
+var DamageBonus = {
+    'player': 0,
+    'ennemy': 0
+}
+
+var ReductionBonus = {
+    'player': 0,
+    'ennemy': 0
+}
 
 
 function SetHealthBarYou(health) {
@@ -26,98 +39,168 @@ function SetHealthBarEnnemy(health) {
 
 function action(sender, target, data, initial_health) {
     if (sender == "player" && target == "ennemy" && playerTurn(nb_turn)) {
-        playerAction(data, initial_health)
+        attackLogic("player", target, data)
+
     } else if (sender == "player" && target == "ennemy" && playerTurn(nb_turn) == false) {
         console.log("It's ennemy Turn")
+
     } else if (sender == "ennemy" && target == "player" && playerTurn(nb_turn) == false) {
-        ennemyAction(data, initial_health)
-    }
-    else if (sender == "ennemy" && target == "player" && playerTurn(nb_turn)) {
+        attackLogic("ennemy", target, data)
+
+    } else if (sender == "ennemy" && target == "player" && playerTurn(nb_turn)) {
         console.log("It's Player Turn")
     }
 
 }
 
 
+function setLastAttack(sender, attack) {
+    if (sender == "player") {
+        lastPlayerAttack = attack;
+    } else {
+        lastEnnemyAttack = attack;
+    }
+}
 
-function playerAction(data) {
-    const YourhealthBar = document.getElementById('YourHealth');
-    const EnnemyhealthBar = document.getElementById('EnnemyHealth');
 
-    const YourEnergyBar = document.getElementById('YourEnergy');
-    const EnnemyEnergyBar = document.getElementById('EnnemyEnergy');
+function attackLogic(sender, target, attackData) {
+    var healthBar;
+    var energyBar;
+    var bonus = DamageBonus[sender]
 
-    var damages = data.damages;
-    var cost = data.cost;
-    var name = data.name
+    if (target == "player") {
+        healthBar = document.getElementById('YourHealth');
+        energyBar = document.getElementById('YourEnergy');
 
-    if (!isOnCoolDown('player', name)) {
-        console.log('Not cooldown')
+    } else {
+        healthBar = document.getElementById('EnnemyHealth');
+        energyBar = document.getElementById('EnnemyEnergy');
+    }
+
+    var attack_name = attackData.name;
+    var damages = attackData.damages
+    var accuracy = attackData.accuracy;
+    var cost = attackData.cost;
+
+    var techWithCD = "Counter";
+    if (!checkCD(sender, attack_name)) {
+        if (hasEnoughEnergy(cost, energyBar.textContent)) {
+            if (attackEmitted(accuracy)) {
+                if (attack_name == "ChargeKi") {
+                    updateEnergy(sender, 50)
+                    increaseTurn()
+                    updateCoolDown(sender, techWithCD)
+
+                    setLastAttack(sender, attack_name)
+
+                } else if (attack_name == "Defense") {
+                    updateEnergy(sender, cost * -1)
+                    increaseTurn()
+                    updateCoolDown(sender, techWithCD)
+
+                    setLastAttack(sender, attack_name)
+
+                } else if (attack_name == "Counter") {
+                    updateEnergy(sender, cost * -1)
+                    increaseTurn()
+                    setCoolDown(sender, attack_name, 2)
+
+                    setLastAttack(sender, attack_name)
+
+                } else {
+                    updateEnergy(sender, cost * -1)
+                    increaseTurn()
+                    updateCoolDown(sender, techWithCD)
+
+                    inflictDamages(sender, target, damages, bonus)
+                    setLastAttack(sender, attack_name)
+                }
+            }
+            else {
+                if (attack_name == "Counter") {
+                    setCoolDown(sender, attack_name, 2)
+                }
+                console.log("Missed")
+                updateEnergy(sender, (cost / 2) * -1)
+                increaseTurn()
+            }
+        } else {
+            console.log('Not enough Energy')
+        }
     } else {
         console.log('Cooldown')
     }
+}
 
-    if (hasEnoughEnergy(cost, YourEnergyBar.textContent)) {
-        if (data.name == "ChargeKi") {
-            updateEnergy('player', 20)
-            increaseTurn()
-        } else {
-            if (attackEmitted(data)) {
-                updateEnergy('player', cost * -1)
-                increaseTurn()
-                updateEnnemyHealth(damages)
-            } else {
-                updateEnergy('player', (cost / 2) * -1)
-                increaseTurn()
-            }
-        }
+function inflictDamages(sender, target, attackValue, bonus) {
+    var healthBar;
+    var initalHealthValue;
+    var sender_stats;
+    var receiverStats;
+
+    if (target == "player") {
+        healthBar = document.getElementById('YourHealth');
+        initalHealthValue = playerInitialHealth;
+        sender_stats = playerStats;
+        receiverStats = ennemyStats;
     } else {
-        console.log('Not enough energy')
-        return
+        healthBar = document.getElementById('EnnemyHealth');
+        initalHealthValue = ennemyInitialHealth;
+        sender_stats = ennemyStats;
+        receiverStats = playerStats;
     }
 
+    var newDamages = attackValue + bonus;
+
+    var finalDamages = calculateDamages(receiverStats, sender_stats, newDamages)
+
+    if (sender == "player" && lastEnnemyAttack == "Guard") {
+        alert("Damage Reduction")
+        finalDamages = bonus
+    } else if (sender == "ennemy" && lastPlayerAttack == "Guard") {
+        alert("Damage Reduction")
+        finalDamages = bonus
+    }
+
+
+    var health = parseInt(healthBar.textContent);
+    var remainingHealth = Math.max(health - finalDamages, 0);
+    var healthPercentage = (remainingHealth / initalHealthValue) * 100;
+
+    healthBar.style.width = healthPercentage + '%';
+    healthBar.textContent = remainingHealth;
+
+    DamageBonusChecker(sender_stats, healthPercentage, healthBar, sender)
+}
+
+function DamageBonusChecker(sender_stats, healthPercentage, healthBar, sender) {
+    if (healthPercentage <= 50) {
+        healthBar.classList.remove('bg-success');
+        healthBar.classList.add('bg-warning');
+        DamageBonus[sender] = (sender_stats.strength) * 0.1
+    }
+    if (healthPercentage <= 25) {
+
+        healthBar.classList.remove('bg-warning');
+        healthBar.classList.add('bg-danger');
+        DamageBonus[sender] = (sender_stats.strength) * 0.5
+    }
+    if (healthPercentage <= 10) {
+        DamageBonus[sender] = (sender_stats.strength)
+    }
 }
 
 
-
-
-function ennemyAction(data) {
-    const YourhealthBar = document.getElementById('YourHealth');
-    const EnnemyhealthBar = document.getElementById('EnnemyHealth');
-
-    const YourEnergyBar = document.getElementById('YourEnergy');
-    const EnnemyEnergyBar = document.getElementById('EnnemyEnergy');
-
-    var damages = data.damages;
-    var cost = data.cost;
-
-
-    if (hasEnoughEnergy(cost, EnnemyEnergyBar.textContent)) {
-        if (data.name == "ChargeKi") {
-            updateEnergy('ennemy', 20)
-            increaseTurn()
-        } else {
-            if (attackEmitted(data)) {
-                updateEnergy('ennemy', cost * -1)
-                increaseTurn()
-                updatePlayerHealth(damages)
-            } else {
-                updateEnergy('ennemy', (cost / 2) * -1)
-                increaseTurn()
-            }
-        }
-    } else {
-        console.log('Not enough energy')
-        return
-    }
-
-}
-
-function isOnCoolDown(sender, technique) {
-    if (sender == "player") {
+function checkCD(sender, technique) {
+    if (sender == "player" && technique in playerAttackCooldowns) {
         return playerAttackCooldowns[technique] > 0
-    } else if (sender == "ennemy") {
+
+    } else if (sender == "ennemy" && technique in ennemyAttackCooldowns) {
         return ennemyAttackCooldowns[technique] > 0
+
+    }
+    else {
+        return false
     }
 }
 
@@ -134,53 +217,17 @@ function updateCoolDown(sender, technique) {
     }
 }
 
-function attackEmitted(data) {
-    return (Math.floor(Math.random() * 100) + 1) >= data.accuracy
-}
-
-function updatePlayerHealth(damages) {
-
-    const YourhealthBar = document.getElementById('YourHealth');
-
-    var damages = calculateDamages(ennemyStats, playerStats, damages)
-
-    var health = parseInt(YourhealthBar.textContent);
-    var remainingHealth = Math.max(health - damages, 0);
-    var healthPercentage = (remainingHealth / playerInitialHealth) * 100; // 1800 est le nombre total de points de vie
-
-    YourhealthBar.style.width = healthPercentage + '%';
-    YourhealthBar.textContent = remainingHealth;
-
-    if (healthPercentage <= 50) {
-        YourhealthBar.classList.remove('bg-success');
-        YourhealthBar.classList.add('bg-warning');
+function setCoolDown(sender, technique, value) {
+    if (sender == "player") {
+        playerAttackCooldowns[technique] = value
     }
-    if (healthPercentage <= 25) {
-        YourhealthBar.classList.remove('bg-warning');
-        YourhealthBar.classList.add('bg-danger');
+    else if (sender == "ennemy") {
+        ennemyAttackCooldowns[technique] = value
     }
 }
 
-function updateEnnemyHealth(damages) {
-    const EnnemyhealthBar = document.getElementById('EnnemyHealth');
-
-    var damages = calculateDamages(playerStats, ennemyStats, damages)
-
-    var health = parseInt(EnnemyhealthBar.textContent);
-    var remainingHealth = Math.max(health - damages, 0);
-    var healthPercentage = (remainingHealth / ennemyInitialHealth) * 100;
-
-    EnnemyhealthBar.style.width = healthPercentage + '%';
-    EnnemyhealthBar.textContent = remainingHealth;
-
-    if (healthPercentage <= 50) {
-        EnnemyhealthBar.classList.remove('bg-success');
-        EnnemyhealthBar.classList.add('bg-warning');
-    }
-    if (healthPercentage <= 25) {
-        EnnemyhealthBar.classList.remove('bg-warning');
-        EnnemyhealthBar.classList.add('bg-danger');
-    }
+function attackEmitted(accuracy) {
+    return (Math.floor(Math.random() * 100) + 1) <= accuracy
 }
 
 
@@ -195,7 +242,6 @@ function calculateDamages(senderStats, receiverStats, damages) {
 
         return newDamages
     }
-
 }
 
 
@@ -224,6 +270,3 @@ function increaseTurn() {
     const turns_counter = document.getElementById('turns')
     turns_counter.textContent = nb_turn;
 }
-
-
-
