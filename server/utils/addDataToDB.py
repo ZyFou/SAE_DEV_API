@@ -162,7 +162,7 @@ def addTechniques(db_infos):
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, ('Counter', 'Attaque de contre qui à un gros risque d"échouer mais peut être très efficace.', counter_gif, 'counter_attack',150,60,50,4))
+            """, ('Counter', 'Attaque de contre qui à un gros risque d"échouer mais peut être très efficace.', counter_gif, 'counter_attack',0,60,50,4))
             print("Technique 'Counter' ajouté à la table 'techniques'.")
 
 

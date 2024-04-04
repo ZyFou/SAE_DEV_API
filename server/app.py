@@ -26,6 +26,28 @@ addDataToDB.linkTechniquesToCharacter(db_infos)
 
 app = Flask(__name__)
 
+@app.route('/api/users/', methods=['GET'])
+def get_users():
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+
+    cursor = db.cursor()
+    query = "SELECT * FROM `users`"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print(result)
+
+    if len(result) == 0:
+        return jsonify({"message": "Aucun personnages"}), 404
+
+
+    characters = [{"id": row[0],"nickname": row[1], "bio": row[2], "email":row[3],"profile_picture":row[6],"banner":row[7],"current_quest_stage":row[10],"experience":row[11], "level":row[12]} for row in result]
+    return jsonify({"characters": characters})
+
 @app.route('/api/userInfos/<int:id>', methods=['GET'])
 def get_users_data(id):
     db = mysql.connector.connect(
@@ -146,7 +168,7 @@ def get_techniques():
         return jsonify({"message": "Aucune technique"}), 404
 
 
-    techniques = [{"idTechnique": row[0],"name": row[1], "Description": row[2], "type": row[3]} for row in result]
+    techniques = [{"idTechnique": row[0],"name": row[1], "Description": row[2], "image": row[3]} for row in result]
     return jsonify({"techniques": techniques})
 
 @app.route('/api/techniques/<string:name>', methods=['GET'])
