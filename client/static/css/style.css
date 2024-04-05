@@ -166,7 +166,7 @@ header{
     font-size: 20px;
     font-weight: 800;
     color: #63645d;
-    width: 280px;
+    width: 230px;
     height: 70px;
     border-radius: 20px;
 }
@@ -387,7 +387,6 @@ svg{
     padding: 10px;
     border-radius: 20px;
     background-color: #4C5562;
-
 }
 
 #gameModeChoices a {

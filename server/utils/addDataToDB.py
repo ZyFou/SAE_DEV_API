@@ -272,7 +272,6 @@ def linkTechniquesToCharacter(db_infos):
         db.close()
 
 
-
 def addStages(db_infos):
     try:
         db = mysql.connector.connect(
@@ -288,7 +287,7 @@ def addStages(db_infos):
 
         if stages_count == 0: 
             satan_city_image = "https://i.pinimg.com/originals/d0/5f/68/d05f68fe951d1a2a3e57774df5f1ba66.jpg"
-            satan_city_icon = "https://i2.wp.com/retrodbzccg.com/wp-content/uploads/2014/04/satan-city.jpg?fit=320%2C240&ssl=1"
+            satan_city_icon = "https://i.pinimg.com/originals/d0/5f/68/d05f68fe951d1a2a3e57774df5f1ba66.jpg"
             cursor.execute("""
                 INSERT INTO stages (name, description, type, image, icon)
                 VALUES (%s, %s, %s, %s, %s)
@@ -308,6 +307,41 @@ def addStages(db_infos):
             db.commit()
         else:
             print("Les stages existent déjà dans la table 'stages'.")
+
+        cursor.close()
+        db.close()
+
+    except mysql.connector.Error as error:
+        db.rollback()
+        print(f"Erreur: {error}")
+        cursor.close()
+        db.close()
+
+
+def addQuestLevels(db_infos):
+    try:
+        db = mysql.connector.connect(
+            host=db_infos['host'],
+            user=db_infos['user'],
+            password=db_infos['password'],
+            database=db_infos['database']
+        )
+        cursor = db.cursor()
+
+        cursor.execute("SELECT COUNT(*) FROM quest_levels")
+        stages_count = cursor.fetchone()[0]
+
+        if stages_count == 0: 
+            
+            cursor.execute("""
+                INSERT INTO quest_levels (levelName, idPlayerCharacter, idEnemyCharacter, StageName, experience_earned)
+                VALUES (%s, %s, %s, %s, %s)
+            """, ("Le Début d'une aventure", 1,7,"SatanCity",50))
+            print("Niveau 1 Ajouté à la table : quest_levels")
+
+            db.commit()
+        else:
+            print("Les niveaux existent déjà dans la table 'quest_levels'")
 
         cursor.close()
         db.close()

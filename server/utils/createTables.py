@@ -137,6 +137,38 @@ def createTechniqueOwnByeTable(db_infos):
     db.close()
 
 
+
+def createQuestLevelsTable(db_infos):
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+    cursor = db.cursor()
+
+    cursor.execute("SHOW TABLES LIKE 'quest_levels'")
+    result = cursor.fetchone()
+
+    if not result:
+        cursor.execute("""
+                CREATE TABLE quest_levels (
+                    idLevel INT AUTO_INCREMENT PRIMARY KEY,
+                    levelName TEXT,
+                    idPlayerCharacter INT,
+                    idEnemyCharacter INT,
+                    StageName TEXT,
+                    experience_earned FLOAT
+                )
+            """)
+        print("La table 'quest_levels' a été créée avec succès.")
+    else:
+        print("La table 'quest_levels' existe déjà.")
+    
+    cursor.close()
+    db.close()
+
+
 def createStageTable(db_infos):
     db = mysql.connector.connect(
         host=db_infos['host'],

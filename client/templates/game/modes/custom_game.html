@@ -49,7 +49,7 @@
         </div>
         <div>
             <h1 id="turns">0</h1>
-            <h1 id="whoplays">Player</h1>
+            <h1 id="whoplays" style="display: none;">Player</h1>
         </div>
 
 
@@ -121,6 +121,7 @@
 
     <script> console.log("")</script>
 
+    {% if mode == "multi" %}
     {% for ennemyTech in ennemy_tech_list %}
     <script>
         var button = document.createElement("button");
@@ -158,6 +159,26 @@
         }
     </script>
     {% endfor %}
+    {% endif %}
+
+    <script>
+        var AI_Techniques = [];
+        var AI_Health = '{{ennemy.health}}'
+        var AISmartness = '{{AISmartness}}';
+    </script>
+
+    {% if mode == "solo" %}
+    {% for ennemyTech in ennemy_tech_list %}
+    <script>
+        var ennemy_tech_list = '{{ennemy_tech_list}}'.replace(/&#39;/g, '"').replace(/&#34;/g, "'")
+        ennemy_tech_list = JSON.parse(ennemy_tech_list)
+
+        var ennemyTech = '{{ennemyTech}}'.replace(/&#39;/g, '"').replace(/&#34;/g, "'")
+
+        AI_Techniques.push(ennemy_tech_list[ennemyTech])
+    </script>
+    {% endfor %}
+    {% endif %}
 
     <script>
         setBackground("{{ stage.image }}")
@@ -197,6 +218,8 @@
     </script>
 
     <script>
+        const GameMode = "{{ mode }}"
+
         const playerInitialHealth = "{{yourPick.health}}"
         const ennemyInitialHealth = "{{ennemy.health}}"
 

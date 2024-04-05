@@ -123,9 +123,10 @@ function confirmStage() {
     // ennemy_text.style.display = "none"
     // stage_choice_div.style.display = "none";
 
-    var dataToSend = { "yourPick": your_character, "ennemy": your_ennemy, "stage": stage, "mode": mode };
+    var dataToSend = { "yourPick": your_character, "ennemy": your_ennemy, "stage": stage, "mode": mode, "AISmartness": 7 };
     var queryString = convertToQueryString(dataToSend);
     window.location.href = `/gameMode/customGame?` + queryString
+
 }
 
 

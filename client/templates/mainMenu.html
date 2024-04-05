@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <title>Index of the site</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/menu.css">
+
+</head>
+
+<body>
+    <header>
+        <a href="{% if is_co %}/profile{% else %}/login{% endif %}">
+            <img id="profileButton"
+                src="{% if is_co %}{{profile_picture}}{% else %}https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png{% endif %}"
+                alt="">
+        </a>
+    </header>
+
+    <h1 id="mainTitleLogo" class="topLogo">
+        <a href="/" id="site_logo">
+            <span id="dragon_text_logo">DRAGON</span>
+            <span id="ball_text">BALL</span>
+        </a>
+    </h1>
+    <a href="/" id="site_logo">
+        <h2 id="draft_clash_text_logo">
+            <span>DRAFT CLASH</span>
+        </h2>
+    </a>
+
+    <div id="MenuChoices">
+
+        <a href="">
+            <div id="ChoicesDiv">
+                <div id="card">
+                    <img id="menuImg"
+                        src="https://dragonball-legends.com/assets/characters/0384_trunksfuture_384_texture/0384_TrunksFuture_384_Chara.png"
+                        alt="">
+                    <p>JOUEURS</p>
+                </div>
+                <br>
+                <div id="cardTitle">
+                    Visualisez la progression de tout les joueurs inscrits sur le site.
+                </div>
+            </div>
+        </a>
+        <a href="">
+            <div id="cardDiv">
+                <div id="card">
+                    <img id="menuImg"
+                        src="https://dragonball-legends.com/assets/characters/0380_brolynss1_380_texture/0380_BrolyNSS1_380_Chara.png"
+                        alt="">
+                    <p>L'API</p>
+                </div>
+                <br>
+                <div id="cardText">
+                    Explorez le contenu de l'api avec ses données et autres informations.
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <footer style="margin-top: 50px;">
+        <a href="/"><button id="goBack">RETOUR</button></a>
+
+    </footer>
+
+</body>
+
+</html>

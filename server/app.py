@@ -12,6 +12,7 @@ createTables.createCharacterTable(db_infos)
 createTables.createTechniqueTable(db_infos)
 createTables.createTechniqueOwnByeTable(db_infos)
 createTables.createStageTable(db_infos)
+createTables.createQuestLevelsTable(db_infos)
 
 
 
@@ -20,6 +21,8 @@ addDataToDB.addExempleUsers(db_infos)
 addDataToDB.addCharacters(db_infos)
 addDataToDB.addTechniques(db_infos)
 addDataToDB.addStages(db_infos)
+addDataToDB.addQuestLevels(db_infos)
+
 
 addDataToDB.linkTechniquesToCharacter(db_infos)
 

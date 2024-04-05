@@ -24,6 +24,16 @@ def index():
     
     else:
         return render_template('index.html', profile_picture=pfp, is_co = False)
+    
+@app.route('/menu')
+def menu():
+    pfp = default_pfp
+    if 'user_id' in session:
+        pfp = session["profile_picture"]
+        return render_template('mainMenu.html', profile_picture=pfp, is_co = True)
+    
+    else:
+        return render_template('mainMenu.html', profile_picture=pfp, is_co = False)
 
 
 def verify_credentials(email, password):
@@ -211,7 +221,6 @@ def gameMode_Custom():
         
     
 
-# FAIRE LA SESSION
 
 @app.route('/gameMode/customGame')
 def testGame():
@@ -245,8 +254,10 @@ def testGame():
 
         stage = requests.get(f"{base_url}stages/{query_params['stage']}").json()
         mode = query_params['mode']
+        AISmartness = query_params['AISmartness']
 
-        return render_template('game/modes/custom_game.html', yourPick=yourPick, yourPick_tech_list=yourPick_tech_list, ennemy=ennemy, ennemy_tech_list=ennemy_tech_list, stage=stage, mode=mode)
+
+        return render_template('game/modes/custom_game.html', yourPick=yourPick, yourPick_tech_list=yourPick_tech_list, ennemy=ennemy, ennemy_tech_list=ennemy_tech_list, stage=stage, mode=mode, AISmartness = AISmartness)
 
     else:
         return redirect('/')

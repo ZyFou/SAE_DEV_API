@@ -1,0 +1,51 @@
+.topLogo{
+    margin-top: -80px;
+}
+
+#menuActionChoices{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 250px;
+}
+
+#MenuChoices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#ChoicesDiv {
+    position: relative;
+    margin: 50px;
+}
+
+
+
+#ChoicesDiv:hover img{
+    filter: brightness(100%);
+    transform: scale(1.1);
+}
+
+#cardTitle{
+    position: absolute;
+    bottom: 0px;
+    left: 50px;
+    width: 70%;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #4C5562;
+}
+
+#menuImg {
+    transition: 0.5s;
+    cursor: pointer;
+    transition: transform 0.5s, filter 0.5s; 
+    filter: brightness(75%);
+    position: relative;
+    left: -40px;
+    top: -60px;
+    width:300px;
+}

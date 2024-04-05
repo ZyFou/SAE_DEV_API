@@ -4,11 +4,13 @@ var nb_turn = 0;
 var lastPlayerAttack;
 var playerAttackCooldowns = {
     "Counter": 0,
+    "Guard": 0
 };
 
 var lastEnnemyAttack;
 var ennemyAttackCooldowns = {
     "Counter": 0,
+    "Guard": 0
 };
 
 var DamageBonus = {
@@ -22,20 +24,6 @@ var ReductionBonus = {
 }
 
 
-function SetHealthBarYou(health) {
-    const healthBar = document.getElementById('YourHealth');
-    const healthPercentage = Math.min(Math.max(health, 0), 100);
-    healthBar.style.width = healthPercentage + '%';
-    healthBar.textContent = health;
-}
-
-function SetHealthBarEnnemy(health) {
-    const healthBar = document.getElementById('EnnemyHealth');
-    const healthPercentage = Math.min(Math.max(health, 0), 100);
-    healthBar.style.width = healthPercentage + '%';
-    healthBar.textContent = health;
-}
-
 let playerHasPlayed = false
 let ennemyHasPlayed = false
 
@@ -45,24 +33,180 @@ var playerMoveData;
 var ennemyMove;
 var ennemyMoveData;
 
+
+
+
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+
+
+
+
+function triggerAi(sender, techniques, initial_health, AIEnergy, AISmartness, playerEnergy) {
+    var aiChoice = Math.floor(Math.random() * techniques.length);
+    var technique_used;
+
+    technique_used = AIBrain(sender, techniques, aiChoice, AIEnergy, AISmartness, initial_health, technique_used, playerEnergy);
+    console.log("Ai Action : ", technique_used.name)
+}
+
+function getAIHealth() {
+    return parseInt(document.getElementById('EnnemyHealth').textContent)
+}
+
+function getPlayerHealth() {
+    return parseInt(document.getElementById('YourHealth').textContent)
+}
+
+
+function AIBrain(sender, techniques, aiChoice, AIEnergy, AISmartness, initial_health, technique_used, playerEnergy) {
+    var AIMax = 10
+    console.log(techniques)
+    var newAISmartness = AISmartness;
+
+    if (AISmartness < 1) {
+        newAISmartness = 1
+    } else if (AISmartness > 10) {
+        newAISmartness = AIMax
+    }
+    var AISmartRoll = Math.floor(Math.random() * AIMax) + 1
+    var AISmart = false;
+
+    console.log(newAISmartness)
+
+    if (AISmartRoll <= newAISmartness) {
+        AISmart = true
+    } else {
+        AISmart = false
+    }
+
+    if (AISmart) {
+        console.log('DUMB');
+
+        var AiHealth = getAIHealth();
+        var playerHealth = getPlayerHealth();
+
+        if (AIEnergy * 1.5 <= playerEnergy && hasEnoughEnergy(techniques[3].cost, AIEnergy)) {
+            action(sender, techniques[3], initial_health);
+            return techniques[3];
+        }
+
+        if (playerHealth > AiHealth) {
+            var favorisedMoveId = 1; // Guard
+            if (!checkCD(sender, techniques[favorisedMoveId].name) && hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
+                action(sender, techniques[favorisedMoveId], initial_health);
+                return techniques[favorisedMoveId];
+            }
+
+            favorisedMoveId = 2; // Counter
+            if (!checkCD(sender, techniques[favorisedMoveId].name) && hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
+                action(sender, techniques[favorisedMoveId], initial_health);
+                return techniques[favorisedMoveId];
+            }
+
+            favorisedMoveId = 0; // Normal Attack
+            if (hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
+                action(sender, techniques[favorisedMoveId], initial_health);
+                return techniques[favorisedMoveId];
+            }
+
+            favorisedMoveId = 3; // ChargeKi
+            action(sender, techniques[favorisedMoveId], initial_health);
+            return techniques[favorisedMoveId];
+
+        } else {
+            var favorisedMoveId = 0; // Normal Attack
+            if (hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
+                action(sender, techniques[favorisedMoveId], initial_health);
+                return techniques[favorisedMoveId];
+            }
+        }
+
+        favorisedMoveId = 3; // ChargeKi
+        action(sender, techniques[favorisedMoveId], initial_health);
+        return techniques[favorisedMoveId];
+
+
+    } else {
+        console.log("SMART")
+        if (!checkCD(sender, techniques[aiChoice].name)) {
+            if (hasEnoughEnergy(techniques[aiChoice].cost, AIEnergy)) {
+                action(sender, techniques[aiChoice], initial_health);
+                technique_used = techniques[aiChoice];
+            } else {
+                action(sender, techniques[3], initial_health);
+                technique_used = techniques[3];
+            }
+        } else {
+            if (hasEnoughEnergy(techniques[0].cost, AIEnergy)) {
+                action(sender, techniques[0], initial_health);
+                technique_used = techniques[0];
+            } else {
+                action(sender, techniques[3], initial_health);
+                technique_used = techniques[3];
+            }
+        }
+        return technique_used;
+    }
+
+
+}
+
+
+
+
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+// AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
+
+
+
+
+
+
 function action(sender, data, initial_health) {
+    var energy_value = sender == "player" ? parseInt(document.getElementById('YourEnergy').textContent) : parseInt(document.getElementById('EnnemyEnergy').textContent);
+
+    if (GameMode == "solo" && sender == "player") {
+        var AIEnergy = parseInt(document.getElementById('EnnemyEnergy').textContent);
+        var playerEnergy = parseInt(document.getElementById('YourEnergy').textContent);
+        triggerAi('ennemy', AI_Techniques, AI_Health, AIEnergy, AISmartness, playerEnergy)
+    }
+
     sender == 'player' ? playerHasPlayed = true : ennemyHasPlayed = true;
     if (sender == "player" && playerHasPlayed && !checkCD(sender, data.name)) {
-        playerMove = data.type
-        playerMoveData = data;
+        if (hasEnoughEnergy(data.cost, energy_value)) {
+            playerMove = data.type;
+            playerMoveData = data;
+        } else {
+            console.log("Not enough energy to perform this action");
+            playerHasPlayed = false;
+        }
     }
     else if (checkCD(sender, data.name)) {
         playerHasPlayed = false;
-        alert("This technique is on CD");
+        console.log("This technique is on CD");
     }
 
     if (sender == "ennemy" && ennemyHasPlayed && !checkCD(sender, data.name)) {
-        ennemyMove = data.type
-        ennemyMoveData = data;
+        if (hasEnoughEnergy(data.cost, energy_value)) {
+            ennemyMove = data.type;
+            ennemyMoveData = data;
+        } else {
+            console.log("Not enough energy for the enemy to perform this action");
+            ennemyHasPlayed = false;
+        }
     }
     else if (checkCD(sender, data.name)) {
         ennemyHasPlayed = false;
-        alert("This technique is on CD");
+        console.log("This technique is on CD");
     }
 
     if (playerHasPlayed && ennemyHasPlayed && playerMove != "" && ennemyMove != "") {
@@ -74,7 +218,6 @@ function action(sender, data, initial_health) {
     }
 
 }
-
 
 function setLastAttack(sender, attack) {
     if (sender == "player") {
@@ -105,21 +248,22 @@ function attackLogic(sender, target, attackData) {
     var cost = attackData.cost;
     var cooldown = attackData.cooldown
 
-    var techWithCD = "Counter";
     if (!checkCD(sender, attack_name)) {
         if (hasEnoughEnergy(cost, energyBar.textContent)) {
             if (attackEmitted(accuracy)) {
                 if (attack_name == "ChargeKi") {
-                    updateEnergy(sender, 500)
+                    updateEnergy(sender, 50)
                     increaseTurn()
-                    updateCoolDown(sender, techWithCD)
+                    updateCoolDown(sender)
 
                     setLastAttack(sender, attack_name)
 
-                } else if (attack_name == "Defense") {
+                } else if (attack_name == "Guard") {
                     updateEnergy(sender, cost * -1)
                     increaseTurn()
-                    updateCoolDown(sender, techWithCD)
+                    setCoolDown(sender, attack_name, cooldown)
+
+                    updateCoolDown(sender)
 
                     setLastAttack(sender, attack_name)
 
@@ -133,10 +277,11 @@ function attackLogic(sender, target, attackData) {
                 } else {
                     updateEnergy(sender, cost * -1)
                     increaseTurn()
-                    updateCoolDown(sender, techWithCD)
+                    updateCoolDown(sender)
                     inflictDamages(sender, target, damages, bonus, attackData)
                     setLastAttack(sender, attack_name)
                 }
+
             }
             else {
                 if (attack_name == "Counter") {
@@ -194,7 +339,6 @@ function inflictDamages(sender, target, attackValue, bonus, attackData) {
         displayDamages("player", "ennemy", calculateDamages(ennemyStats, playerStats, (attackDamage * 1.5) + DamageBonus["ennemy"]));
     }
 
-
     displayDamages(sender, target, finalDamages);
 
 }
@@ -205,20 +349,17 @@ function displayDamages(sender, target, finalDamages) {
     var initalHealthValue;
 
     var sender_stats;
+    var target_stats;
 
     if (target == "player") {
         healthBar = document.getElementById('YourHealth');
         initalHealthValue = playerInitialHealth;
+        target_stats = playerStats;
     } else {
         healthBar = document.getElementById('EnnemyHealth');
         initalHealthValue = ennemyInitialHealth;
+        target_stats = ennemyStats;
     }
-
-    if (sender == "player") {
-        sender_stats = playerStats;
-    } else {
-        sender_stats = ennemyStats;
-    };
 
 
     var health = parseInt(healthBar.textContent);
@@ -230,38 +371,32 @@ function displayDamages(sender, target, finalDamages) {
     healthBar.style.width = healthPercentage + '%';
     healthBar.textContent = remainingHealth;
 
-    DamageBonusChecker(sender_stats, healthPercentage, healthBar, sender);
+    DamageBonusChecker(target_stats, healthPercentage, healthBar, target);
 
 }
 
-function DamageBonusChecker(sender_stats, healthPercentage, healthBar, sender) {
+function DamageBonusChecker(target_stats, healthPercentage, healthBar, target) {
     // console.log(sender_stats, healthPercentage, healthBar, sender)
 
-    sender_stats = JSON.parse(sender_stats);
-    if (sender == "player") {
-        sender == "ennemy"
-    }
-    else {
-        sender == "player"
-    }
+    target_stats = JSON.parse(target_stats);
 
     if (healthPercentage <= 75) {
         healthBar.classList.remove('bg-success');
         healthBar.classList.add('bg-info');
-        DamageBonus[sender] = (sender_stats["strength"]) * 0.1
+        DamageBonus[target] = (target_stats["strength"]) * 0.1
     }
     if (healthPercentage <= 50) {
         healthBar.classList.remove('bg-info');
         healthBar.classList.add('bg-warning');
-        DamageBonus[sender] = (sender_stats["strength"]) * 0.5
+        DamageBonus[target] = (target_stats["strength"]) * 0.5
     }
     if (healthPercentage <= 25) {
         healthBar.classList.remove('bg-warning');
         healthBar.classList.add('bg-danger');
-        DamageBonus[sender] = (sender_stats["strength"])
+        DamageBonus[target] = (target_stats["strength"])
     }
     if (healthPercentage <= 10) {
-        DamageBonus[sender] = (sender_stats["strength"]) * 1.5
+        DamageBonus[target] = (target_stats["strength"]) * 1.5
     }
 
 }
@@ -273,27 +408,24 @@ function checkCD(sender, technique) {
 
     } else if (sender == "ennemy" && technique in ennemyAttackCooldowns) {
         return ennemyAttackCooldowns[technique] > 0
-
     }
     else {
         return false
     }
 }
 
-function updateCoolDown(sender, technique) {
-    if (sender == "player") {
-        if (playerAttackCooldowns[technique] > 0) {
-            playerAttackCooldowns[technique] -= 1
-        }
-    }
-    else if (sender == "ennemy") {
-        if (ennemyAttackCooldowns[technique] > 0) {
-            ennemyAttackCooldowns[technique] -= 1
+function updateCoolDown(sender) {
+    var attackCooldowns = sender == "player" ? playerAttackCooldowns : ennemyAttackCooldowns;
+
+    for (var technique in attackCooldowns) {
+        if (attackCooldowns.hasOwnProperty(technique) && attackCooldowns[technique] > 0) {
+            attackCooldowns[technique]--;
         }
     }
 }
 
 function setCoolDown(sender, technique, value) {
+    console.log(technique)
     if (sender == "player") {
         playerAttackCooldowns[technique] = value
     }
@@ -337,7 +469,22 @@ function increaseTurn() {
         whoplays.textContent = "Player";
     };
 
-    nb_turn += 1
+    nb_turn += 0.5
     const turns_counter = document.getElementById('turns')
     turns_counter.textContent = nb_turn;
+}
+
+
+function SetHealthBarYou(health) {
+    const healthBar = document.getElementById('YourHealth');
+    const healthPercentage = Math.min(Math.max(health, 0), 100);
+    healthBar.style.width = healthPercentage + '%';
+    healthBar.textContent = health;
+}
+
+function SetHealthBarEnnemy(health) {
+    const healthBar = document.getElementById('EnnemyHealth');
+    const healthPercentage = Math.min(Math.max(health, 0), 100);
+    healthBar.style.width = healthPercentage + '%';
+    healthBar.textContent = health;
 }
