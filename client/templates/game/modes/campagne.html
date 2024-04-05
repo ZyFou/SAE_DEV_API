@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CUSTOM</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/campagne.css">
+
+    <script src='../static/script/campagne.js'></script>
+
+
+</head>
+
+<body>
+
+    <h1 id="mainTitleLogo">
+        <a href="/" id="site_logo">
+            <span id="dragon_text_logo">DRAGON</span>
+            <span id="ball_text">BALL</span>
+        </a>
+    </h1>
+    <a href="/" id="site_logo">
+        <h2 id="draft_clash_text_logo">
+            <span>DRAFT CLASH</span>
+        </h2>
+    </a>
+
+    <div id="gameModeMainDiv">
+        <h1 id="mainTitle">
+            <span id="dragon_text">CHOISISSEZ UN</span>
+            <span id="title2ndWord">NIVEAU</span>
+        </h1>
+    </div>
+
+    <div id="levelsContainer">
+        {% for quest in questStages.QuestStages %}
+        {% if player_data <= quest.idLevel %} <button id="stageButton" onclick="pickQuestLevel('{{ quest.idPlayerCharacter }}','{{ quest.idCharacterEnemy }}', '{{ quest.stageName }}',
+                    '{{ quest.easyness }}', '{{ quest.experience_earned }}')">
+            {{ quest.levelName }}
+            </button>
+            {% endif %}
+            {% endfor %}
+    </div>
+
+
+    <footer>
+        <a href="/gameMode"><button id="goBack">RETOUR</button></a>
+        <div id="confirm_div">
+            <button id="confirm" onclick="sendFight()">CONFIRMER</button>
+
+
+        </div>
+    </footer>
+
+</html>
+
+
+<script>
+    let yourCharacter;
+    let yourEnnemy;
+    let stagePicked;
+    let EXPearned;
+    let AiBrain;
+
+    function pickQuestLevel(your_character, your_ennemy, stage, AIeasyness, EXP) {
+        yourCharacter = your_character;
+        yourEnnemy = your_ennemy;
+        stagePicked = stage
+        EXPearned = EXP;
+        AiBrain = AIeasyness;
+
+        var confirm = document.getElementById('confirm')
+        confirm.style.display = "block"
+    }
+
+
+
+</script>

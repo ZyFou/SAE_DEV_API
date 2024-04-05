@@ -174,6 +174,10 @@ def get_techniques():
     techniques = [{"idTechnique": row[0],"name": row[1], "Description": row[2], "image": row[3]} for row in result]
     return jsonify({"techniques": techniques})
 
+
+
+
+
 @app.route('/api/techniques/<string:name>', methods=['GET'])
 def get_specific_technique(name):
     db = mysql.connector.connect(
@@ -325,6 +329,34 @@ def get_infos_techniques_linked(idCharacter):
 
     # Vous pouvez retourner directement la liste d'idTechniques
     return jsonify({"idCharacter": idCharacter, "idTechniques": idTechniques})
+
+
+@app.route('/api/QuestStages/', methods=['GET'])
+def get_questStages():
+    db = mysql.connector.connect(
+        host=db_infos['host'],
+        user=db_infos['user'],
+        password=db_infos['password'],
+        database=db_infos['database']
+    )
+
+    cursor = db.cursor()
+    query = "SELECT * FROM `quest_levels`"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    print(result)
+
+    if len(result) == 0:
+        return jsonify({"message": "Aucune technique"}), 404
+
+
+    techniques = [{"idLevel": row[0],"levelName": row[1], "idPlayerCharacter": row[2], "idCharacterEnemy": row[3], "stageName": row[4], "experience_earned":row[5], "easyness":row[6]} for row in result]
+    return jsonify({"QuestStages": techniques})
+
+
+
+
+
 
 
 if __name__ == '__main__':

@@ -11,6 +11,9 @@
 
 .character-image {
     width: 500px; 
+    object-fit: contain;
+    max-height: 500px;
+
 }
 
 .character-name {

@@ -15,6 +15,7 @@
     <script src='../static/script/fightLogic.js'></script>
 
     <script src='../static/script/fight_custom.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
@@ -23,8 +24,30 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
+<script>
+    function quit() {
+        Swal.fire({
+            title: "Voulez vous vraiment quitter ?",
+            DenyButtonText: "Non",
+
+            showDenyButton: true,
+            confirmButtonText: "Yes",
+            showCancelButton: false,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                window.location.href = '/gameMode/custom'
+            }
+        });
+    }
+</script>
 
 <body>
+    <button id="submit" onclick="quit()"
+        style="position: absolute;margin-left: 10px;margin-top: 30px; font-size: 12px; height: 30px; width: 80px; border-radius: 5px;">
+        QUITTER</button>
+
+    </div>
     <div class="container">
 
         <div class="character">
@@ -164,7 +187,10 @@
     <script>
         var AI_Techniques = [];
         var AI_Health = '{{ennemy.health}}'
-        var AISmartness = '{{AISmartness}}';
+        var FixedAISmartness = '{{AISmartness}}';
+
+        var StorageTechniques = [];
+
     </script>
 
     {% if mode == "solo" %}
@@ -179,6 +205,18 @@
     </script>
     {% endfor %}
     {% endif %}
+
+    {% for ennemyTech in ennemy_tech_list %}
+    <script>
+        var tech_list = '{{ennemy_tech_list}}'.replace(/&#39;/g, '"').replace(/&#34;/g, "'")
+        tech_list = JSON.parse(tech_list)
+
+        var Tech = '{{ennemyTech}}'.replace(/&#39;/g, '"').replace(/&#34;/g, "'")
+
+        StorageTechniques.push(tech_list[Tech])
+    </script>
+    {% endfor %}
+
 
     <script>
         setBackground("{{ stage.image }}")

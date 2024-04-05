@@ -36,6 +36,7 @@ var ennemyMoveData;
 
 
 
+
 // AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
 // AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
 // AI PART AI PART AI PART PART AI PART AI PART PART AI PART AI PART
@@ -62,6 +63,44 @@ function getPlayerHealth() {
     return parseInt(document.getElementById('YourHealth').textContent)
 }
 
+
+function checkHealth() {
+    var YourPickAttacks = document.getElementById('YourPickAttacks')
+    var EnnemyAttacks = document.getElementById('EnnemyAttacks')
+
+
+    if (getPlayerHealth() == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "Vous avez perdu !",
+            text: "",
+        });
+        YourPickAttacks.style.display = 'none'
+        EnnemyAttacks.style.display = 'none'
+
+        setTimeout(() => {
+            window.location.href = "/gameMode";
+        }, 3000);
+    }
+    else if (getAIHealth() == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "L'adversaire a perdu !",
+            text: "",
+        });
+
+        YourPickAttacks.style.display = 'none'
+        EnnemyAttacks.style.display = 'none'
+
+        setTimeout(() => {
+            window.location.href = "/gameMode";
+        }, 3000);
+    }
+}
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function AIBrain(sender, techniques, aiChoice, AIEnergy, AISmartness, initial_health, technique_used, playerEnergy) {
     var AIMax = 10
@@ -90,16 +129,21 @@ function AIBrain(sender, techniques, aiChoice, AIEnergy, AISmartness, initial_he
         var AiHealth = getAIHealth();
         var playerHealth = getPlayerHealth();
 
-        if (AIEnergy * 1.5 <= playerEnergy && hasEnoughEnergy(techniques[3].cost, AIEnergy)) {
-            action(sender, techniques[3], initial_health);
-            return techniques[3];
-        }
 
         if (playerHealth > AiHealth) {
-            var favorisedMoveId = 1; // Guard
-            if (!checkCD(sender, techniques[favorisedMoveId].name) && hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
-                action(sender, techniques[favorisedMoveId], initial_health);
-                return techniques[favorisedMoveId];
+            var roll = getRandomNumber(1, 3)
+            if (roll == 1) {
+                var favorisedMoveId = 1; // Guard
+                if (!checkCD(sender, techniques[favorisedMoveId].name) && hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
+                    action(sender, techniques[favorisedMoveId], initial_health);
+                    return techniques[favorisedMoveId];
+                }
+            } else if (roll == 2) {
+                favorisedMoveId = 0; // Normal Attack
+                if (hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
+                    action(sender, techniques[favorisedMoveId], initial_health);
+                    return techniques[favorisedMoveId];
+                }
             }
 
             favorisedMoveId = 2; // Counter
@@ -108,22 +152,17 @@ function AIBrain(sender, techniques, aiChoice, AIEnergy, AISmartness, initial_he
                 return techniques[favorisedMoveId];
             }
 
-            favorisedMoveId = 0; // Normal Attack
-            if (hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
-                action(sender, techniques[favorisedMoveId], initial_health);
-                return techniques[favorisedMoveId];
-            }
-
-            favorisedMoveId = 3; // ChargeKi
-            action(sender, techniques[favorisedMoveId], initial_health);
-            return techniques[favorisedMoveId];
-
         } else {
             var favorisedMoveId = 0; // Normal Attack
             if (hasEnoughEnergy(techniques[favorisedMoveId].cost, AIEnergy)) {
                 action(sender, techniques[favorisedMoveId], initial_health);
                 return techniques[favorisedMoveId];
             }
+        }
+
+        if (AIEnergy <= playerEnergy && hasEnoughEnergy(techniques[3].cost, AIEnergy)) {
+            action(sender, techniques[3], initial_health);
+            return techniques[3];
         }
 
         favorisedMoveId = 3; // ChargeKi
@@ -177,7 +216,7 @@ function action(sender, data, initial_health) {
     if (GameMode == "solo" && sender == "player") {
         var AIEnergy = parseInt(document.getElementById('EnnemyEnergy').textContent);
         var playerEnergy = parseInt(document.getElementById('YourEnergy').textContent);
-        triggerAi('ennemy', AI_Techniques, AI_Health, AIEnergy, AISmartness, playerEnergy)
+        triggerAi('ennemy', AI_Techniques, AI_Health, AIEnergy, FixedAISmartness, playerEnergy)
     }
 
     sender == 'player' ? playerHasPlayed = true : ennemyHasPlayed = true;
@@ -186,13 +225,28 @@ function action(sender, data, initial_health) {
             playerMove = data.type;
             playerMoveData = data;
         } else {
-            console.log("Not enough energy to perform this action");
+            Swal.fire({
+                icon: "info",
+                position: "top",
+                title: "Pas assez de Ki !",
+                text: "Vous n'avez pas assez d'énergie.",
+                showConfirmButton: false,
+                timer: 1500
+            });
             playerHasPlayed = false;
         }
     }
     else if (checkCD(sender, data.name)) {
         playerHasPlayed = false;
         console.log("This technique is on CD");
+        Swal.fire({
+            icon: "info",
+            position: "top",
+            title: "Technique en Coodldown !",
+            text: "Vous ne pouvez  pas utiliser cette technique.",
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
 
     if (sender == "ennemy" && ennemyHasPlayed && !checkCD(sender, data.name)) {
@@ -200,13 +254,27 @@ function action(sender, data, initial_health) {
             ennemyMove = data.type;
             ennemyMoveData = data;
         } else {
-            console.log("Not enough energy for the enemy to perform this action");
+            Swal.fire({
+                icon: "info",
+                position: "top",
+                title: "Pas assez de Ki !",
+                text: "Vous n'avez pas assez d'énergie.",
+                showConfirmButton: false,
+                timer: 1500
+            });
             ennemyHasPlayed = false;
         }
     }
     else if (checkCD(sender, data.name)) {
         ennemyHasPlayed = false;
-        console.log("This technique is on CD");
+        Swal.fire({
+            icon: "info",
+            position: "top",
+            title: "Technique en Coodldown !",
+            text: "Vous ne pouvez  pas utiliser cette technique.",
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
 
     if (playerHasPlayed && ennemyHasPlayed && playerMove != "" && ennemyMove != "") {
@@ -297,6 +365,7 @@ function attackLogic(sender, target, attackData) {
     } else {
         console.log('Cooldown')
     }
+    checkHealth()
 }
 
 
@@ -326,17 +395,27 @@ function inflictDamages(sender, target, attackValue, bonus, attackData) {
 
     if (sender == "player" && lastEnnemyAttack == "Guard") {
         finalDamages = bonus
+        var animation = StorageTechniques[1].image;
+        displayAnimation("L'adversaire se défend.", animation, 2000)
 
     } else if (sender == "ennemy" && lastPlayerAttack == "Guard") {
         finalDamages = bonus
+        var animation = StorageTechniques[1].image;
+        displayAnimation("Vous vous défendez.", animation, 2000)
 
     } else if (sender == "player" && lastEnnemyAttack == "Counter") {
+        var animation = StorageTechniques[2].image;
+        displayAnimation("L'adversaire contre.", animation, 2200)
         finalDamages = 0;
-        displayDamages("ennemy", "player", calculateDamages(playerStats, ennemyStats, (attackDamage * 1.5) + DamageBonus["player"]));
+
+        displayDamages("ennemy", "player", calculateDamages(playerStats, ennemyStats, (attackDamage * 1.5) + DamageBonus["player"]), true);
 
     } else if (sender == "ennemy" && lastPlayerAttack == "Counter") {
         finalDamages = 0;
-        displayDamages("player", "ennemy", calculateDamages(ennemyStats, playerStats, (attackDamage * 1.5) + DamageBonus["ennemy"]));
+        var animation = StorageTechniques[2].image;
+        displayAnimation("Vous contrez.", animation, 2200)
+
+        displayDamages("player", "ennemy", calculateDamages(ennemyStats, playerStats, (attackDamage * 1.5) + DamageBonus["ennemy"]), true);
     }
 
     displayDamages(sender, target, finalDamages);
@@ -344,7 +423,7 @@ function inflictDamages(sender, target, attackValue, bonus, attackData) {
 }
 
 
-function displayDamages(sender, target, finalDamages) {
+function displayDamages(sender, target, finalDamages, counter = false, clash = false) {
     var healthBar;
     var initalHealthValue;
 
@@ -361,7 +440,6 @@ function displayDamages(sender, target, finalDamages) {
         target_stats = ennemyStats;
     }
 
-
     var health = parseInt(healthBar.textContent);
     var remainingHealth = Math.max(health - finalDamages, 0);
 
@@ -370,6 +448,11 @@ function displayDamages(sender, target, finalDamages) {
 
     healthBar.style.width = healthPercentage + '%';
     healthBar.textContent = remainingHealth;
+
+    if (finalDamages != 0 && finalDamages != DamageBonus[sender] && !counter) {
+        var animation = "https://qph.cf2.quoracdn.net/main-qimg-194420cf0a61b6c1a2b0cf3508f74879"
+        displayAnimation("L'attaque fait mouche", animation, 2000)
+    }
 
     DamageBonusChecker(target_stats, healthPercentage, healthBar, target);
 

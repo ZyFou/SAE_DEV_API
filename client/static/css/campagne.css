@@ -1,0 +1,28 @@
+#levelsContainer{
+    justify-content: center;
+    display: flex;
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+#stageButton{
+    margin: 5px;
+    margin: 0px 10px 0px 10px;
+
+    transition: 0.5s;
+    cursor: pointer;
+    border: none;
+    background-color: #1bb6d5;
+    font-size: 15px;
+    font-weight: 800;
+    color: #F2FCFF;
+    width: 200px;
+    height: 70px;
+    border-radius: 20px;
+}
+
+#stageButton:hover{
+    background-color: #43c5df;
+    transform: scale(1.05);
+
+}

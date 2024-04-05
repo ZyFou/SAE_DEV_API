@@ -158,7 +158,8 @@ def createQuestLevelsTable(db_infos):
                     idPlayerCharacter INT,
                     idEnemyCharacter INT,
                     StageName TEXT,
-                    experience_earned FLOAT
+                    experience_earned FLOAT,
+                    difficulty INT
                 )
             """)
         print("La table 'quest_levels' a été créée avec succès.")

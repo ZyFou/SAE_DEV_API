@@ -309,6 +309,7 @@ svg{
 
 #submit:hover{
     background-color: #fe3939;
+    transform: scale(1.05);
 }
 
 #goToRegister{
@@ -490,8 +491,10 @@ svg{
     border-radius: 20px;
     transition: transform 0.5s, filter 0.5s; 
     filter: brightness(75%);
-    width: 300px;
     cursor: pointer;
+    max-height: 300px;
+    object-fit: contain;
+    
 }
 
 #characterImage:hover {
@@ -658,4 +661,14 @@ footer{
 #confirm_stage:hover{
     background-color: #fe3939;
     color: #FFFFFF;
+}
+
+#tutoImagesContainer{
+    display: flex;
+    justify-content: center;
+}
+
+#tutoImages{
+    margin-top: 30px;
+    width: 55%;
 }

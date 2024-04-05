@@ -105,7 +105,7 @@ def register():
                         return render_template('register.html', error="Email already in use.")
 
                     cursor.execute("""INSERT INTO users (nickname, email, password, admin, profile_picture, banner,current_quest_stage, experience, level) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s  )""", 
-                                   (pseudo, email, password, False, default_pfp,default_banner,0,0,1))
+                                   (pseudo, email, password, False, default_pfp,default_banner,1,0,1))
                     db.commit()
 
                     user = verify_credentials(email, password)
@@ -124,8 +124,6 @@ def register():
         return render_template('register.html', error="")
     else:
         return redirect('/')
-
-    
 
 
 @app.route('/profile' , methods=['GET', 'POST'])
@@ -190,7 +188,6 @@ def profile():
     else:
         return redirect('/')
 
-
 @app.route('/logout')
 def logout():
     session.clear()
@@ -206,6 +203,31 @@ def gameMode():
         return redirect('/')
     
 
+@app.route('/gameMode/campagne')
+def gameMode_Campagne():
+    if 'user_id' in session:
+        print(session['user_id'])
+        player_data = requests.get(base_url + f"userInfos/{session['user_id']}" )
+        player_data = player_data.json()
+        player_current_stage = player_data['current_quest_stage']
+
+        allQuestStages = requests.get(base_url + f"QuestStages/" )
+        allQuestStages = allQuestStages.json()
+        
+
+        return render_template('game/modes/campagne.html', player_data = player_current_stage, questStages = allQuestStages)
+    else:
+        return redirect('/')
+
+
+@app.route('/gameMode/tutorial')
+def Tutorial():
+    if 'user_id' in session:
+
+        return render_template('game/modes/tutorial.html')
+    else:
+        return redirect('/')
+
 
 @app.route('/gameMode/custom')
 def gameMode_Custom():
@@ -218,8 +240,8 @@ def gameMode_Custom():
         return render_template('game/modes/custom.html', characters=characters, stages=stages)
     else:
         return redirect('/')
-        
     
+        
 
 
 @app.route('/gameMode/customGame')
@@ -233,6 +255,8 @@ def testGame():
 
         if missing_params:
             return redirect('/')
+
+        print(query_params['yourPick'])
 
         yourPick = requests.get(f"{base_url}characters/{query_params['yourPick']}").json()
         yourPick_techniques = requests.get(f"{base_url}TOB/{yourPick['idCharacter']}").json()

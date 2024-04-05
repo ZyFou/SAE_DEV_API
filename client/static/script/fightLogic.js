@@ -1,3 +1,18 @@
+function displayAnimation(text, gif, duration, x = 400, y = 200) {
+    Swal.fire({
+        position: "top",
+
+        title: text,
+        text: "",
+        imageUrl: gif,
+        imageWidth: x,
+        imageHeight: y,
+        imageAlt: "Custom image",
+        showConfirmButton: false,
+        timer: duration
+    });
+}
+
 
 function fightLogic(PlayerMove, EnemyMove, playerMoveData, enemyMoveData) {
     console.log("PlayerMove : ", PlayerMove, "EnemyMove : ", EnemyMove)
@@ -13,14 +28,18 @@ function fightLogic(PlayerMove, EnemyMove, playerMoveData, enemyMoveData) {
     if (PlayerMove == "normal_attack" && EnemyMove == "defense") {
         attackLogic(enemy, player, enemyMoveData)
         attackLogic(player, enemy, playerMoveData)
+
     } else if (EnemyMove == "normal_attack" && PlayerMove == "defense") {
         attackLogic(player, enemy, playerMoveData)
         attackLogic(enemy, player, enemyMoveData)
+
     }
 
     if (PlayerMove == "normal_attack" && EnemyMove == "counter_attack") {
         attackLogic(enemy, player, enemyMoveData)
         attackLogic(player, enemy, playerMoveData)
+        // displayAnimation("L'adverse contre", enemyMoveData['image'], 2200)
+
     } else if (EnemyMove == "normal_attack" && PlayerMove == "counter_attack") {
         attackLogic(player, enemy, playerMoveData)
         attackLogic(enemy, player, enemyMoveData)
@@ -38,6 +57,8 @@ function fightLogic(PlayerMove, EnemyMove, playerMoveData, enemyMoveData) {
     if (PlayerMove == "defense" && EnemyMove == PlayerMove) {
         attackLogic(player, enemy, playerMoveData)
         attackLogic(enemy, player, enemyMoveData)
+        var gif = "https://i.pinimg.com/originals/bb/5a/51/bb5a51c34c62a307ffb0e180eadc260c.gif"
+        displayAnimation("Vous vous défendez tout les 2.", gif, 2200, 400, 300)
     }
 
     if (PlayerMove == "defense" && EnemyMove == "special") {
@@ -80,9 +101,11 @@ function fightLogic(PlayerMove, EnemyMove, playerMoveData, enemyMoveData) {
     }
 
     if (PlayerMove == "special" && EnemyMove == "chargeKi") {
-        console.log("damage p1 -> p2 special Logic")
+        attackLogic(player, enemy, playerMoveData)
+
     } else if (EnemyMove == "special" && PlayerMove == "chargeKi") {
-        console.log("damage p2 -> p1 special Logic")
+        attackLogic(enemy, player, enemyMoveData)
+
     }
 
     // counter_attack LOGIC
@@ -100,14 +123,16 @@ function fightLogic(PlayerMove, EnemyMove, playerMoveData, enemyMoveData) {
     }
 
     if (PlayerMove == "counter_attack" && EnemyMove == "special") {
-        console.log("damage p2 -> p1 counter_attack Logic")
+        attackLogic(enemy, player, enemyMoveData)
+        attackLogic(player, enemy, playerMoveData)
     } else if (EnemyMove == "counter_attack" && PlayerMove == "special") {
-        console.log("damage p1 -> p1 counter_attack Logic")
+        attackLogic(player, enemy, playerMoveData)
+        attackLogic(enemy, player, enemyMoveData)
     }
 
     // SPECIAL LOGIC
     if (PlayerMove == "special" && EnemyMove == PlayerMove) {
-        console.log("p1 -> cost ki special Logic")
-        console.log("p2 -> cost ki special Logic")
+        attackLogic(player, enemy, playerMoveData)
+        attackLogic(enemy, player, enemyMoveData)
     }
 }

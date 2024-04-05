@@ -45,7 +45,7 @@
     transition: transform 0.5s, filter 0.5s; 
     filter: brightness(75%);
     position: relative;
-    left: -40px;
-    top: -60px;
+    left: -20px;
+    top: -20px;
     width:300px;
 }

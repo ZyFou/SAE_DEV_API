@@ -29,7 +29,7 @@ def addExempleUsers(db_infos):
             cursor.execute("""
                 INSERT INTO users (nickname, email, password, admin,profile_picture,banner,current_quest_stage, experience, level)
                 VALUES (%s, %s, %s, %s, %s, %s, %s,%s,%s)
-            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU",0,0,1))
+            """, ('Utilisateur', 'user@example.com', 'password456', False, "https://i.pinimg.com/564x/b1/79/47/b17947cd9653a08b2801d11afd291d2d.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr5STtRwhRGtjmno8wvhTi0rklpxHIe44Vj6bBRRV_syAfsdinpR3bTwBPYbE9BZEQ7-k&usqp=CAU",1,0,1))
             print("Utilisateur 'Utilisateur' a été ajouté à la table 'users'.")
         else:
             print("L'utilisateur 'Utilisateur' existe déjà.")
@@ -105,13 +105,20 @@ def addCharacters(db_infos):
             """, ('Super Saiyan Vegeta', 'Saiyan', vegeta_ssj1_image, 'Éveil du prince des saiyans au stade de super saiyan !', 90, 85, 70, 1800, 650))
             print("Personnage 'Vegeta ssj1' ajouté à la table 'characters'.")
 
-
+            
             tao_pai_pai_image = "https://dragonball-legends.com/assets/characters/0309_taopaipai_309_texture/Texture2D/0309_TaoPaiPai_309_Effect3.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('TaoPaiPai', 'Human',tao_pai_pai_image, 'Tristement connu assassin à renommée mondiale capable de tuer avec sa langue.', 40, 50, 80, 1300, 600))
             print("Personnage 'TaoPaiPai' ajouté à la table 'characters'.")
+
+            freezer_image = "https://dragonball-legends.com/assets/characters/0219_friezafp_219_texture/0219_FriezaFP_219_Chara.png"
+            cursor.execute("""
+                INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, ('Freezer (full power)', 'Démon du Givre', freezer_image, 'Créature impitoyable, terrifiant conquérant de la glaxie.', 90, 50, 65, 2200, 500))
+            print("Personnage 'Freezer (full power)' ajouté à la table 'characters'.")
 
             db.commit()
         else:
@@ -144,7 +151,7 @@ def addTechniques(db_infos):
         if techniques_count == 0:  # Si la table est vide, ajouter les personnages
             # Ajout du premier personnage
 
-            normal_attack_gif = "https://c.tenor.com/ApaFfLf7DzsAAAAC/tenor.gif"
+            normal_attack_gif = "https://i.gifer.com/77dr.gif"
             cursor.execute("""
                 INSERT INTO techniques (name, description, image, type, damages, accuracy, cost, cooldown)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
@@ -303,7 +310,14 @@ def addStages(db_infos):
             """, ("Espace", "Bah c'est l'espace quoi...", "solid",space_image, space_icon))
             print("Le Terrain 'space' ajouté à la table 'stages'.")
 
-            
+            namek_lava_icon = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvpnZdXBaCT95m2bbdCtwCeI2Zro9mPy5MluJBjcMMz-q3cxnrqXH75d-0h3pZx1modRNpS-x_UuqU33Fan0TniDjHYZIn2bpncHZdgkE9U9bdqWj40NO2WIpVogOK_HgOFnL_bd5YNj8W/s1600/dbz106-01.jpg"
+            namek_lava_image = "https://cdn.gamedevmarket.net/wp-content/uploads/20230107071946/dca48e4e74b9bc8bb861f577fef38a08.jpg"
+            cursor.execute("""
+                INSERT INTO stages (name, description, type, image, icon)
+                VALUES (%s, %s, %s, %s, %s)
+            """, ("namekLava", "Namek En Fusion", "solid",namek_lava_image, namek_lava_icon))
+            print("Le Terrain 'namekLava' ajouté à la table 'stages'.")
+
             db.commit()
         else:
             print("Les stages existent déjà dans la table 'stages'.")
@@ -334,10 +348,28 @@ def addQuestLevels(db_infos):
         if stages_count == 0: 
             
             cursor.execute("""
-                INSERT INTO quest_levels (levelName, idPlayerCharacter, idEnemyCharacter, StageName, experience_earned)
-                VALUES (%s, %s, %s, %s, %s)
-            """, ("Le Début d'une aventure", 1,7,"SatanCity",50))
+                INSERT INTO quest_levels (levelName, idPlayerCharacter, idEnemyCharacter, StageName, experience_earned, difficulty)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, ("Le Début d'une aventure", 1,7,"SatanCity",50,10))
             print("Niveau 1 Ajouté à la table : quest_levels")
+
+            cursor.execute("""
+                INSERT INTO quest_levels (levelName, idPlayerCharacter, idEnemyCharacter, StageName, experience_earned, difficulty)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, ("Le Prince des Saiyans", 1,2,"SatanCity",80,5))
+            print("Niveau 2 Ajouté à la table : quest_levels")
+
+            cursor.execute("""
+                INSERT INTO quest_levels (levelName, idPlayerCharacter, idEnemyCharacter, StageName, experience_earned, difficulty)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, ("Le Super Saiyan Légendaire", 5,8,"namekLava",200,1))
+            print("Niveau 3 Ajouté à la table : quest_levels")
+
+            cursor.execute("""
+                INSERT INTO quest_levels (levelName, idPlayerCharacter, idEnemyCharacter, StageName, experience_earned, difficulty)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, ("Affrontement père adoptif, fils. ", 3,4,"SatanCity",30,2))
+            print("Niveau 4 Ajouté à la table : quest_levels")
 
             db.commit()
         else:
