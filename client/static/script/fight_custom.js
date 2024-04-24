@@ -358,6 +358,8 @@ function attackLogic(sender, target, attackData) {
                 console.log("Missed")
                 updateEnergy(sender, (cost / 2) * -1)
                 increaseTurn()
+                setLastAttack(sender, attack_name)
+
             }
         } else {
             console.log('Not enough Energy')

@@ -672,3 +672,22 @@ footer{
     margin-top: 30px;
     width: 55%;
 }
+
+#apiRootsContainer{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 300px;
+}
+
+#apiRoots{
+    margin-right: 20px;
+    transition: 0.5s;
+    font-size: 30px;
+    color: #FFDB00; 
+}
+
+#apiRoots:hover{
+    transform: scale(1.1);
+    color: #ffe855; 
+}
