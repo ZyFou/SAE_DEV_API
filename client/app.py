@@ -227,19 +227,6 @@ def Tutorial():
         return render_template('game/modes/tutorial.html')
     else:
         return redirect('/')
-    
-
-@app.route('/menu/apiInfos')
-def apiInfos():
-    return render_template('apiInfos.html')
-
-    
-
-@app.route('/menu/allPlayers')
-def allPlayers():
-
-    return render_template('allPlayers.html')
-
 
 
 @app.route('/gameMode/custom')

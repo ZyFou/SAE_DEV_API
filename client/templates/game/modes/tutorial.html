@@ -36,56 +36,15 @@
 
     <div id="tutoImagesContainer">
         <img id="tutoImages" src="../../static/images/tutorial/fight scene.png" alt="">
-        <img id="tutoImages" src="../../static/images/tutorial/alertExemple.png" alt="">
-        <img id="tutoImages" src="../../static/images/tutorial/attackland.png" alt="">
-        <img id="tutoImages" src="../../static/images/tutorial/counterland.png" alt="">
-        <img id="tutoImages" src="../../static/images/tutorial/deathtext.png" alt="">
     </div>
+
 
 
     <footer style="margin-top: 70px;">
         <a href="/gameMode"><button id="goBack">RETOUR</button></a>
         <button id="submit"
             style="width: 120px; margin-right: 10px; font-size: 20px; height: 60px; margin-top: 20px;">SUITE</button>
+
     </footer>
 
 </html>
-
-
-<script>
-
-
-    // Récupère toutes les images sauf la première et les cache
-    var images = document.querySelectorAll('#tutoImagesContainer img');
-    for (var i = 1; i < images.length; i++) {
-        images[i].style.display = 'none';
-    }
-
-    // Initialise l'index de l'image actuellement affichée
-    var currentImageIndex = 0;
-
-    // Fonction pour afficher l'image suivante
-    function afficherImageSuivante() {
-        // Cache l'image actuelle
-        images[currentImageIndex].style.display = 'none';
-        // Passe à l'image suivante
-        currentImageIndex++;
-        // Vérifie si on est arrivé à la dernière image
-        if (currentImageIndex === images.length) {
-            // Si oui, redirige vers gameMode/campagne
-            window.location.href = '/gameMode/campagne';
-            return;
-        }
-        // Affiche l'image suivante
-        images[currentImageIndex].style.display = 'block';
-        // Change le texte du bouton pour "JOUER" s'il s'agit de la dernière image
-        if (currentImageIndex === images.length - 1) {
-            document.getElementById('submit').textContent = 'JOUER';
-        }
-    }
-
-    // Ajoute un gestionnaire d'événement au bouton "SUITE" pour afficher l'image suivante
-    document.getElementById('submit').addEventListener('click', afficherImageSuivante);
-
-
-</script>
