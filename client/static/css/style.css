@@ -332,63 +332,60 @@ svg{
 
 #gameModeChoices {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 #cardDiv {
     position: relative;
-    margin: 50px;
+    margin: 20px;
+    width: 300px; /* Adjust the width as needed */
+    text-align: center;
 }
 
 #card {
-    position: relative;
-    margin: 50px;
     background-color: #4C5562;
     border-radius: 20px;
-    height: 300px;
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #cardImg {
+    width: 100%;
+    height: auto;
     transition: 0.5s;
     cursor: pointer;
     transition: transform 0.5s, filter 0.5s; 
     filter: brightness(75%);
-    position: relative;
-    left: -40px;
-    top: -60px;
-    width:130%;
 }
 
-
-#cardDiv:hover img{
+#cardDiv:hover #cardImg {
     filter: brightness(100%);
     transform: scale(1.1);
 }
 
 #card p {
-    cursor: pointer;
-
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 10px 0 0;
     color: white;
-    font-size: 40px;
+    font-size: 24px;
     font-weight: bold;
     text-align: center;
 }
 
 #cardText {
-    position: absolute;
-    bottom: -30px;
-    left: 50px;
-    width: 70%;
+    margin-top: 20px;
     color: white;
     padding: 10px;
     border-radius: 20px;
     background-color: #4C5562;
+    text-align: center;
 }
+
+
 
 #gameModeChoices a {
     cursor:default;

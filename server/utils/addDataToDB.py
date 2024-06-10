@@ -61,7 +61,7 @@ def addCharacters(db_infos):
         characters_count = cursor.fetchone()[0]
 
         if characters_count == 0: 
-            goku_image = "https://dragonball-legends.com/assets/characters/0278_kakarot_278_texture/Texture2D/0278_Kakarot_278_Chara.png"
+            goku_image = "https://dragonball-legends.com/assets/characters/0278_kakarot_278_texture/0278_Kakarot_278_Chara.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -69,21 +69,21 @@ def addCharacters(db_infos):
             print("Personnage 'Goku' ajouté à la table 'characters'.")
 
 
-            vegeta_image = "https://dragonball-legends.com/assets/characters/0257_vegeta_257_texture/Texture2D/0257_Vegeta_257_Effect06.png"
+            vegeta_image = "https://dragonball-legends.com/assets/characters/0257_vegeta_257_texture/0257_Vegeta_257_Effect06.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('Vegeta', 'Saiyan', vegeta_image, 'Fier prince des Saiyans.', 85, 85, 60, 1750, 750))
             print("Personnage 'Vegeta' ajouté à la table 'characters'.")
 
-            gohan_image = "https://dragonball-legends.com/assets/characters/0258_gohanfuture_258_texture/Texture2D/0258_GohanFuture_258_Chara.png"
+            gohan_image = "https://dragonball-legends.com/assets/characters/0258_gohanfuture_258_texture/0258_GohanFuture_258_Chara.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('Gohan', 'Saiyan',gohan_image, 'Fils de Goku et saiyan hybride au potentiel infini.', 75, 75, 60, 1600, 900))
             print("Personnage 'Gohan' ajouté à la table 'characters'.")
 
-            piccolo_image = "https://dragonball-legends.com/assets/characters/0445_piccolohl_445_texture/Texture2D/0445_PiccoloHL_445_Chara.png"
+            piccolo_image = "https://dragonball-legends.com/assets/characters/0445_piccolohl_445_texture/0445_PiccoloHL_445_Chara.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -91,14 +91,14 @@ def addCharacters(db_infos):
             print("Personnage 'Piccolo' ajouté à la table 'characters'.")
 
 
-            goku_ssj1_image = "https://dragonball-legends.com/assets/characters/0563_gokuss1_563_texture/Texture2D/0563_GokuSS1_563_Chara_00.png"
+            goku_ssj1_image = "https://dragonball-legends.com/assets/characters/0563_gokuss1_563_texture/0563_GokuSS1_563_Chara_00.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, ('Super Saiyan Goku', 'Saiyan', goku_ssj1_image, 'Première apparition d"un super Saiyan dans la série.', 95, 70, 70, 1500, 650))
             print("Personnage 'Goku ssj1' ajouté à la table 'characters'.")
 
-            vegeta_ssj1_image = "https://dragonball-legends.com/assets/characters/0257_vegeta_257_texture/Texture2D/0257_Vegeta_257_Effect15.png"
+            vegeta_ssj1_image = "https://dragonball-legends.com/assets/characters/0257_vegeta_257_texture/0257_Vegeta_257_Effect15.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -106,7 +106,7 @@ def addCharacters(db_infos):
             print("Personnage 'Vegeta ssj1' ajouté à la table 'characters'.")
 
             
-            tao_pai_pai_image = "https://dragonball-legends.com/assets/characters/0309_taopaipai_309_texture/Texture2D/0309_TaoPaiPai_309_Effect3.png"
+            tao_pai_pai_image = "https://dragonball-legends.com/assets/characters/0309_taopaipai_309_texture/0309_TaoPaiPai_309_Effect3.png"
             cursor.execute("""
                 INSERT INTO characters (name, race, image, description, strength, defense, speed, health, energy)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
